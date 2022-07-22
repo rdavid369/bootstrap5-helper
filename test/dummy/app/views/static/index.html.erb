@@ -1,0 +1,445 @@
+<%= page_header_helper type: :h2, class: 'mt-5' do %>
+    Test Application
+<% end %>
+
+<div class="row">
+    <div class="col mt-3 mb-3">
+        <p>This is the sample page for testing the library</p>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col mt-3 mb-3">
+        <div class="form-group">
+            <%= input_group_helper :lg, class: 'mb-3' do |ig| %>
+                <input type="text" value="" name="email" placeholder="Email" class="form-control" />
+                <%= ig.text do %>
+                    @gmail.com
+                <% end %>
+            <% end %>
+        </div>
+        <div class="form-group">
+            <%= input_group_helper(class: 'mb-3', id: 'some_id', data: { 'test-attribute' => 1 }) do |ig| %>
+                <%= ig.text(class: 'some-color') { '@' } %>
+                <input type="text" value="" name="email" placeholder="Your email address" class="form-control" />
+            <% end %>
+        </div>
+        <div class="form-group">
+            <%= input_group_helper(:sm, class: 'mb-3', id: 'some_id', data: { 'test-attribute' => 1 }) do |ig| %>
+                <%= ig.text(class: 'some-color') { '@' } %>
+                <input type="text" value="" name="email" placeholder="Your email address" class="form-control" />
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col mt-3 mb-3">
+        <%= alert_helper :primary do %>
+            This is the standard alert....
+        <% end %>
+
+        <%= alert_helper :danger, dismissible: true do %>
+            This is the standard alert....
+        <% end %>
+
+        <%= alert_helper :secondary, dismissible: true do %>
+            This is the standard alert....
+        <% end %>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 mt-3 mb-3">
+        <%= badge_helper(:primary) { 'Primary' } %>
+        <%= badge_helper { 'Secondary' } %>
+        <%= badge_helper :info, class: 'badge-pill' do %>
+            I am a pill!
+        <% end %>
+        <%= badge_helper :warning, class: 'rounded-pill' do %>
+            I am a rounded pill!
+        <% end %>
+    </div>
+    <div class="col-sm-12 my-3">
+        <button type="button" class="btn btn-primary position-relative">
+            Inbox
+            <%= badge_helper :danger, class: 'position-absolute top-0 start-100 translate-middle rounded-pill' do %>
+                99+ <span class="visually-hidden">unread messages</span>
+            <% end %>
+        </button>
+
+        <button type="button" class="btn btn-secondary position-relative ms-3">
+            Inbox
+            <%= badge_helper :danger, class: 'position-absolute top-0 start-100 translate-middle' do %>
+                99+ <span class="visually-hidden">unread messages</span>
+            <% end %>
+        </button>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-sm mt-3 mb-3">
+        <%= card_helper do |c| %>
+            <%= c.header class: 'text-white bg-primary' do %>
+                This is the header...
+            <% end %>
+            <%= c.body do %>
+                <%= c.title { 'This is the title' } %>
+                <%= c.text { 'This card body' } %>
+                <ul>
+                    <% [1, 2, 3].each do |x|  %>
+                        <li>Item: <%= x %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+            <%= c.footer class: 'text-muted' do %>
+                This is the footer...
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col mt-3 mb-3">
+        <%= card_helper do |c| %>
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <%= image_tag 'placeholder.svg', class: 'card-img' %>
+                </div>
+                <div class="col-md-8">
+                    <%= c.body do %>
+                        <%= c.title { "Card title" } %>
+                        <%= c.text { "This is a wider card with supporting text below as a natural lead-in to additional content." } %>
+                        <%= c.text do %>
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        <% end %>
+                   <% end %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+<hr />
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <%= card_helper class: 'h-100' do |c| %>
+            <%= c.body do %>
+                <%= c.title { 'This is the title one' } %>
+                <%= c.text { 'This card body' } %>
+                <ul>
+                    <% [1, 2, 3, 4, 5, 6, 7].each do |x|  %>
+                        <li>Item: <%= x %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+            <%= c.footer do %>
+                This is the footer...
+            <% end %>
+        <% end %>
+    </div>
+    <div class="col">
+        <%= card_helper class: 'h-100' do |c| %>
+            <%= c.body do %>
+                <%= c.title { 'This is the title two' } %>
+                <%= c.text { 'This card body' } %>
+                <ul>
+                    <% [1, 2, 3].each do |x|  %>
+                        <li>Item: <%= x %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+            <%= c.footer do %>
+                This is the footer...
+            <% end %>
+        <% end %>
+    </div>
+    <div class="col">
+        <%= card_helper class: 'h-100' do |c| %>
+            <%= c.body do %>
+                <%= c.title { 'This is the title three' } %>
+                <%= c.text { 'This card body' } %>
+                <ul>
+                    <% [1, 2, 3].each do |x|  %>
+                        <li>Item: <%= x %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+            <%= c.footer do %>
+                This is the footer...
+            <% end %>
+        <% end %>
+    </div>
+    <div class="col">
+        <%= card_helper class: 'h-100' do |c| %>
+            <%= c.body do %>
+                <%= c.title { 'This is the title four' } %>
+                <%= c.text { 'This card body' } %>
+                <ul>
+                    <% [1, 2, 3].each do |x|  %>
+                        <li>Item: <%= x %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+            <%= c.footer do %>
+                This is the footer...
+            <% end %>
+        <% end %>
+    </div>
+        <div class="col">
+        <%= card_helper class: 'h-100' do |c| %>
+            <%= c.body do %>
+                <%= c.title { 'This is the title one' } %>
+                <%= c.text { 'This card body' } %>
+                <ul>
+                    <% [*1..10].each do |x|  %>
+                        <li>Item: <%= x %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+            <%= c.footer do %>
+                This is the footer...
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-sm mt-3 mb-3">
+        <%= accordion_helper id: 'my_custom_id' do |a| %>
+            <%= a.item expanded: true do |item| %>
+                <%= item.header do %>
+                    Accordion Header #1
+                <% end %>
+                <%= item.body do %>
+                    This is the first item's accordion body. It is hidden by default, until the 
+                    collapse plugin adds the appropriate classes that we use to style each element. 
+                    These classes control the overall appearance, as well as the showing and hiding 
+                    via CSS transitions. You can modify any of this with custom CSS or overriding 
+                    our default variables. It's also worth noting that just about any HTML can go 
+                    within the .accordion-body, though the transition does limit overflow.
+                <% end %>
+            <% end %>
+            <%= a.item do |item| %>
+                <%= item.header do %>
+                    Accordion Header #2
+                <% end %>
+                <%= item.body do %>
+                    This is the second item's accordion body. It is hidden by default, until the 
+                    collapse plugin adds the appropriate classes that we use to style each element. 
+                    These classes control the overall appearance, as well as the showing and hiding 
+                    via CSS transitions. You can modify any of this with custom CSS or overriding 
+                    our default variables. It's also worth noting that just about any HTML can go 
+                    within the .accordion-body, though the transition does limit overflow.
+                <% end %>
+            <% end %>
+            <%= a.item do |item| %>
+                <%= item.header do %>
+                    Accordion Header #3
+                <% end %>
+                <%= item.body do %>
+                    This is the third item's accordion body. It is hidden by default, until the 
+                    collapse plugin adds the appropriate classes that we use to style each element. 
+                    These classes control the overall appearance, as well as the showing and hiding 
+                    via CSS transitions. You can modify any of this with custom CSS or overriding 
+                    our default variables. It's also worth noting that just about any HTML can go 
+                    within the .accordion-body, though the transition does limit overflow.
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-sm mt-3 mb-3">
+        <%= dropdown_helper class: 'testing' do |dropdown| %>
+            <%= dropdown.button(:primary) { "Action" } %>
+            <%= dropdown.menu do |menu| %>
+                <%= menu.link 'Edit', '#' %>
+                <%= menu.link 'Delete', '#' %>
+                <%= menu.text 'Static text' %>
+            <% end %>
+        <% end %>
+    </div>
+    <div class="col-sm mt-3 mb-3">
+        <%= dropdown_helper :dropup, centered: true do |dropdown| %>
+            <%= dropdown.button(:info) { "Action" } %>
+            <%= dropdown.menu do |menu| %>
+                <%= menu.link 'Edit', '#' %>
+                <%= menu.link 'Delete', '#' %>
+                <%= menu.text 'Static text' %>
+            <% end %>
+        <% end %>
+    </div>
+    <div class="col-sm mt-3 mb-3">
+        <%= dropdown_helper :dropup, class: 'btn-group' do |dropdown| %>
+            <button type="button" class="btn btn-danger">Action 2</button>
+            <%= dropdown.button(:danger, split: true) { "Action" } %>
+            <%= dropdown.menu do |menu| %>
+                <%= menu.link 'Edit', '#', class: 'active' %>
+                <%= menu.link 'Delete', '#' %>
+                <%= menu.divider %>
+                <%= menu.header 'Testing' %>
+                <%= menu.text 'Static text' %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-sm my-3">
+          <%= nav_helper do |nav| %>
+            <%= nav.link "Item 1", "https://www.google.com" %>
+            <%= nav.link "Item 2", "#" %>
+            <%= nav.link "Item 3", "#" %>
+            <%= nav.dropdown :more do |menu| %>
+                <%= menu.link 'People', '#' %>
+                <%= menu.link 'Records', '#' %>
+            <% end %>
+            <%= nav.dropdown "More 2" do |menu| %>
+                <%= menu.link 'People', '#' %>
+                <%= menu.link 'Records', '#' %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm my-3">
+          <%= nav_helper :nav, class: 'testing' do |nav| %>
+            <%= nav.link "Item 1", "https://www.google.com" %>
+            <%= nav.link "Item 2", "#" %>
+            <%= nav.link "Item 3", "#" %>
+            <%= nav.dropdown :more do |menu| %>
+                <%= menu.link 'People', '#' %>
+                <%= menu.link 'Records', '#' %>
+            <% end %>
+            <%= nav.dropdown "More 2" do |menu| %>
+                <%= menu.link 'People', '#' %>
+                <%= menu.link 'Records', '#' %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-sm my-3">
+        <%= tab_helper do |tab| %>
+            <%= tab.nav do |nav| %>
+                <%= nav.item :item1 do %>
+                    Item 1
+                <% end %>
+                <%= nav.item(:item2, class: 'active') { "Item 2" } %>
+                <%= nav.item(:item3) { "Item 3" } %>
+                <%= nav.item :item4 %>
+                <%= nav.dropdown 'More' do |dropdown| %>
+                    <%= dropdown.item :item5 %>
+                    <%= dropdown.item(:item6) { 'Item 6' } %>
+                <% end %>
+            <% end %>
+        
+            <%= tab.content do |content| %>
+                <%= content.pane :item1, class: 'mt-3' do %>
+                    Content 1
+                <% end %>
+        
+                <%= content.pane :item2, class: 'active mt-3' do %>
+                    Content 2
+                <% end %>
+        
+                <%= content.pane :item3, class: 'mt-3' do %>
+                    Content 3
+                <% end %>
+        
+                <%= content.pane :item4, class: 'mt-3' do %>
+                    Content 4
+                <% end %>
+        
+                <%= content.pane :item5, class: 'mt-3' do %>
+                    Content 5
+                <% end %>
+        
+                <%= content.pane :item6, class: 'mt-3' do %>
+                    Content 6
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm my-3">
+        <div class="d-flex align-items-start">
+            <%= tab_helper type: :pills do |tab| %>
+                <%= tab.nav class: 'flex-column me-3 col-2' do |nav| %>
+                    <%= nav.item :item10 do %>
+                        Item 10
+                    <% end %>
+                    <%= nav.item(:item20, class: 'active') { "Item 20" } %>
+                    <%= nav.item(:item30) { "Item 30" } %>
+                    <%= nav.item :item40 %>
+                    <%= nav.dropdown 'More' do |dropdown| %>
+                        <%= dropdown.item :item50 %>
+                        <%= dropdown.item(:item60) { 'Item 60' } %>
+                    <% end %>
+                <% end %>
+            
+                <%= tab.content do |content| %>
+                    <%= content.pane :item10, class: 'mt-3' do %>
+                        This is some placeholder content the Settings tab's associated content. Clicking another tab 
+                        will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control 
+                        the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered 
+                        navigation.
+                    <% end %>
+            
+                    <%= content.pane :item20, class: 'active mt-3' do %>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum neque obcaecati sequi ducimus 
+                        cumque incidunt, officia totam vitae deleniti delectus asperiores eligendi veniam nobis aut sunt
+                        ea nam possimus facere?
+                    <% end %>
+            
+                    <%= content.pane :item30, class: 'mt-3' do %>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, architecto? Iure a vitae 
+                        accusantium ipsum esse quibusdam praesentium sed adipisci tempora! Cupiditate libero saepe 
+                        tenetur illum obcaecati sit nam quibusdam.
+                    <% end %>
+            
+                    <%= content.pane :item40, class: 'mt-3' do %>
+                        This is some placeholder content the Settings tab's associated content. Clicking another tab 
+                        will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control 
+                        the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.
+                    <% end %>
+            
+                    <%= content.pane :item50, class: 'mt-3' do %>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea tempore itaque alias, culpa, eius modi 
+                        quo quasi dolore eos dolorum accusamus enim, natus corrupti quis odio eaque quisquam voluptas delectus?
+                    <% end %>
+            
+                    <%= content.pane :item60, class: 'mt-3' do %>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo voluptas deleniti consequuntur sit 
+                        repellat. Totam blanditiis temporibus sequi quisquam quod vero vitae libero minima, molestias ullam corporis eum dolor eius.
+                    <% end %>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</div>

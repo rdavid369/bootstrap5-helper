@@ -26,21 +26,20 @@ module Bootstrap5Helper
 
     # Builds a custom Nav component for the tabs.
     #
+    # @param  [Symbol|Hash] tag_or_options
     # @param  [Hash] opts
     # @option opts [String] :class
     # @option opts [Hash]   :data
     # @return [Nav]
     #
-    def nav(opts = {}, &block)
-      opts[:class] = (opts[:class] || '') << " nav-#{@type}"
-      opts[:data]  = (opts[:data]  || {}).merge(toggle: 'tab')
-      opts[:child] = {
-        data: {
-          toggle: 'tab'
-        }
-      }
+    def nav(tag_or_options = nil, opts = {}, &block)
+      tag, args = parse_tag_or_options(tag_or_options, opts)
 
-      Nav.new(@template, opts, &block)
+      args[:class] = (args[:class] || '') << " nav-#{@type}"
+      args[:data]  = (args[:data]  || {}).merge('bs-toggle' => 'tab')
+      args[:child] = { data: { 'bs-toggle' => 'tab' } }
+
+      Nav.new(@template, tag, args, &block)
     end
 
     # Builds the Content object for the Tab.
@@ -55,11 +54,12 @@ module Bootstrap5Helper
       Content.new(@template, opts, &block)
     end
 
-    # This has a weird interaction.  Because this object doesn't actually return any wrapping
-    # string or DOM element, we want to return nil, so that only the output buffer on the sub components are
-    # returned.
-    # If we return the return value of the block, we will get the last element added to the input
-    # buffer as an unescaped string.
+    # @note This has a weird interaction.  Because this object doesn't actually return any wrapping
+    #   string or DOM element, we want to return nil, so that only the output buffer on the sub components are
+    #   returned.
+    #
+    #   If we return the return value of the block, we will get the last element added to the input
+    #   buffer as an unescaped string.
     #
     def to_s
       @content.call(self)

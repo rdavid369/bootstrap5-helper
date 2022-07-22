@@ -30,7 +30,13 @@ module Bootstrap5Helper
       # @return [String]
       #
       def link(name = nil, options = nil, html_options = nil, &block)
-        html_options = (html_options || {}).merge(class: 'dropdown-item')
+        html_options ||= {}
+
+        if html_options.key?(:class)
+          html_options[:class] << ' dropdown-item'
+        else
+          html_options[:class] = ' dropdown-item'
+        end
 
         @template.link_to(name, options, html_options, &block)
       end
@@ -49,7 +55,7 @@ module Bootstrap5Helper
       def item(target, opts = {})
         id    = opts.fetch(:id,    nil)
         klass = opts.fetch(:class, '')
-        data  = opts.fetch(:data,  {}).merge(toggle: 'tab')
+        data  = opts.fetch(:data,  {}).merge('bs-toggle' => 'tab')
         aria  = opts.fetch(:aria,  {})
 
         content_tag(
@@ -74,7 +80,13 @@ module Bootstrap5Helper
       # @return [String]
       #
       def text(text, opts = {}, &block)
-        build_sub_component :span, text, 'item-text', opts, &block
+        build_sub_component(
+          config({ dropdown_menus: :text }, :span),
+          text,
+          'item-text',
+          opts,
+          &block
+        )
       end
 
       # Builds a Header component
@@ -87,7 +99,13 @@ module Bootstrap5Helper
       # @return [String]
       #
       def header(text, opts = {}, &block)
-        build_sub_component :h6, text, 'header', opts, &block
+        build_sub_component(
+          config({ dropdown_menus: :header }, :h6),
+          text,
+          'header',
+          opts,
+          &block
+        )
       end
 
       # Builds a divider element
@@ -95,7 +113,11 @@ module Bootstrap5Helper
       # @return [String]
       #
       def divider
-        content_tag :div, '', class: 'dropdown-divider'
+        content_tag(
+          config({ dropdown_menus: :divider }, :div),
+          '',
+          class: 'dropdown-divider'
+        )
       end
 
       # String representation of the object.

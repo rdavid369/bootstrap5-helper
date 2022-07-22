@@ -29,9 +29,9 @@ module Bootstrap5Helper
     def to_s
       content_tag(
         @type || config(:page_header, :h1),
-        id: @id,
+        id:    @id,
         class: "pb-2 mt-4 mb-2 border-bottom #{@class}",
-        data: @data
+        data:  @data
       ) do
         @content.call(self)
       end

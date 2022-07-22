@@ -12,13 +12,14 @@ module Bootstrap5Helper
     # @param  [Hash]  opts
     # @return [InputGroup]
     #
-    def initialize(template, type = :prepend, opts = {}, &block)
+    def initialize(template, context_or_options = nil, opts = {}, &block)
       super(template)
 
-      @type    = VALID_TYPES.include?(type) ? type : :prepend
-      @id      = opts.fetch(:id,          nil)
-      @class   = opts.fetch(:class,       '')
-      @data    = opts.fetch(:data,        {})
+      @context, args = parse_context_or_options(context_or_options, opts)
+
+      @id      = args.fetch(:id,     nil)
+      @class   = args.fetch(:class,  '')
+      @data    = args.fetch(:data,   {})
       @content = block || proc { '' }
     end
 
@@ -29,11 +30,8 @@ module Bootstrap5Helper
     # @return [String]
     #
     def text(opts = {}, &block)
-      opts[:class] = (opts[:class] || '') << " input-group-#{@type}"
-
-      content_tag :div, opts do
-        content_tag :span, class: 'input-group-text', &block
-      end
+      opts[:class] = (opts[:class] || '') << ' input-group-text'
+      content_tag :span, opts, &block
     end
 
     # Used to render out the InputGroup component.
@@ -44,10 +42,27 @@ module Bootstrap5Helper
       content_tag(
         :div,
         id:    @id,
-        class: "input-group #{@class}",
+        class: "input-group #{size_class} #{@class}",
         data:  @data
       ) do
         @content.call(self)
+      end
+    end
+
+    private
+
+    # Used to get the size of the input group.
+    #
+    # @return [String]
+    #
+    def size_class
+      case @context
+      when :sm
+        'input-group-sm'
+      when :lg
+        'input-group-lg'
+      else
+        ''
       end
     end
   end

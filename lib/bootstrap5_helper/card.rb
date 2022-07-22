@@ -23,62 +23,117 @@ module Bootstrap5Helper
 
     # Builds the Header component.
     #
-    # @param  [Hash] args
-    # @option args [String] :id
-    # @option args [String] :class
-    # @option args [Hash]   :data
+    # @param  [Symbol|Hash|NilClass] tag_or_options
+    # @param  [Hash] opts
+    # @option opts [String] :id
+    # @option opts [String] :class
+    # @option opts [Hash]   :data
     # @return [String]
     #
-    def header(args = {}, &block)
-      build_base_component :header, args, &block
+    def header(tag_or_options = nil, opts = {}, &block)
+      tag, args = parse_tag_or_options(tag_or_options, opts)
+      build_base_component(
+        tag || config({ cards: :header }, :h5),
+        :header,
+        args,
+        &block
+      )
     end
 
     # Builds the Body component.
     #
-    # @param  [Hash] args
-    # @option args [String] :id
-    # @option args [String] :class
-    # @option args [Hash]   :data
+    # @param  [Symbol|Hash|NilClass] tag_or_options
+    # @param  [Hash] opts
+    # @option opts [String] :id
+    # @option opts [String] :class
+    # @option opts [Hash]   :data
     # @return [String]
     #
-    def body(args = {}, &block)
-      build_base_component :body, args, &block
+    def body(tag_or_options = nil, opts = {}, &block)
+      tag, args = parse_tag_or_options(tag_or_options, opts)
+      build_base_component(
+        tag || config({ cards: :body }, :div),
+        :body,
+        args,
+        &block
+      )
     end
 
     # Builds the Footer component.
     #
-    # @param  [Hash] args
-    # @option args [String] :id
-    # @option args [String] :class
-    # @option args [Hash]   :data
+    # @param  [Symbol|Hash|NilClass] tag_or_options
+    # @param  [Hash] opts
+    # @option opts [String] :id
+    # @option opts [String] :class
+    # @option opts [Hash]   :data
     # @return [String]
     #
-    def footer(args = {}, &block)
-      build_base_component :footer, args, &block
+    def footer(tag_or_options = nil, opts = {}, &block)
+      tag, args = parse_tag_or_options(tag_or_options, opts)
+      build_base_component(
+        tag || config({ cards: :footer }, :div),
+        :footer,
+        args,
+        &block
+      )
     end
 
     # Builds a Title component.
     #
-    # @param  [Hash] args
-    # @option args [String] :id
-    # @option args [String] :class
-    # @option args [Hash]   :data
+    # @param  [Symbol|Hash|NilClass] tag_or_options
+    # @param  [Hash] opts
+    # @option opts [String] :id
+    # @option opts [String] :class
+    # @option opts [Hash]   :data
     # @return [String]
     #
-    def title(args = {}, &block)
-      build_sub_component config(:card_title, :h5), :title, args, &block
+    def title(tag_or_options = nil, opts = {}, &block)
+      tag, args = parse_tag_or_options(tag_or_options, opts)
+      build_sub_component(
+        tag || config({ cards: :title }, :h5),
+        :title,
+        args,
+        &block
+      )
     end
 
     # Builds a Text component.
     #
-    # @param  [Hash] args
-    # @option args [String] :id
-    # @option args [String] :class
-    # @option args [Hash]   :data
+    # @param  [Symbol|Hash|NilClass] tag_or_options
+    # @param  [Hash] opts
+    # @option opts [String] :id
+    # @option opts [String] :class
+    # @option opts [Hash]   :data
     # @return [String]
     #
-    def text(args = {}, &block)
-      build_sub_component config(:card_text, :p), :text, args, &block
+    def text(tag_or_options = nil, opts = {}, &block)
+      tag, args = parse_tag_or_options(tag_or_options, opts)
+      build_sub_component(
+        tag || config(:card_text, :p),
+        :text,
+        args,
+        &block
+      )
+    end
+
+    # @todo
+    #
+    #
+    def image(src, opts = {})
+      (opts[:class] ||= '') << 'card-img'
+      @template.image_tag(src, opts)
+    end
+
+    # Builds an Image Cap component.
+    #
+    # @param  [String] src,
+    # @param  [Symbol|String] type
+    # @param  [Hash] opts
+    # @return [String]
+    #
+    def image_cap(src, type = :top, opts = {})
+      (opts[:class] ||= '') << "card-img-#{type}"
+      @template.image_tag(src, opts)
     end
 
     # Builds a Img Overlay component.
@@ -90,7 +145,7 @@ module Bootstrap5Helper
     # @return [String]
     #
     def image_overlay(args = {}, &block)
-      build_base_component 'img-overlay', args, &block
+      build_base_component(:div, 'img-overlay', args, &block)
     end
 
     # Outputs the Object in its String representation.
@@ -111,8 +166,8 @@ module Bootstrap5Helper
     # @param  [Mixed] args
     # @return [String]
     #
-    def build_base_component(type, args, &block)
-      build_sub_component :div, type, args, &block
+    def build_base_component(tag, type, args, &block)
+      build_sub_component(tag, type, args, &block)
     end
 
     # Used to build various DOM components.

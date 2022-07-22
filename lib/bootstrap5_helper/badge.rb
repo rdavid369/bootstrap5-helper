@@ -11,7 +11,7 @@ module Bootstrap5Helper
     #
     def initialize(template, context_or_options = nil, opts = {}, &block)
       super(template)
-      @context, args = parse_arguments(context_or_options, opts)
+      @context, args = parse_context_or_options(context_or_options, opts)
 
       @id      = args.fetch(:id,    nil)
       @class   = args.fetch(:class, '')
@@ -22,7 +22,13 @@ module Bootstrap5Helper
     #
     #
     def to_s
-      content_tag(config(:badge, :span), id: @id, class: container_class) { @content.call(self) }
+      content_tag(
+        config(:badges, :span),
+        id:    @id,
+        class: container_class
+      ) do
+        @content.call(self)
+      end
     end
 
     private
@@ -33,7 +39,7 @@ module Bootstrap5Helper
     #
     def container_class
       string = 'badge '
-      string += @context == 'secondary' ? 'badge-secondary' : "badge-#{@context}"
+      string += @context == 'secondary' ? 'bg-secondary' : "bg-#{@context}"
       string += " #{@class}"
       string
     end

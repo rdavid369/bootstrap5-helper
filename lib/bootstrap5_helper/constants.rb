@@ -7,13 +7,9 @@ module Bootstrap5Helper
       component
       alert
       accordion
-      accordion_group
+      accordion/item
       badge
       card
-      card_grouping
-      card_group
-      card_deck
-      card_column
       configuration
       dropdown
       dropdown/menu

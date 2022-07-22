@@ -6,20 +6,24 @@ module Bootstrap5Helper
     # Class constructor
     #
     # @param [ActionView]     template
+    # @param [Symbol|Hash]    tag_or_options
     # @param [Hash]           opts
     # @option opts [String]  :id
     # @option opts [String]  :class
     # @option opts [Hash]    :data
     # @option opts [Hash]    :child
     #
-    def initialize(template, opts = {}, &block)
+    def initialize(template, tag_or_options = nil, opts = {}, &block)
       super(template)
 
-      @id       = opts.fetch(:id,    uuid)
-      @class    = opts.fetch(:class, '')
-      @data     = opts.fetch(:data,  {})
-      @child    = opts.fetch(:child, {})
-      @content  = block || proc { '' }
+      @tag, args = parse_tag_or_options(tag_or_options, opts)
+      @tag ||= config({ navs: :base }, :ul)
+
+      @id        = args.fetch(:id,    uuid)
+      @class     = args.fetch(:class, '')
+      @data      = args.fetch(:data,  {})
+      @child     = args.fetch(:child, {})
+      @content   = block || proc { '' }
 
       @dropdown = Dropdown.new(@template)
     end
@@ -43,7 +47,7 @@ module Bootstrap5Helper
       data  = opts.fetch(:data,  {})
       aria  = opts.fetch(:aria,  {})
 
-      content_tag :li, id: id, class: 'nav-item', data: data do
+      nav_item_wrapper id: id, data: data do
         content_tag(
           :a,
           class:    "nav-link #{klass}",
@@ -66,9 +70,17 @@ module Bootstrap5Helper
     # @return [String]
     #
     def link(name = nil, options = nil, html_options = nil, &block)
-      html_options = (html_options || {}).merge(class: 'nav-link')
+      html_options ||= {}
 
-      @template.link_to(name, options, html_options, &block)
+      if html_options.key?(:class)
+        html_options[:class] << ' nav-link'
+      else
+        html_options[:class] = ' nav-link'
+      end
+
+      nav_item_wrapper do
+        @template.link_to(name, options, html_options, &block)
+      end
     end
 
     # Creates a dropdown menu for the nav.
@@ -87,13 +99,13 @@ module Bootstrap5Helper
       data  = opts.fetch(:data,  {})
       aria  = opts.fetch(:aria,  {}).merge(haspopup: true, expanded: false)
 
-      content_tag :li, id: id, class: 'nav-item dropdown', data: data do
+      nav_item_wrapper id: id, class: 'dropdown', data: data do
         content_tag(
           :a,
           name,
           class: "nav-link dropdown-toggle #{klass}",
           href:  '#',
-          data:  { toggle: 'dropdown' },
+          data:  { 'bs-toggle' => 'dropdown' },
           role:  'button',
           aria:  aria
         ) + @dropdown.menu(opts, &block).to_s.html_safe
@@ -105,8 +117,33 @@ module Bootstrap5Helper
     # @return [String]
     #
     def to_s
-      content_tag :ul, id: @id, class: "nav #{@class}" do
+      content_tag(@tag, id: @id, class: "nav #{@class}") do
         @content.call(self)
+      end
+    end
+
+    private
+
+    # Decorator for elements require a wrapper component.
+    #
+    # @return [String]
+    #
+    def nav_item_wrapper(opts = {}, &block)
+      id    = opts.fetch(:id,    '')
+      klass = opts.fetch(:class, '')
+      data  = opts.fetch(:data,  {})
+
+      case @tag
+      when :nav
+        block.call
+      when :ul
+        content_tag(
+          :li,
+          id:    id,
+          class: "nav-item #{klass}",
+          data:  data,
+          &block
+        )
       end
     end
   end

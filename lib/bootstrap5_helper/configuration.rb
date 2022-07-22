@@ -6,10 +6,27 @@ module Bootstrap5Helper
   class Configuration
     DEFAULT_SETTINGS = {
       autoload_in_views: true,
-      card_title:        :h5,
-      card_text:         :p,
-      accordion_header:  :h5,
-      badge:             :span,
+      accordions:        {
+        header: :h2,
+        body:   :div
+      },
+      badges:            :span,
+      cards:             {
+        header: :h5,
+        body:   :div,
+        footer: :div,
+        title:  :h5,
+        text:   :p
+      },
+      dropdowns:         {},
+      dropdown_menus:    {
+        text:    :span,
+        header:  :h6,
+        divider: :div
+      },
+      navs:              {
+        base: :ul
+      },
       page_header:       :h1
     }.freeze
 

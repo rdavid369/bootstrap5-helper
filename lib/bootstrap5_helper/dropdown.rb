@@ -8,18 +8,22 @@ module Bootstrap5Helper
     # @param [ActionView]    template
     # @param [Symbol|String] type
     # @param [Hash]          opts
-    # @option opts [String] :id
-    # @option opts [String] :class
-    # @option opts [Hash]   :data
+    # @option opts [String]  :id
+    # @option opts [String]  :class
+    # @option opts [Hash]    :data
+    # @option opts [Boolea]  :split
+    # @option opts [Boolean] :centered
     #
     def initialize(template, type = :dropdown, opts = {}, &block)
       super(template)
 
-      @type    = type
-      @id      = opts.fetch(:id,    uuid)
-      @class   = opts.fetch(:class, '')
-      @data    = opts.fetch(:data,  {})
-      @content = block || proc { '' }
+      @type     = type
+      @split    = opts.fetch(:split,    false)
+      @centered = opts.fetch(:centered, false)
+      @id       = opts.fetch(:id,       uuid)
+      @class    = opts.fetch(:class,    '')
+      @data     = opts.fetch(:data,     {})
+      @content  = block || proc { '' }
     end
 
     # Used to generate a button for the dropdown.  The buttons default as just
@@ -28,18 +32,18 @@ module Bootstrap5Helper
     #
     # @param  [Symbol] context
     # @param  [Hash]   opts
-    # @option opts [Boolean] :split
     # @option opts [String]  :id
     # @option opts [String]  :class
     # @option opts [Hash]    :data
+    # @option opts [Boolean] :split
     # @return [String]
     #
     def button(context = :primary, opts = {})
-      split = opts.fetch(:split, false)
-      id    = opts.fetch(:id,    nil)
-      klass = opts.fetch(:class, '')
-      data  = opts.fetch(:data,  {}).merge(toggle: 'dropdown')
-      extra = split ? 'dropdown-toggle-split' : ''
+      id     = opts.fetch(:id,    nil)
+      klass  = opts.fetch(:class, '')
+      split  = opts.fetch(:split, false)
+      data   = opts.fetch(:data,  {}).merge('bs-toggle' => 'dropdown')
+      extra  = @split ? 'dropdown-toggle-split' : ''
 
       content_tag(
         :button,
@@ -49,7 +53,7 @@ module Bootstrap5Helper
         data:  data,
         aria:  { haspopup: true, expanded: false }
       ) do
-        split ? content_tag(:span, 'Toggle Dropdwon', class: 'sr-only') : yield
+        split ? content_tag(:span, 'Toggle Dropdown', class: 'visually-hidden') : yield
       end
     end
 
@@ -70,7 +74,12 @@ module Bootstrap5Helper
     # @return [String]
     #
     def to_s
-      content_tag :div, id: @id, class: "#{container_class} #{@class}", data: @data do
+      content_tag(
+        :div,
+        id:    @id,
+        class: "#{element_type_class} #{alignment_type_class} #{@class}",
+        data:  @data
+      ) do
         @content.call(self)
       end
     end
@@ -81,12 +90,29 @@ module Bootstrap5Helper
     #
     # @return [String]
     #
-    def container_class
+    def element_type_class
       case @type
       when :dropdown
         'dropdown'
-      when :group
-        'btn-group'
+      when :dropup
+        'dropup'
+      when :dropstart
+        'dropstart'
+      when :dropend
+        'dropend'
+      else
+        ''
+      end
+    end
+
+    # Returns the alignment class for the dropdown component.
+    #
+    # @return [String]
+    #
+    def alignment_type_class
+      case @type
+      when :dropdown, :dropup
+        @centered ? "#{element_type_class}-center" : ''
       else
         ''
       end

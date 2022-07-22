@@ -12,7 +12,7 @@ module Bootstrap5Helper
     #
     def initialize(template, context_or_options = nil, opts = {}, &block)
       super(template)
-      @context, args = parse_arguments(context_or_options, opts)
+      @context, args = parse_context_or_options(context_or_options, opts)
 
       @id          = args.fetch(:id,          nil)
       @class       = args.fetch(:class,       '')
@@ -25,9 +25,13 @@ module Bootstrap5Helper
     # @return [String]
     #
     def close_button
-      content_tag(:button, class: 'close', data: { dismiss: 'alert' }, aria: { label: 'Close' }) do
-        content_tag(:span, aria: { hidden: true }) { '&times;'.html_safe }
-      end
+      content_tag(
+        :button,
+        '',
+        class: 'btn-close',
+        data:  { 'bs-dismiss' => 'alert' },
+        aria:  { label: 'Close' }
+      )
     end
 
     # Used to render out the Alert component.
@@ -48,7 +52,15 @@ module Bootstrap5Helper
     # @return [String]
     #
     def container_class
-      "alert alert-#{@context} #{@class}"
+      "alert alert-#{@context} #{@class} #{dismissible_class}"
+    end
+
+    # Class used on parent element to signify a dismissible button.
+    #
+    # @return [String]
+    #
+    def dismissible_class
+      @dismissible ? 'alert-dismissible fade show' : ''
     end
   end
 end

@@ -3,12 +3,14 @@ require 'bootstrap5_helper/railtie'
 require 'bootstrap5_helper/constants'
 
 Bootstrap5Helper::Constants::COMPONENTS.each do |component|
-  require "bootstrap4_helper/#{component}"
+  require "bootstrap5_helper/#{component}"
 end
 
 require 'bootstrap5_helper/initialize'
 
-
+# This is the module that will get included in your partials.
+#
+#
 module Bootstrap5Helper
   # Creates a single Accordion element.  The header component
   # already provides the DOM element to link the Collapse area.
@@ -17,11 +19,13 @@ module Bootstrap5Helper
   #
   # ```erb
   #  <%= accordion_helper do |a| %>
-  #    <%= a.header do %>
-  #      // Some HTML or Ruby
-  #    <% end %>
-  #    <%= a.body %>
-  #      // Some HTML or Ruby
+  #    <%= a.item do |item| %>
+  #      <%= item.header do %>
+  #        // Some HTML or Ruby
+  #      <% end %>
+  #      <%= item.body %>
+  #        // Some HTML or Ruby
+  #      <% end %>
   #    <% end %>
   #  <% end %>
   # ```
@@ -31,38 +35,6 @@ module Bootstrap5Helper
   #
   def accordion_helper(opts = {}, &block)
     Accordion.new(self, opts, &block)
-  end
-
-  # Creates a group of Accordions that stay in sync with each other.
-  # One opens, the other closes.
-  #
-  # ```erb
-  #  <%= accordion_group_helper do |grp| %>
-  #    <%= grp.accordion do |a| %>
-  #      <%= a.header class: 'text-white bg-primary' do %>
-  #        // Some HTML or Ruby
-  #      <% end %>
-  #      <%= a.body %>
-  #        // Some HTML or Ruby
-  #      <% end %>
-  #    <% end %>
-  #
-  #    <%= grp.accordion do |a| %>
-  #      <%= a.header class: 'text-white bg-danger' do %>
-  #        // Some HTML or Ruby
-  #      <% end %>
-  #      <%= a.body %>
-  #        // Some HTML or Ruby
-  #      <% end %>
-  #    <% end %>
-  #  <% end $>
-  # ```
-  #
-  # @param  [Mixed] args
-  # @return [Accordion]
-  #
-  def accordion_group_helper(*args, &block)
-    AccordionGroup.new(self, *args, &block)
   end
 
   # Creates an Alert component.
@@ -136,7 +108,10 @@ module Bootstrap5Helper
   #                <div class="col-md-8">
   #                    <%= c.body do %>
   #                        <%= c.title { "Card title" } %>
-  #                        <%= c.text { "This is a wider card with supporting text below as a natural lead-in to additional content." } %>
+  #                        <%= c.text do
+  #                          This is a wider card with supporting text below as a natural
+  #                          lead-in to additional content.
+  #                        <% end %>
   #                        <%= c.text do %>
   #                            <small class="text-muted">Last updated 3 mins ago</small>
   #                        <% end %>
@@ -153,180 +128,6 @@ module Bootstrap5Helper
   #
   def card_helper(opts = {}, &block)
     Card.new(self, opts, &block)
-  end
-
-  # Builds a card group.
-  #
-  # ```erb
-  #  <%= card_group_helper do |group| %>
-  #    <%= group.card do |c| %>
-  #        <%= c.body do %>
-  #            <%= c.title { 'This is the title one' } %>
-  #            <%= c.text { 'This card body' } %>
-  #            <ul>
-  #                <% [1, 2, 3, 4, 5, 6, 7].each do |x|  %>
-  #                    <li>Item: <%= x %></li>
-  #                <% end %>
-  #            </ul>
-  #        <% end %>
-  #        <%= c.footer do %>
-  #            This is the footer...
-  #        <% end %>
-  #    <% end %>
-  #
-  #    <%= group.card do |c| %>
-  #        <%= c.body do %>
-  #            <%= c.title { 'This is the title two' } %>
-  #            <%= c.text { 'This card body' } %>
-  #            <ul>
-  #                <% [1, 2, 3].each do |x|  %>
-  #                    <li>Item: <%= x %></li>
-  #                <% end %>
-  #            </ul>
-  #        <% end %>
-  #        <%= c.footer do %>
-  #            This is the footer...
-  #        <% end %>
-  #    <% end %>
-  #
-  #    <%= group.card do |c| %>
-  #        <%= c.body do %>
-  #            <%= c.title { 'This is the title three' } %>
-  #            <%= c.text { 'This card body' } %>
-  #            <ul>
-  #                <% [1, 2, 3].each do |x|  %>
-  #                    <li>Item: <%= x %></li>
-  #                <% end %>
-  #            </ul>
-  #        <% end %>
-  #        <%= c.footer do %>
-  #            This is the footer...
-  #        <% end %>
-  #    <% end %>
-  #  <% end %>
-  # ```
-  #
-  # @param  [Hash] opts
-  # @return [String]
-  #
-  def card_group_helper(opts = {}, &block)
-    CardGroup.new(self, opts, &block)
-  end
-
-  # Builds a card deck.
-  #
-  # ```erb
-  #  <%= card_deck_helper do |deck| %>
-  #    <%= deck.card do |c| %>
-  #        <%= c.body do %>
-  #            <%= c.title { 'This is the title one' } %>
-  #            <%= c.text { 'This card body' } %>
-  #            <ul>
-  #                <% [1, 2, 3, 4, 5, 6, 7].each do |x|  %>
-  #                    <li>Item: <%= x %></li>
-  #                <% end %>
-  #            </ul>
-  #        <% end %>
-  #        <%= c.footer do %>
-  #            This is the footer...
-  #        <% end %>
-  #    <% end %>
-  #
-  #    <%= deck.card do |c| %>
-  #        <%= c.body do %>
-  #            <%= c.title { 'This is the title two' } %>
-  #            <%= c.text { 'This card body' } %>
-  #            <ul>
-  #                <% [1, 2, 3].each do |x|  %>
-  #                    <li>Item: <%= x %></li>
-  #                <% end %>
-  #            </ul>
-  #        <% end %>
-  #        <%= c.footer do %>
-  #            This is the footer...
-  #        <% end %>
-  #    <% end %>
-  #
-  #    <%= deck.card do |c| %>
-  #        <%= c.body do %>
-  #            <%= c.title { 'This is the title three' } %>
-  #            <%= c.text { 'This card body' } %>
-  #            <ul>
-  #                <% [1, 2, 3].each do |x|  %>
-  #                    <li>Item: <%= x %></li>
-  #                <% end %>
-  #            </ul>
-  #        <% end %>
-  #        <%= c.footer do %>
-  #            This is the footer...
-  #        <% end %>
-  #    <% end %>
-  #  <% end %>
-  # ```
-  #
-  # @param  [Hash] opts
-  # @return [String]
-  #
-  def card_deck_helper(opts = {}, &block)
-    CardDeck.new(self, opts, &block)
-  end
-
-  # Builds a card column.
-  #
-  # ```erb
-  #  <%= card_column_helper do |column| %>
-  #    <%= column.card do |c| %>
-  #        <%= c.body do %>
-  #            <%= c.title { 'This is the title one' } %>
-  #            <%= c.text { 'This card body' } %>
-  #            <ul>
-  #                <% [1, 2, 3, 4, 5, 6, 7].each do |x|  %>
-  #                    <li>Item: <%= x %></li>
-  #                <% end %>
-  #            </ul>
-  #        <% end %>
-  #        <%= c.footer do %>
-  #            This is the footer...
-  #        <% end %>
-  #    <% end %>
-  #
-  #    <%= column.card do |c| %>
-  #        <%= c.body do %>
-  #            <%= c.title { 'This is the title two' } %>
-  #            <%= c.text { 'This card body' } %>
-  #            <ul>
-  #                <% [1, 2, 3].each do |x|  %>
-  #                    <li>Item: <%= x %></li>
-  #                <% end %>
-  #            </ul>
-  #        <% end %>
-  #        <%= c.footer do %>
-  #            This is the footer...
-  #        <% end %>
-  #    <% end %>
-  #
-  #    <%= column.card do |c| %>
-  #        <%= c.body do %>
-  #            <%= c.title { 'This is the title three' } %>
-  #            <%= c.text { 'This card body' } %>
-  #            <ul>
-  #                <% [1, 2, 3].each do |x|  %>
-  #                    <li>Item: <%= x %></li>
-  #                <% end %>
-  #            </ul>
-  #        <% end %>
-  #        <%= c.footer do %>
-  #            This is the footer...
-  #        <% end %>
-  #    <% end %>
-  #  <% end %>
-  # ```
-  #
-  # @param  [Hash] opts
-  # @return [String]
-  #
-  def card_column_helper(opts = {}, &block)
-    CardColumn.new(self, opts, &block)
   end
 
   # Generates a Dropdown component.  Default type `:dropdown`.  For inline buttons, use
@@ -439,11 +240,15 @@ module Bootstrap5Helper
   #  <% end %>
   # ```
   #
-  # @param  [Hash] opts
+  # @param  [Symbol] value
+  # @param  [Hash]   opts
+  # @option opts [String] :id
+  # @option opts [String] :class
+  # @option opts [Hash] :data
   # @return [String]
   #
-  def nav_helper(opts = {}, &block)
-    Nav.new(self, opts, &block)
+  def nav_helper(*args, &block)
+    Nav.new(self, *args, &block)
   end
 
   # Generates a page header, similiar to bootstrap 3
@@ -475,8 +280,8 @@ module Bootstrap5Helper
   # @param  [Hash] opts
   # @return [String]
   #
-  def input_group_helper(type = :prepend, opts = {}, &block)
-    InputGroup.new(self, type, opts, &block)
+  def input_group_helper(*args, &block)
+    InputGroup.new(self, *args, &block)
   end
 
   # Generates a Tab component.

@@ -21,6 +21,8 @@ module Bootstrap5Helper
       @template = template
     end
 
+    # rubocop:disable Style/OptionalBooleanParameter
+
     # Used to pass all context of content_tag to the template.  This ensures
     # proper template binding of variables and methods!
     #
@@ -45,6 +47,7 @@ module Bootstrap5Helper
         &block
       )
     end
+    # rubocop:enable Style/OptionalBooleanParameter
 
     # Used to pass all context of the capture tag to then template.  This ensures
     # proper template binding of variables and methods!
@@ -75,11 +78,29 @@ module Bootstrap5Helper
     # @param  [Hash|NilClass|String|Symbol] args
     # @return [Array]
     #
-    def parse_arguments(*args)
+    def parse_context_or_options(*args)
       first, second = *args
       case first
       when Hash, NilClass
         ['secondary', first || second]
+      when Symbol, String
+        [first, second]
+      end
+    end
+
+    # Used to parse method arguments.  If the first argument is
+    # a Hash, then it is assumed that the user left off the tag
+    # element.  So we will assign it to <tt>NilClass</tt> and
+    # return the Hash to be used as options.
+    #
+    # @param  [Hash|NilClass|String|Symbol] args
+    # @return [Array]
+    #
+    def parse_tag_or_options(*args)
+      first, second = *args
+      case first
+      when Hash, NilClass
+        [nil, first || second]
       when Symbol, String
         [first, second]
       end
@@ -96,11 +117,22 @@ module Bootstrap5Helper
 
     # Used to get config settings inside of components quicker.
     #
-    # @param  [Symbol] setting
+    # @param  [Symbol|String|Hash] setting
     # @return [Mixed]
     #
     def config(setting, fallback)
-      Bootstrap5Helper.config.send(setting) || fallback
+      object = Bootstrap5Helper.config
+
+      value  = (
+        case setting
+        when Hash
+          object.send(setting.keys[0])[setting.values[0]] if object.send(setting.keys[0])
+        when Symbol, String
+          object.send(setting) if object.respond_to?(setting)
+        end
+      )
+
+      value || fallback
     end
   end
 end
