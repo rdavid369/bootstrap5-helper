@@ -3,13 +3,14 @@ module Bootstrap5Helper
   # group components quickly and easily.
   #
   class InputGroup < Component
-    VALID_TYPES = %i[append prepend].freeze
-
     # Class constructor
     #
     # @param  [Class] template - Template in which your are binding too.
-    # @param  [Symbol] type - Whether the component is prepend or append.
+    # @param  [Symbol|Hash] context_or_options
     # @param  [Hash]  opts
+    # @option opts [String] :id
+    # @option opts [String] :class
+    # @option opts [Hash]   :data
     # @return [InputGroup]
     #
     def initialize(template, context_or_options = nil, opts = {}, &block)

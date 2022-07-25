@@ -24,6 +24,9 @@ module Bootstrap5Helper
         header:  :h6,
         divider: :div
       },
+      modals:            {
+        title: :h5
+      },
       navs:              {
         base: :ul
       },

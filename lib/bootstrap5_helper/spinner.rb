@@ -37,7 +37,7 @@ module Bootstrap5Helper
         aria:  { hidden: true },
         data:  @data
       ) do
-        content_tag :span, 'Loading', class: 'sr-only'
+        content_tag :span, 'Loading', class: 'visually-hidden'
       end
     end
   end

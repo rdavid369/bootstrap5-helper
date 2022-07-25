@@ -8,6 +8,9 @@ module Bootstrap5Helper
     # @param [ActionView] template
     # @param [NilClass|String|Symbol|Hash] context_or_options
     # @param [Hash] opts
+    # @option opts [String] :id
+    # @option opts [String] :class
+    # @option opts [Hash] : :data
     #
     def initialize(template, context_or_options = nil, opts = {}, &block)
       super(template)
@@ -15,17 +18,20 @@ module Bootstrap5Helper
 
       @id      = args.fetch(:id,    nil)
       @class   = args.fetch(:class, '')
+      @data    = args.fetch(:data,  {})
       @content = block || proc { '' }
     end
 
     # String representation of the object.
     #
+    # @return [String]
     #
     def to_s
       content_tag(
         config(:badges, :span),
         id:    @id,
-        class: container_class
+        class: container_class,
+        data:  @data
       ) do
         @content.call(self)
       end

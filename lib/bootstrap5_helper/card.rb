@@ -116,8 +116,15 @@ module Bootstrap5Helper
       )
     end
 
-    # @todo
+    # Simple image element for cards.
     #
+    # @param  [String] src
+    # @param  [Hash] opts
+    # @option opts [String] :id
+    # @option opts [String] :class
+    # @option opts [Hash]   :data
+    # @option opts [Hash]   :aria
+    # @return [String]
     #
     def image(src, opts = {})
       (opts[:class] ||= '') << 'card-img'

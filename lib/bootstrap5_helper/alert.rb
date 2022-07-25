@@ -8,6 +8,9 @@ module Bootstrap5Helper
     # @param [Class] template - Template in which your are binding too.
     # @param [NilClass|String|Symbol|Hash] context_or_options
     # @param [Hash]  opts
+    # @option opts [String] :id
+    # @option opts [String] :class
+    # @option opts [Boolean] :dismissible
     # @return [Alert]
     #
     def initialize(template, context_or_options = nil, opts = {}, &block)

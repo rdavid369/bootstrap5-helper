@@ -1,5 +1,5 @@
 module Bootstrap5Helper
-  # @todo
+  # Builds a Accordion component.
   #
   #
   class Accordion < Component

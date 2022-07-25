@@ -1,4 +1,6 @@
 module Bootstrap5Helper
+  # rubocop:disable Metrics/ClassLength
+
   # Builds a Modal window component.
   #
   #
@@ -12,6 +14,8 @@ module Bootstrap5Helper
     # @option opts [Hash]    :data
     # @option opts [Boolean] :scrollable
     # @option opts [Boolean] :vcentered
+    # @option opts [Boolean] :static
+    # @option opts [Boolean|Symbol] :fullscreen
     # @option opts [Symbol]  :size
     #
     def initialize(template, opts = {}, &block)
@@ -22,6 +26,8 @@ module Bootstrap5Helper
       @data       = opts.fetch(:data,       {})
       @scrollable = opts.fetch(:scrollable, false)
       @vcentered  = opts.fetch(:vcentered,  false)
+      @static     = opts.fetch(:static,     false)
+      @fullscreen = opts.fetch(:fullscreen, true)
       @size       = opts.fetch(:size,       nil)
       @content    = block || proc { '' }
     end
@@ -71,7 +77,7 @@ module Bootstrap5Helper
     # @return [String]
     #
     def title(opts = {}, &block)
-      build_sub_component :h5, :title, opts, &block
+      build_sub_component config({ modals: :title }, :h5), :title, opts, &block
     end
 
     # Builds a close button component.
@@ -85,26 +91,42 @@ module Bootstrap5Helper
 
       content_tag(
         :button,
-        type: 'button',
-        class: block_given? ? klass : 'close',
-        data: { dismiss: 'modal' },
-        aria: { label: 'Close' }
+        type:  'button',
+        class: block_given? ? klass : 'btn-close',
+        data:  { 'bs-dismiss': 'modal' },
+        aria:  { label: 'Close' }
       ) do
         block_given? ? yield : xbutton
       end
     end
+
+    # rubocop:disable Metrics/MethodLength
 
     # String representation of the object.
     #
     # @return [String]
     #
     def to_s
-      content_tag :div, id: @id, class: "modal #{@class}", tabindex: -1, role: 'dialog', data: @data do
-        content_tag :div, class: "modal-dialog #{size} #{scrollable} #{vcentered}", role: 'document' do
+      @data.merge!('bs-backdrop' => 'static', 'bs-keyboard' => false) if @static
+
+      content_tag(
+        :div,
+        id:       @id,
+        class:    "modal #{@class}",
+        tabindex: -1,
+        role:     'dialog',
+        data:     @data
+      ) do
+        content_tag(
+          :div,
+          class: "modal-dialog #{size} #{scrollable} #{vcentered} #{fullscreen}",
+          role:  'document'
+        ) do
           content_tag(:div, class: 'modal-content') { @content.call(self) }
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
@@ -135,9 +157,9 @@ module Bootstrap5Helper
 
       content_tag(
         tag,
-        id: id,
+        id:    id,
         class: "modal-#{type} #{klass}",
-        data: data,
+        data:  data,
         &block
       )
     end
@@ -147,7 +169,7 @@ module Bootstrap5Helper
     # @return [String]
     #
     def xbutton
-      content_tag :span, '&times;'.html_safe, aria: { hidden: true }
+      content_tag :span, '&times;'.html_safe, class: 'visually-hidden', aria: { hidden: true }
     end
 
     # Gets the scrollable CSS class.
@@ -164,6 +186,21 @@ module Bootstrap5Helper
     #
     def vcentered
       @vcentered ? 'modal-dialog-centered' : ''
+    end
+
+    # Gets the fullscreen class.
+    #
+    # @return [String]
+    #
+    def fullscreen
+      case @fullscreen
+      when TrueClass
+        'modal-fullscreen'
+      when String, Symbol
+        "modal-fullscreen-#{@fullscreen}-down	"
+      else
+        ''
+      end
     end
 
     # Gets the size of the modal window.
@@ -183,4 +220,5 @@ module Bootstrap5Helper
       end
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

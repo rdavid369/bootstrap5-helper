@@ -71,12 +71,7 @@ module Bootstrap5Helper
     #
     def link(name = nil, options = nil, html_options = nil, &block)
       html_options ||= {}
-
-      if html_options.key?(:class)
-        html_options[:class] << ' nav-link'
-      else
-        html_options[:class] = ' nav-link'
-      end
+      html_options[:class] = (html_options[:class] || '') << ' nav-link'
 
       nav_item_wrapper do
         @template.link_to(name, options, html_options, &block)

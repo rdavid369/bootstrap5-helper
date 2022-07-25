@@ -1,4 +1,4 @@
-<%= page_header_helper type: :h2, class: 'mt-5' do %>
+<%= page_header_helper class: 'mt-5' do %>
     Test Application
 <% end %>
 
@@ -299,6 +299,37 @@
             <% end %>
         <% end %>
     </div>
+    <div class="col-sm my-3">
+        <%= dropdown_helper do |dropdown| %>
+            <%= dropdown.button :primary do %>
+                Login
+            <% end %>
+            <%= dropdown.menu do |menu| %>
+                <form class="px-4 py-3">
+                    <div class="form-group">
+                        <label for="exampleDropdownFormEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleDropdownFormPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                            <label class="form-check-label" for="dropdownCheck">
+                                Remember me
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </form>
+                <%= menu.divider %>
+                <%= menu.link "New around here? Sign up", "#" %>
+                <%= menu.link "Forgot password", "#" %>
+            <% end %>
+        <% end %>
+    </div>
 </div>
 
 <hr>
@@ -441,5 +472,44 @@
                 <% end %>
             <% end %>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm my-3">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+            Launch demo modal
+        </button>
+
+        <%= modal_helper id: 'exampleModal', fullscreen: true, static: true do |m| %>
+            <%= m.header do %>
+                <%= m.title { 'Example Modal' } %>
+                <%= m.close_button %>
+            <% end %>
+            <%= m.body do %>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel nisi tempora, eius iste sit nobis
+                earum in harum optio dolore explicabo. Eveniet reprehenderit harum itaque ad fuga beatae, quasi
+                sequi! Laborum ea porro nihil ipsam repudiandae vel harum voluptates minima corrupti unde quas,
+                dolore possimus doloribus voluptatem sint fuga dolores odio dignissimos at molestias earum.
+            <% end %>
+            <%= m.footer do %>
+                <%= m.close_button class: 'btn btn-secondary' do %>
+                    Close
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col my-3">
+        <%= spinner_helper class: 'text-warning' %>
+        <%= spinner_helper type: :grow, class: 'text-danger', id: 'loadingRecords' %>
     </div>
 </div>
