@@ -12,10 +12,7 @@ require 'bootstrap5_helper/initialize'
 #
 #
 module Bootstrap5Helper
-  # Creates a single Accordion element.  The header component
-  # already provides the DOM element to link the Collapse area.
-  # You just need to provide the text or additional markup, if
-  # you want it.
+  # Creates a single Accordion element.
   #
   # @example
   #   ```erb
@@ -103,7 +100,7 @@ module Bootstrap5Helper
     Badge.new(self, *args, &block)
   end
 
-  # @todo
+  # Internal helper, used with personal Bootstrap modifications.
   #
   #
   def callout_helper(*args, &block)
@@ -111,7 +108,6 @@ module Bootstrap5Helper
   end
 
   # Creates a Card component.
-  #
   #
   # @example Regular Card
   #   ```erb
