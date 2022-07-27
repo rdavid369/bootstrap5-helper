@@ -79,13 +79,7 @@ module Bootstrap5Helper
     # @return [Array]
     #
     def parse_context_or_options(*args)
-      first, second = *args
-      case first
-      when Hash, NilClass
-        ['secondary', first || second]
-      when Symbol, String
-        [first, second]
-      end
+      parse_arguments(*args, 'secondary')
     end
 
     # Used to parse method arguments.  If the first argument is
@@ -97,10 +91,34 @@ module Bootstrap5Helper
     # @return [Array]
     #
     def parse_tag_or_options(*args)
+      parse_arguments(*args, nil)
+    end
+
+    # Used to parse method arguments.  If the first argument is
+    # a Hash, then it is assumed that the user left out the text
+    # string.  So we will assign it to <tt>NilClass</tt> and
+    # return the Hash to be used as options.
+    #
+    # @param  [Hash|NilClass|String|Symbol] args
+    # @return [Array]
+    #
+    def parse_text_or_options(*args)
+      parse_arguments(*args, nil)
+    end
+
+    # Used to parse method arguments.  If the first argument is
+    # a Hash, then it is assumed that the user skipped the default
+    # argument.  So we will assign it to `default` provided and
+    # return the Hash to be used as options.
+    #
+    # @param  [Hash|NilClass|String|Symbol] args
+    # @return [Array]
+    #
+    def parse_arguments(*args, default)
       first, second = *args
       case first
       when Hash, NilClass
-        [nil, first || second]
+        [default, first || second]
       when Symbol, String
         [first, second]
       end

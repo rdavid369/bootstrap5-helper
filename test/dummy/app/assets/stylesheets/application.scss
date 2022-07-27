@@ -1,2 +1,216 @@
 /* Application styles */
 @import "bootstrap";
+
+
+
+// Styles for Internal Callout component.
+.callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+.callout h4, .callout .h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.callout p:last-child {
+  margin-bottom: 0;
+}
+.callout code {
+  border-radius: 3px;
+}
+
+.bs-callout + .bs-callout {
+  margin-top: -5px;
+}
+
+.callout-minnesota-blue {
+  border-left-color: #003865;
+}
+.callout-minnesota-blue h4, .callout-minnesota-blue .h4 {
+  color: #003865;
+}
+
+.callout-minnesota-green {
+  border-left-color: #78be21;
+}
+.callout-minnesota-green h4, .callout-minnesota-green .h4 {
+  color: #78be21;
+}
+
+.callout-accent-teal {
+  border-left-color: #008eaa;
+}
+.callout-accent-teal h4, .callout-accent-teal .h4 {
+  color: #008eaa;
+}
+
+.callout-accent-green {
+  border-left-color: #0d5257;
+}
+.callout-accent-green h4, .callout-accent-green .h4 {
+  color: #0d5257;
+}
+
+.callout-accent-orange {
+  border-left-color: #8d3f2b;
+}
+.callout-accent-orange h4, .callout-accent-orange .h4 {
+  color: #8d3f2b;
+}
+
+.callout-accent-purple {
+  border-left-color: #5d295f;
+}
+.callout-accent-purple h4, .callout-accent-purple .h4 {
+  color: #5d295f;
+}
+
+.callout-extended-accent-blue-gray {
+  border-left-color: #a4bcc2;
+}
+.callout-extended-accent-blue-gray h4, .callout-extended-accent-blue-gray .h4 {
+  color: #a4bcc2;
+}
+
+.callout-extended-accent-cream {
+  border-left-color: #f5e1a4;
+}
+.callout-extended-accent-cream h4, .callout-extended-accent-cream .h4 {
+  color: #f5e1a4;
+}
+
+.callout-extended-accent-sky-blue {
+  border-left-color: #9bcbeb;
+}
+.callout-extended-accent-sky-blue h4, .callout-extended-accent-sky-blue .h4 {
+  color: #9bcbeb;
+}
+
+.callout-extended-accent-gold {
+  border-left-color: #ffc845;
+}
+.callout-extended-accent-gold h4, .callout-extended-accent-gold .h4 {
+  color: #ffc845;
+}
+
+.callout-safety-red {
+  border-left-color: #a6192e;
+}
+.callout-safety-red h4, .callout-safety-red .h4 {
+  color: #a6192e;
+}
+
+.callout-safety-orange {
+  border-left-color: #e57200;
+}
+.callout-safety-orange h4, .callout-safety-orange .h4 {
+  color: #e57200;
+}
+
+.callout-alt-accent-green {
+  border-left-color: #162207;
+}
+.callout-alt-accent-green h4, .callout-alt-accent-green .h4 {
+  color: #162207;
+}
+
+.callout-alt-accent-red {
+  border-left-color: #fbe1d0;
+}
+.callout-alt-accent-red h4, .callout-alt-accent-red .h4 {
+  color: #fbe1d0;
+}
+
+.callout-alt-accent-gold {
+  border-left-color: #473200;
+}
+.callout-alt-accent-gold h4, .callout-alt-accent-gold .h4 {
+  color: #473200;
+}
+
+.callout-alt-accent-blue-gray {
+  border-left-color: #212e31;
+}
+.callout-alt-accent-blue-gray h4, .callout-alt-accent-blue-gray .h4 {
+  color: #212e31;
+}
+
+.callout-alt-accent-gray {
+  border-left-color: #4d4d4d;
+}
+.callout-alt-accent-gray h4, .callout-alt-accent-gray .h4 {
+  color: #4d4d4d;
+}
+
+.callout-alt-accent-teal {
+  border-left-color: #ffffff;
+}
+.callout-alt-accent-teal h4, .callout-alt-accent-teal .h4 {
+  color: #ffffff;
+}
+
+.callout-alt-teal {
+  border-left-color: #b4d8e2;
+}
+.callout-alt-teal h4, .callout-alt-teal .h4 {
+  color: #b4d8e2;
+}
+
+.callout-primary {
+  border-left-color: #003865;
+}
+.callout-primary h4, .callout-primary .h4 {
+  color: #003865;
+}
+
+.callout-secondary {
+  border-left-color: #6c757d;
+}
+.callout-secondary h4, .callout-secondary .h4 {
+  color: #6c757d;
+}
+
+.callout-success {
+  border-left-color: #78be21;
+}
+.callout-success h4, .callout-success .h4 {
+  color: #78be21;
+}
+
+.callout-info {
+  border-left-color: #008eaa;
+}
+.callout-info h4, .callout-info .h4 {
+  color: #008eaa;
+}
+
+.callout-warning {
+  border-left-color: #ffc845;
+}
+.callout-warning h4, .callout-warning .h4 {
+  color: #ffc845;
+}
+
+.callout-danger {
+  border-left-color: #a6192e;
+}
+.callout-danger h4, .callout-danger .h4 {
+  color: #a6192e;
+}
+
+.callout-light {
+  border-left-color: #f8f9fa;
+}
+.callout-light h4, .callout-light .h4 {
+  color: #f8f9fa;
+}
+
+.callout-dark {
+  border-left-color: #212529;
+}
+.callout-dark h4, .callout-dark .h4 {
+  color: #212529;
+}

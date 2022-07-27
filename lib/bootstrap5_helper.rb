@@ -103,6 +103,13 @@ module Bootstrap5Helper
     Badge.new(self, *args, &block)
   end
 
+  # @todo
+  #
+  #
+  def callout_helper(*args, &block)
+    Callout.new(self, *args, &block)
+  end
+
   # Creates a Card component.
   #
   #
@@ -325,6 +332,70 @@ module Bootstrap5Helper
   #
   def nav_helper(*args, &block)
     Nav.new(self, *args, &block)
+  end
+
+  # Generates a Offcanvas component.
+  #
+  # @example:
+  #   ```erb
+  #   <%= offcanvas_helper :top, id: 'off_canvas_example1' do |off| %>
+  #     <%= off.button 'Open sidebar', class: 'btn btn-primary' %>
+  #     <%= off.content do |c| %>
+  #         <%= c.header do %>
+  #             <%= c.title { 'Sidebar content' } %>
+  #             <%= c.close_button %>
+  #         <% end %>
+  #         <%= c.body do %>
+  #             <p>Some content in the sidebar!</p>
+  #         <% end %>
+  #     <% end %>
+  #   <% end %>
+  #   ```
+  #
+  # @example:
+  #   ```erb
+  #   <%= offcanvas_helper scrollable: true, id: 'off_canvas_example2' do |off| %>
+  #     <%= off.link class: 'btn btn-danger' do %>
+  #         <strong>*</strong> Open sidebar 2
+  #     <% end %>
+  #
+  #     <%= off.content do |c| %>
+  #         <%= c.header do %>
+  #             <%= c.title { 'Sidebar content 2' } %>
+  #             <%= c.close_button class: 'btn btn-info' do %>
+  #                 Close
+  #             <% end %>
+  #         <% end %>
+  #         <%= c.body do %>
+  #             <p>Some content in the sidebar 2!</p>
+  #         <% end %>
+  #     <% end %>
+  #   <% end %>
+  #   ```
+  #
+  # @overload offcanvas_helper(position, options)
+  #   @param  [Symbol] position - :start, :end, :top, :bottom
+  #   @param  [Hash] opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #   @option opts [Hash]    :aria
+  #   @option opts [Boolean] :scrollable
+  #   @option opts [Boolean|String] :backdrop - true, false, 'static'
+  #
+  # @overload offcanvas_helper(options)
+  #   @param  [Hash] opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #   @option opts [Hash]    :aria
+  #   @option opts [Boolean] :scrollable
+  #   @option opts [Boolean|String] :backdrop - true, false, 'static'
+  #
+  # @return [String]
+  #
+  def offcanvas_helper(*args, &block)
+    Offcanvas.new(self, *args, &block)
   end
 
   # Generates a page header, similiar to bootstrap 3

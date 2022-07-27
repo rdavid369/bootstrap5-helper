@@ -10,12 +10,15 @@ module Bootstrap5Helper
       accordion/item
       badge
       card
+      callout
       configuration
       dropdown
       dropdown/menu
       input_group
       modal
       nav
+      offcanvas
+      offcanvas/content
       page_header
       spinner
       tab

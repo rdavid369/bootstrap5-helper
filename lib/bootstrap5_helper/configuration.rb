@@ -11,6 +11,9 @@ module Bootstrap5Helper
         body:   :div
       },
       badges:            :span,
+      callouts:          {
+        header: :h4
+      },
       cards:             {
         header: :h5,
         body:   :div,
@@ -29,6 +32,13 @@ module Bootstrap5Helper
       },
       navs:              {
         base: :ul
+      },
+      offcanvas:         {
+        header:  :div,
+        title:   :h5,
+        close:   :button,
+        body:    :div,
+        trigger: :div
       },
       page_header:       :h1
     }.freeze

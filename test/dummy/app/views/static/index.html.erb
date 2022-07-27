@@ -506,10 +506,86 @@
     </div>
 </div>
 
+<hr>
 
 <div class="row">
     <div class="col my-3">
         <%= spinner_helper class: 'text-warning' %>
         <%= spinner_helper type: :grow, class: 'text-danger', id: 'loadingRecords' %>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col my-3">
+        <%= callout_helper :primary do |c| %>
+            <%= c.header 'This is a title' %>
+            <p>Some random text about your callout here....</p>
+            <p>Another string of text....</p>
+        <% end %>
+    </div>
+    <div class="col my-3">
+        <%= callout_helper :danger do |c| %>
+            <%= c.header 'TEsting' do %>
+                This is another callout <input type="checkbox">
+            <% end %>
+            <p>Some random text about your callout here....</p>
+            <p>Another string of text....</p>
+        <% end %>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col my-3">
+        <%= offcanvas_helper :top, id: 'off_canvas_example1' do |off| %>
+            <%= off.button 'Open sidebar', class: 'btn btn-primary' %>
+            <%= off.content do |c| %>
+                <%= c.header do %>
+                    <%= c.title { 'Sidebar content' } %>
+                    <%= c.close_button %>
+                <% end %>
+                <%= c.body do %>
+                    <p>Some content in the sidebar!</p>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+    <div class="col my-3">
+        <%= offcanvas_helper scrollable: true, id: 'off_canvas_example2' do |off| %>
+            <%= off.link class: 'btn btn-danger' do %>
+                <strong>*</strong> Open sidebar 2
+            <% end %>
+
+            <%= off.content do |c| %>
+                <%= c.header do %>
+                    <%= c.title { 'Sidebar content 2' } %>
+                    <%= c.close_button class: 'btn btn-info' do %>
+                        Close
+                    <% end %>
+                <% end %>
+                <%= c.body do %>
+                    <p>Some content in the sidebar 2!</p>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+    <div class="col my-3">
+        <%= offcanvas_helper :bottom, scrollable: true do |off| %>
+            <%= off.trigger do %>
+                <p>Open sidebar 3</p>
+            <% end %>
+            <%= off.content do |c| %>
+                <%= c.header do %>
+                    <%= c.title { 'Sidebar content 3' } %>
+                    <%= c.close_button class: 'btn btn-info' do %>
+                        Close
+                    <% end %>
+                <% end %>
+                <%= c.body do %>
+                    <p>Some content in the sidebar 3!</p>
+                <% end %>
+            <% end %>
+        <% end %>
     </div>
 </div>

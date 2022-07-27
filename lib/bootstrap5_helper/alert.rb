@@ -17,7 +17,7 @@ module Bootstrap5Helper
       super(template)
       @context, args = parse_context_or_options(context_or_options, opts)
 
-      @id          = args.fetch(:id,          nil)
+      @id          = args.fetch(:id,          uuid)
       @class       = args.fetch(:class,       '')
       @dismissible = args.fetch(:dismissible, false)
       @content     = block || proc { '' }
