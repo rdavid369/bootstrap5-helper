@@ -507,15 +507,23 @@ module Bootstrap5Helper
   #    <% end %>
   #   ```
   #
-  # @param  [Hash] opts
-  # @option opts [Symbol]  :type - :tabs, :pills
-  # @option opts [String]  :id
-  # @option opts [String]  :class
-  # @option opts [Hash]    :data
+  # @overload tab_helper(type, opts)
+  #   @param [Symbol|String] type - :tabs, :pills
+  #   @param  [Hash] opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #
+  # @overload tab_helper(opts)
+  #   @param  [Hash] opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #
   # @return [String]
   #
-  def tab_helper(opts = {}, &block)
-    Tab.new(self, opts, &block)
+  def tab_helper(*args, &block)
+    Tab.new(self, *args, &block)
   end
 
   # Generates spinner annimations.

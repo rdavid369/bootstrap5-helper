@@ -5,22 +5,20 @@ module Bootstrap5Helper
   class Tab < Component
     # Class constructor
     #
-    # @note The support types are: `:tabs` and `:pills`
-    #
     # @param [ActionView] template
+    # @param [Symbol|String|Hash] type_or_options
     # @param [Hash] opts
-    # @option opts [Symbol]  :type
     # @option opts [String]  :id
     # @option opts [String]  :class
     # @option opts [Hash]    :data
     #
-    def initialize(template, opts = {}, &block)
+    def initialize(template, type_or_options = nil, opts = {}, &block)
       super(template)
+      @type, args = type_or_options(type_or_options, opts)
 
-      @type    = opts.fetch(:type,  :tabs)
-      @id      = opts.fetch(:id,    uuid)
-      @class   = opts.fetch(:class, '')
-      @data    = opts.fetch(:data,  {})
+      @id      = args.fetch(:id,    uuid)
+      @class   = args.fetch(:class, '')
+      @data    = args.fetch(:data,  {})
       @content = block || proc { '' }
     end
 
@@ -65,6 +63,10 @@ module Bootstrap5Helper
       @content.call(self)
 
       nil
+    end
+
+    def type_or_options(*args)
+      parse_arguments(*args, :tabs)
     end
   end
 end

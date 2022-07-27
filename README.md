@@ -42,6 +42,22 @@ end
 
 ### Accordion(s):
 
+```ruby
+# @param  [Hash] opts
+# @option opts [String]  :id
+# @option opts [String]  :class
+# @option opts [Hash]    :data
+# @option opts [Boolean] :always_open
+# @option opts [Boolean] :flush
+# @return [Accordion]
+#
+def accordion_helper(opts = {}, &block)
+  Accordion.new(self, opts, &block)
+end
+```
+
+#### Example:
+
 ```erb
 <%= accordion_helper id: 'custom_id' do |a| %>
     <%= a.item expanded: true do |item| %>
@@ -67,6 +83,29 @@ end
 
 Alerts use the context helper, where you can pass the context of the object and it will render the appropriate colors.
 
+```ruby
+# @overload alert_helper(context, opts)
+#   @param [Symbol|String] context - :primary, :danger etc
+#   @param [Hash] opts
+#   @option opts [String] :id
+#   @option opts [String] :class
+#   @option opts [Boolean] :dismissible
+#
+# @overload alert_helper(opts)
+#   @param [Hash] opts
+#   @option opts [String] :id
+#   @option opts [String] :class
+#   @option opts [Boolean] :dismissible
+#
+# @return [String]
+#
+def alert_helper(*args, &block)
+  Alert.new(self, *args, &block)
+end
+```
+
+#### Example:
+
 ```erb
 <%= alert_helper :danger, dismissble: true do %>
     Something went wrong with your model data...
@@ -76,6 +115,29 @@ Alerts use the context helper, where you can pass the context of the object and 
 ### Badges
 
 The badge helper will build badges realitively quickly. If you are just passing a String, use the shorter curly brace block syntax. If you plan on building other HTML elements or using other Ruby proceedures, use the do/end method.
+
+```ruby
+# @overload badge_helper(context, opts)
+#   @param [Symbol|String] context - :primary, :danger etc
+#   @param [Hash] opts
+#   @option opts [String] :id
+#   @option opts [String] :class
+#   @option opts [Hash] : :data
+#
+# @overload badge_helper(opts)
+#   @param [Hash] opts
+#   @option opts [String] :id
+#   @option opts [String] :class
+#   @option opts [Hash] : :data
+#
+# @return [String]
+#
+def badge_helper(*args, &block)
+  Badge.new(self, *args, &block)
+end
+```
+
+#### Example
 
 ```erb
 <li>
@@ -104,9 +166,21 @@ Cards support a few methods that make building them easier:
 
 For usage on various card sub components, @see https://getbootstrap.com/docs/4.0/components/card/
 
-```erb
-<%# Regular %>
+```ruby
+# @param  [Hash] opts
+# @option opts [String] :id
+# @option opts [String] :class
+# @option opts [Hash]   :data
+# @return [String]
+#
+def card_helper(opts = {}, &block)
+  Card.new(self, opts, &block)
+end
+```
 
+#### Example
+
+```erb
 <%= card_helper do |c| %>
     <%= c.header class: 'text-white bg-primary' do %>
         <h4>This is the header...</h4>
@@ -151,8 +225,6 @@ For usage on various card sub components, @see https://getbootstrap.com/docs/4.0
 
 ### Dropdowns
 
-Generates a Dropdown component. Default type `:dropdown`. Supports `:dropdown` `:dropup` `:dropstart` `:dropend`
-
 Dropdowns support the following methods:
 
 - `button`
@@ -162,6 +234,31 @@ Dropdowns support the following methods:
   - `text` - simple text
   - `header` - Is a header item
   - `divider` - A dividing element
+
+```ruby
+# @overload dropdown_helper(type, opts)
+#   @param [Symbol|String] type - :dropdown, :dropup, :dropstart, :dropend
+#   @param [Hash] opts
+#   @option opts [String]  :id
+#   @option opts [String]  :class
+#   @option opts [Hash]    :data
+#   @option opts [Boolean] :split
+#
+# @overload dropdown(opts)
+#   @param [Hash] opts
+#   @option opts [String]  :id
+#   @option opts [String]  :class
+#   @option opts [Hash]    :data
+#   @option opts [Boolean] :split
+#
+# @return [String]
+#
+def dropdown_helper(*args, &block)
+  Dropdown.new(self, *args, &block)
+end
+```
+
+#### Example
 
 ```erb
 <%= dropdown_helper do |dropdown| %>
@@ -217,9 +314,26 @@ Dropdowns support the following methods:
 
 ### Modals
 
-Builds a modal window.
+```ruby
+# @param  [Hash] opts
+# @option opts [String]  :id
+# @option opts [String]  :class
+# @option opts [Hash]    :data
+# @option opts [Boolean] :scrollable
+# @option opts [Boolean] :vcentered
+# @option opts [Boolean] :static
+# @option opts [Boolean|Symbol] :fullscreen - true, :sm, :lg, :xl etc
+# @option opts [Symbol]  :size - :sm, :md, :lg etc
+# @return [String]
+#
+def modal_helper(opts = {}, &block)
+  Modal.new(self, opts, &block)
+end
+```
 
 > Note: When the `close_button` is not passed a block, it will default to the X icon.
+
+#### Example
 
 ```erb
 <%= modal_helper id: 'exampleModal' do |m| %>
@@ -243,11 +357,36 @@ Builds a modal window.
 
 ### Navs
 
-For building nav components. The Nav compoent has the following methods:
+The Nav component has the following methods:
 
 - `dropwdown` - @see Dropdown for list of methods
 - `item`
 - `link`
+
+```ruby
+# @overload nav_helper(tag, opts)
+#   @param [Symbol|String] tag - :nav, :ul
+#   @param [Hash] opts
+#   @option opts [String]  :id
+#   @option opts [String]  :class
+#   @option opts [Hash]    :data
+#   @option opts [Hash]    :child - data attributes for child, NOT wrapper
+#
+# @overload nav_helper(opts)
+#   @param [Hash] opts
+#   @option opts [String]  :id
+#   @option opts [String]  :class
+#   @option opts [Hash]    :data
+#   @option opts [Hash]    :child - data attributes for child, NOT wrapper
+#
+# @return [String]
+#
+def nav_helper(*args, &block)
+  Nav.new(self, *args, &block)
+end
+```
+
+#### Example
 
 ```erb
 <%= nav_helper do |nav| %>
@@ -268,13 +407,31 @@ For building nav components. The Nav compoent has the following methods:
 
 ### Tabs
 
-> Note: There are two types, `:tabs` and `:pills`. The default is `:tabs`.
->
-> Example:
-> `<%= tab_helper :pills do |tab| %>`
+```ruby
+ # @overload tab_helper(type, opts)
+#   @param [Symbol|String] type - :tabs, :pills
+#   @param  [Hash] opts
+#   @option opts [String]  :id
+#   @option opts [String]  :class
+#   @option opts [Hash]    :data
+#
+# @overload tab_helper(opts)
+#   @param  [Hash] opts
+#   @option opts [String]  :id
+#   @option opts [String]  :class
+#   @option opts [Hash]    :data
+#
+# @return [String]
+#
+def tab_helper(*args, &block)
+  Tab.new(self, *args, &block)
+end
+```
+
+#### Example
 
 ```erb
-<%= tab_helper :tabs do |tab| %>
+<%= tab_helper :pills do |tab| %>
     <%= tab.nav do |nav| %>
         <%= nav.item :item1 do %>
             Item 1
@@ -318,7 +475,20 @@ For building nav components. The Nav compoent has the following methods:
 
 ### Spinners
 
-Creates CSS spinner components. Supports two types: `:border` and `:grow`. Teh default is `:border`
+```ruby
+# @param  [Hash] args
+# @option opts [Symbol]  :type - :border, :grow
+# @option opts [String]  :id
+# @option opts [String]  :class
+# @option opts [Hash]    :data
+# @return [String]
+#
+def spinner_helper(opts = {}, &block)
+  Spinner.new(self, opts, &block)
+end
+```
+
+#### Example
 
 ```erb
 <%= spinner_helper class: 'text-warning' %>
