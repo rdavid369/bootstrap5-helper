@@ -24,6 +24,10 @@ module Bootstrap5Helper
       @content     = block || proc { '' }
     end
 
+    # Used to generate a <tt>Accordion::Item</tt> component.
+    #
+    # @return [Accodion::Item]
+    #
     def item(*args, &block)
       Accordion::Item.new(self, (@always_open ? nil : @id), *args, &block)
     end

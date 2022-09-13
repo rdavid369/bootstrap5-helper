@@ -11,18 +11,22 @@ module Bootstrap5Helper
       # @option opts [String]  :id
       # @option opts [String]  :class
       # @option opts [Hash]    :data
+      # @option opts [Hash]    :collapse
       #
       def initialize(template, parent_id = nil, opts = {}, &block)
         super(template)
 
-        @parent      = parent_id
-        @id          = opts.fetch(:id,       uuid)
-        @class       = opts.fetch(:class,    '')
-        @data        = opts.fetch(:data,     {})
-        @expanded    = opts.fetch(:expanded, false)
-        @header_id   = uuid
-        @collapse_id = uuid
-        @content     = block || proc { '' }
+        @parent         = parent_id
+        @id             = opts.fetch(:id,       uuid)
+        @class          = opts.fetch(:class,    '')
+        @data           = opts.fetch(:data,     {})
+        @expanded       = opts.fetch(:expanded, false)
+        @collapse       = opts.fetch(:collapse, {})
+        @collapse_id    = @collapse.fetch(:id,    uuid)
+        @collapse_klass = @collapse.fetch(:class, '')
+        @collapse_data  = @collapse.fetch(:data,  {})
+        @header_id      = uuid
+        @content        = block || proc { '' }
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -78,9 +82,11 @@ module Bootstrap5Helper
         content_tag(
           :div,
           id:    @collapse_id,
-          class: "accordion-collapse collapse #{@expanded ? 'show' : ''}",
+          class: "accordion-collapse collapse #{@collapse_klass} #{@expanded ? 'show' : ''}",
           aria:  { labelledby: @header_id },
-          data:  { 'bs-parent' => @parent.present? ? "##{@parent}" : nil }
+          data:  {
+            'bs-parent' => @parent.present? ? "##{@parent}" : nil
+          }.merge(@collapse_data)
         ) do
           content_tag(
             :div,

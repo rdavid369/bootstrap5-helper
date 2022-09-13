@@ -220,7 +220,7 @@
 <div class="row">
     <div class="col-sm mt-3 mb-3">
         <%= accordion_helper id: 'my_custom_id' do |a| %>
-            <%= a.item expanded: true do |item| %>
+            <%= a.item expanded: true, collapse: { data: { test: 'worked' }, class: 'some-collapse-class', id: 'some_collapse_id' } do |item| %>
                 <%= item.header do %>
                     Accordion Header #1
                 <% end %>
@@ -354,7 +354,7 @@
 
 <div class="row">
     <div class="col-sm my-3">
-          <%= nav_helper :nav, class: 'testing' do |nav| %>
+          <%= nav_helper :ul, class: 'testing' do |nav| %>
             <%= nav.link "Item 1", "https://www.google.com" %>
             <%= nav.link "Item 2", "#" %>
             <%= nav.link "Item 3", "#" %>
@@ -486,7 +486,7 @@
             Launch demo modal
         </button>
 
-        <%= modal_helper id: 'exampleModal', fullscreen: true, static: true do |m| %>
+        <%= modal_helper id: 'exampleModal', vcentered: true do |m| %>
             <%= m.header do %>
                 <%= m.title { 'Example Modal' } %>
                 <%= m.close_button %>
