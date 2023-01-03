@@ -28,7 +28,7 @@ module Bootstrap5Helper
     #
     def to_s
       content_tag(
-        config(:badges, :span),
+        config({ badges: :base }, :span),
         id:    @id,
         class: container_class,
         data:  @data
@@ -44,10 +44,17 @@ module Bootstrap5Helper
     # @return [String]
     #
     def container_class
-      string = 'badge '
-      string += @context == 'secondary' ? 'bg-secondary' : "bg-#{@context}"
-      string += " #{@class}"
-      string
+      "badge #{component_class} #{@class}"
+    end
+
+    def component_class
+      contrast = config({ badges: :contrast }, false)
+
+      if @context == 'secondary'
+        contrast ? 'text-bg-secondary' : 'bg-secondary'
+      else
+        contrast ? "text-bg-#{@context}" : "bg-#{@context}"
+      end
     end
   end
 end

@@ -28,8 +28,8 @@ module Bootstrap5Helper
     #
     # @return [Accodion::Item]
     #
-    def item(*args, &block)
-      Accordion::Item.new(self, (@always_open ? nil : @id), *args, &block)
+    def item(opts = {}, &block)
+      Accordion::Item.new(self, (@always_open ? nil : @id), opts, &block)
     end
 
     # String representation of the object.

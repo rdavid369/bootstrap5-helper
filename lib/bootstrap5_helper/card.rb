@@ -23,15 +23,23 @@ module Bootstrap5Helper
 
     # Builds the Header component.
     #
-    # @param  [Symbol|Hash|NilClass] tag_or_options
-    # @param  [Hash] opts
-    # @option opts [String] :id
-    # @option opts [String] :class
-    # @option opts [Hash]   :data
+    # @overload header(tag, opts)
+    #   @param [Symbol|String] tag - The HTML element to use.
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
+    # @overload header(opts)
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
     # @return [String]
     #
-    def header(tag_or_options = nil, opts = {}, &block)
-      tag, args = parse_tag_or_options(tag_or_options, opts)
+    def header(*tag_or_options, &block)
+      tag, args = parse_tag_or_options(*tag_or_options, {})
       build_base_component(
         tag || config({ cards: :header }, :h5),
         :header,
@@ -42,15 +50,23 @@ module Bootstrap5Helper
 
     # Builds the Body component.
     #
-    # @param  [Symbol|Hash|NilClass] tag_or_options
-    # @param  [Hash] opts
-    # @option opts [String] :id
-    # @option opts [String] :class
-    # @option opts [Hash]   :data
+    # @overload body(tag, opts)
+    #   @param [Symbol|String] tag - The HTML element to use.
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
+    # @overload body(opts)
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
     # @return [String]
     #
-    def body(tag_or_options = nil, opts = {}, &block)
-      tag, args = parse_tag_or_options(tag_or_options, opts)
+    def body(*tag_or_options, &block)
+      tag, args = parse_tag_or_options(*tag_or_options, {})
       build_base_component(
         tag || config({ cards: :body }, :div),
         :body,
@@ -61,15 +77,24 @@ module Bootstrap5Helper
 
     # Builds the Footer component.
     #
-    # @param  [Symbol|Hash|NilClass] tag_or_options
-    # @param  [Hash] opts
-    # @option opts [String] :id
-    # @option opts [String] :class
-    # @option opts [Hash]   :data
+    #
+    # @overload footer(tag, opts)
+    #   @param [Symbol|String] tag - The HTML element to use.
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
+    # @overload footer(opts)
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
     # @return [String]
     #
-    def footer(tag_or_options = nil, opts = {}, &block)
-      tag, args = parse_tag_or_options(tag_or_options, opts)
+    def footer(*tag_or_options, &block)
+      tag, args = parse_tag_or_options(*tag_or_options, {})
       build_base_component(
         tag || config({ cards: :footer }, :div),
         :footer,
@@ -80,15 +105,23 @@ module Bootstrap5Helper
 
     # Builds a Title component.
     #
-    # @param  [Symbol|Hash|NilClass] tag_or_options
-    # @param  [Hash] opts
-    # @option opts [String] :id
-    # @option opts [String] :class
-    # @option opts [Hash]   :data
+    # @overload title(tag, opts)
+    #   @param [Symbol|String] tag - The HTML element to use.
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
+    # @overload title(opts)
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
     # @return [String]
     #
-    def title(tag_or_options = nil, opts = {}, &block)
-      tag, args = parse_tag_or_options(tag_or_options, opts)
+    def title(*tag_or_options, &block)
+      tag, args = parse_tag_or_options(*tag_or_options, {})
       build_sub_component(
         tag || config({ cards: :title }, :h5),
         :title,
@@ -97,17 +130,52 @@ module Bootstrap5Helper
       )
     end
 
-    # Builds a Text component.
+    # Builds a Title component.
     #
-    # @param  [Symbol|Hash|NilClass] tag_or_options
-    # @param  [Hash] opts
-    # @option opts [String] :id
-    # @option opts [String] :class
-    # @option opts [Hash]   :data
+    # @overload subtitle(tag, opts)
+    #   @param [Symbol|String] tag - The HTML element to use.
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
+    # @overload subtitle(opts)
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
     # @return [String]
     #
-    def text(tag_or_options = nil, opts = {}, &block)
-      tag, args = parse_tag_or_options(tag_or_options, opts)
+    def subtitle(*tag_or_options, &block)
+      tag, args = parse_tag_or_options(*tag_or_options, {})
+      build_sub_component(
+        tag || config({ cards: :subtitle }, :h6),
+        :subtitle,
+        args,
+        &block
+      )
+    end
+
+    # Builds a Text component.
+    #
+    # @overload header(tag, opts)
+    #   @param [Symbol|String] tag - The HTML element to use.
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
+    # @overload header(opts)
+    #   @param [Hash] options
+    #   @option opts [String] :id
+    #   @option opts [String] :class
+    #   @option opts [Hash] :data
+    #
+    # @return [String]
+    #
+    def text(*tag_or_options, &block)
+      tag, args = parse_tag_or_options(*tag_or_options, {})
       build_sub_component(
         tag || config(:card_text, :p),
         :text,

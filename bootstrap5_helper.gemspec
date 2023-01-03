@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
     Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   end
 
-  spec.add_development_dependency 'bootstrap', '~> 5.1.3'
+  spec.add_development_dependency 'bootstrap', '~> 5.2.2'
   spec.add_development_dependency 'jquery-rails'
   spec.add_development_dependency 'redcarpet'
   spec.add_development_dependency 'solargraph'

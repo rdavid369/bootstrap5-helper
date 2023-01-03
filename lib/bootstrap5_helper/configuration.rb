@@ -10,16 +10,20 @@ module Bootstrap5Helper
         header: :h2,
         body:   :div
       },
-      badges:            :span,
+      badges:            {
+        contrast: false,
+        base:     :span
+      },
       callouts:          {
         header: :h4
       },
       cards:             {
-        header: :h5,
-        body:   :div,
-        footer: :div,
-        title:  :h5,
-        text:   :p
+        header:   :h5,
+        body:     :div,
+        footer:   :div,
+        title:    :h5,
+        subtitle: :h6,
+        text:     :p
       },
       dropdowns:         {},
       dropdown_menus:    {

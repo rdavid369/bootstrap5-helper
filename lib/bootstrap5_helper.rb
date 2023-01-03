@@ -62,7 +62,7 @@ module Bootstrap5Helper
   #   @option opts [String] :class
   #   @option opts [Boolean] :dismissible
   #
-  # @return [String]
+  # @return [Alert]
   #
   def alert_helper(*args, &block)
     Alert.new(self, *args, &block)
@@ -94,7 +94,7 @@ module Bootstrap5Helper
   #   @option opts [String] :class
   #   @option opts [Hash] : :data
   #
-  # @return [String]
+  # @return [Badge]
   #
   def badge_helper(*args, &block)
     Badge.new(self, *args, &block)
@@ -157,7 +157,7 @@ module Bootstrap5Helper
   # @option opts [String] :id
   # @option opts [String] :class
   # @option opts [Hash]   :data
-  # @return [String]
+  # @return [Card]
   #
   def card_helper(opts = {}, &block)
     Card.new(self, opts, &block)
@@ -245,7 +245,7 @@ module Bootstrap5Helper
   #   @option opts [Hash]    :data
   #   @option opts [Boolean] :split
   #
-  # @return [String]
+  # @return [Dropdown]
   #
   def dropdown_helper(*args, &block)
     Dropdown.new(self, *args, &block)
@@ -283,7 +283,7 @@ module Bootstrap5Helper
   # @option opts [Boolean] :static
   # @option opts [Boolean|Symbol] :fullscreen - true, :sm, :lg, :xl etc
   # @option opts [Symbol]  :size - :sm, :md, :lg etc
-  # @return [String]
+  # @return [Modal]
   #
   def modal_helper(opts = {}, &block)
     Modal.new(self, opts, &block)
@@ -324,7 +324,7 @@ module Bootstrap5Helper
   #   @option opts [Hash]    :data
   #   @option opts [Hash]    :child - data attributes for child, NOT wrapper
   #
-  # @return [String]
+  # @return [Nav]
   #
   def nav_helper(*args, &block)
     Nav.new(self, *args, &block)
@@ -388,7 +388,7 @@ module Bootstrap5Helper
   #   @option opts [Boolean] :scrollable
   #   @option opts [Boolean|String] :backdrop - true, false, 'static'
   #
-  # @return [String]
+  # @return [Offcanvas]
   #
   def offcanvas_helper(*args, &block)
     Offcanvas.new(self, *args, &block)
@@ -416,7 +416,7 @@ module Bootstrap5Helper
   #   @option opts [String]  :class
   #   @option opts [Hash]    :data
   #
-  # @return [String]
+  # @return [PageHeader]
   #
   def page_header_helper(*args, &block)
     PageHeader.new(self, *args, &block)
@@ -455,7 +455,7 @@ module Bootstrap5Helper
   #   @option opts [String] :class
   #   @option opts [Hash]   :data
   #
-  # @return [String]
+  # @return [InputGroup]
   #
   def input_group_helper(*args, &block)
     InputGroup.new(self, *args, &block)
@@ -520,7 +520,7 @@ module Bootstrap5Helper
   #   @option opts [String]  :class
   #   @option opts [Hash]    :data
   #
-  # @return [String]
+  # @return [Tab]
   #
   def tab_helper(*args, &block)
     Tab.new(self, *args, &block)
@@ -539,7 +539,7 @@ module Bootstrap5Helper
   # @option opts [String]  :id
   # @option opts [String]  :class
   # @option opts [Hash]    :data
-  # @return [String]
+  # @return [Spinner]
   #
   def spinner_helper(opts = {}, &block)
     Spinner.new(self, opts, &block)

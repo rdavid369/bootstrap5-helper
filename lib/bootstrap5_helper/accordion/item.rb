@@ -33,11 +33,23 @@ module Bootstrap5Helper
 
       # Builds a header component for the accordion.
       #
-      # @param  [Hash] opts
+      # @overload header(tag, opts)
+      #   @param [Symbol|String] tag - The HTML element to use.
+      #   @param [Hash] options
+      #   @option opts [String] :id
+      #   @option opts [String] :class
+      #   @option opts [Hash] :data
+      #
+      # @overload header(opts)
+      #   @param [Hash] options
+      #   @option opts [String] :id
+      #   @option opts [String] :class
+      #   @option opts [Hash] :data
+      #
       # @return [String]
       #
-      def header(tag_or_options = nil, opts = {}, &block)
-        tag, args = parse_tag_or_options(tag_or_options, opts)
+      def header(*tag_or_options, &block)
+        tag, args = parse_tag_or_options(*tag_or_options, {})
 
         @header_id = args.fetch(:id,    @header_id)
         klass      = args.fetch(:class, '')
@@ -72,6 +84,9 @@ module Bootstrap5Helper
       # Builds the body component for the accordion.
       #
       # @param  [Hash] opts
+      # @option opts [String] :id
+      # @option opts [String] :class
+      # @option opts [Hash] :data
       # @return [String]
       #
       def body(opts = {}, &block)

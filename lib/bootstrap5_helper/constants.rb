@@ -13,12 +13,13 @@ module Bootstrap5Helper
       callout
       configuration
       dropdown
-      dropdown/menu
       input_group
       modal
       nav
       offcanvas
       offcanvas/content
+      overlay
+      overlay/menu
       page_header
       spinner
       tab

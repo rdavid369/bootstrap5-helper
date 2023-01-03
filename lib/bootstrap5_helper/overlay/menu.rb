@@ -1,5 +1,5 @@
 module Bootstrap5Helper
-  class Dropdown
+  class Overlay
     # Builds a menu component for use in dropdowns.
     #
     #
@@ -21,8 +21,8 @@ module Bootstrap5Helper
         @content = block || proc { '' }
       end
 
-      # Use this method when the `item`, `link` in the item in the menu  is nothing
-      # more than a hyperlink.
+      # Use this method when the menu `item` is nothing more than a
+      # hyperlink.
       #
       # @param  [String] name
       # @param  [Hash]   options
@@ -36,8 +36,8 @@ module Bootstrap5Helper
         @template.link_to(name, options, html_options, &block)
       end
 
-      # Use this method when you are using the item in the menu as trigger for tab
-      # content.
+      # Use this method when you are using the item in the menu as trigger for
+      # something like tab content.
       #
       # @param [Symbol|String] target
       # @param [Hash] opts
