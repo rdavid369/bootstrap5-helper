@@ -27,7 +27,7 @@ module Bootstrap5Helper
       @scrollable = opts.fetch(:scrollable, false)
       @vcentered  = opts.fetch(:vcentered,  false)
       @static     = opts.fetch(:static,     false)
-      @fullscreen = opts.fetch(:fullscreen, true)
+      @fullscreen = opts.fetch(:fullscreen, false)
       @size       = opts.fetch(:size,       nil)
       @content    = block || proc { '' }
     end
@@ -208,12 +208,12 @@ module Bootstrap5Helper
     # @return [String]
     #
     def size
-      case @size
-      when :xlarge
+      case @size.to_s
+      when 'xlarge', 'xl'
         'modal-xl'
-      when :large
+      when 'large', 'lg'
         'modal-lg'
-      when :small
+      when 'small', 'sm'
         'modal-sm'
       else
         ''

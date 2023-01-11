@@ -34,6 +34,7 @@ module Bootstrap5Helper
   # @option opts [Hash]    :data
   # @option opts [Boolean] :always_open
   # @option opts [Boolean] :flush
+  # @yield  [Accordion]
   # @return [Accordion]
   #
   def accordion_helper(opts = {}, &block)
@@ -157,13 +158,34 @@ module Bootstrap5Helper
   # @option opts [String] :id
   # @option opts [String] :class
   # @option opts [Hash]   :data
+  # @yield  [Card]
   # @return [Card]
   #
   def card_helper(opts = {}, &block)
     Card.new(self, opts, &block)
   end
 
-  # Generates a Dropdown component.  Default type `:dropdown`.
+  # @overload card_with_nav_tab_helper(type, opts)
+  #   @param [Symbol|String] type - :tabs, :pills
+  #   @param  [Hash] opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #
+  # @overload card_with_nav_tab_helper(opts)
+  #   @param  [Hash] opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #
+  # @yield  [CardWithNavTab]
+  # @return [CardWithNavTab]
+  #
+  def card_with_nav_tab_helper(*args, &block)
+    CardWithNavTab.new(self, *args, &block)
+  end
+
+  # Generates a Dropdown component.
   #
   # @example Dropdown
   #   ```erb
@@ -177,19 +199,7 @@ module Bootstrap5Helper
   #    <% end %>
   #   ```
   #
-  # @example Dropup
-  #   ```erb
-  #    <%= dropdown_helper :dropup do |dropdown| %>
-  #      <%= dropdown.button(:primary) { "Action" } %>
-  #      <%= dropdown.menu do |menu| %>
-  #          <%= menu.link 'Edit', '#' %>
-  #          <%= menu.link 'Delete', '#' %>
-  #          <%= menu.text 'Static text' %>
-  #      <% end %>
-  #    <% end %>
-  #   ```
-  #
-  # @example Dropdown w/ menu
+  # @example Dropdown w/ Login Form
   #   ```erb
   #   <%= dropdown_helper do |dropdown| %>
   #     <%= dropdown.button :primary do %>
@@ -222,33 +232,98 @@ module Bootstrap5Helper
   #   <% end %>
   #   ```
   #
-  # @example Dropdown::Menu in a Nav menu
-  #   ```erb
-  #   <%= nav.dropdown 'More' do |dropdown| %>
-  #     <%= dropdown.item :item5 %>
-  #     <%= dropdown.item(:item6) { 'Item 6' } %>
-  #   <% end %>
-  #   ```
-  #
-  # @overload dropdown_helper(type, opts)
-  #   @param [Symbol|String] type - :dropdown, :dropup, :dropstart, :dropend
-  #   @param [Hash] opts
+  # @overload dropdown_helper(tag, opts)
+  #   @param [Symbol|String] tag - The HTML element to use to wrap the component.
+  #   @param [Hash]          opts
   #   @option opts [String]  :id
   #   @option opts [String]  :class
   #   @option opts [Hash]    :data
-  #   @option opts [Boolean] :split
+  #   @option opts [Boolean] :centered
   #
-  # @overload dropdown(opts)
-  #   @param [Hash] opts
+  # @overload dropdown_helper(opts)
+  #   @param [Hash]          opts
   #   @option opts [String]  :id
   #   @option opts [String]  :class
   #   @option opts [Hash]    :data
-  #   @option opts [Boolean] :split
+  #   @option opts [Boolean] :centered
   #
+  # @yield  [Dropdown]
   # @return [Dropdown]
   #
   def dropdown_helper(*args, &block)
     Dropdown.new(self, *args, &block)
+  end
+
+  # Generates a Dropup component.
+  #
+  # @overload dropup_helper(tag, opts)
+  #   @param [Symbol|String] tag - The HTML element to use to wrap the component.
+  #   @param [Hash]          opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #   @option opts [Boolean] :centered
+  #
+  # @overload dropup_helper(opts)
+  #   @param [Hash]          opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #   @option opts [Boolean] :centered
+  #
+  # @yield  [Dropdup]
+  # @return [Dropup]
+  #
+  def dropup_helper(*args, &block)
+    Dropup.new(self, *args, &block)
+  end
+
+  # Generates a Dropstart component.
+  #
+  # @overload dropstart_helper(tag, opts)
+  #   @param [Symbol|String] tag - The HTML element to use to wrap the component.
+  #   @param [Hash]          opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #   @option opts [Boolean] :centered
+  #
+  # @overload dropstart_helper(opts)
+  #   @param [Hash]          opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #   @option opts [Boolean] :centered
+  #
+  # @yield  [Dropstart]
+  # @return [Dropstart]
+  #
+  def dropstart_helper(*args, &block)
+    Dropstart.new(self, *args, &block)
+  end
+
+  # Generates a Dropend component.
+  #
+  # @overload dropend_helper(tag, opts)
+  #   @param [Symbol|String] tag - The HTML element to use to wrap the component.
+  #   @param [Hash]          opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #   @option opts [Boolean] :centered
+  #
+  # @overload dropend_helper(opts)
+  #   @param [Hash]          opts
+  #   @option opts [String]  :id
+  #   @option opts [String]  :class
+  #   @option opts [Hash]    :data
+  #   @option opts [Boolean] :centered
+  #
+  # @yield  [Dropend]
+  # @return [Dropend]
+  #
+  def dropend_helper(*args, &block)
+    Dropend.new(self, *args, &block)
   end
 
   # Generates Modal windows.
@@ -283,6 +358,7 @@ module Bootstrap5Helper
   # @option opts [Boolean] :static
   # @option opts [Boolean|Symbol] :fullscreen - true, :sm, :lg, :xl etc
   # @option opts [Symbol]  :size - :sm, :md, :lg etc
+  # @yield  [Modal]
   # @return [Modal]
   #
   def modal_helper(opts = {}, &block)
@@ -324,6 +400,7 @@ module Bootstrap5Helper
   #   @option opts [Hash]    :data
   #   @option opts [Hash]    :child - data attributes for child, NOT wrapper
   #
+  # @yield  [Nav]
   # @return [Nav]
   #
   def nav_helper(*args, &block)
@@ -388,6 +465,7 @@ module Bootstrap5Helper
   #   @option opts [Boolean] :scrollable
   #   @option opts [Boolean|String] :backdrop - true, false, 'static'
   #
+  # @yield  [Offcanvas]
   # @return [Offcanvas]
   #
   def offcanvas_helper(*args, &block)
@@ -520,6 +598,7 @@ module Bootstrap5Helper
   #   @option opts [String]  :class
   #   @option opts [Hash]    :data
   #
+  # @yield  [Tab]
   # @return [Tab]
   #
   def tab_helper(*args, &block)

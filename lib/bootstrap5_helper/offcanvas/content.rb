@@ -19,6 +19,7 @@ module Bootstrap5Helper
         @aria       = opts.fetch(:aria,       {})
         @scrollable = opts.fetch(:scrollable, false)
         @position   = opts.fetch(:position,   'start')
+        @backdrop   = opts.fetch(:backdrop,   true)
         @content    = block || proc { '' }
       end
 

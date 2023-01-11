@@ -1,58 +1,102 @@
 module Bootstrap5Helper
-  # Builds a Dropdown component that can be used in other components.
+  # Builds a Overlay component that can be used in other components.
   #
   #
   class Overlay < Component
     # Class constructor
     #
-    # @param [ActionView]    template
-    # @param [Symbol|String] type
-    # @param [Hash]          opts
-    # @option opts [String]  :id
-    # @option opts [String]  :class
-    # @option opts [Hash]    :data
-    # @option opts [Boolea]  :split
-    # @option opts [Boolean] :centered
+    # @overload initialize(template, tag, opts)
+    #   @param [ActionView]    template
+    #   @param [Symbol|String] tag - The HTML element to use to wrap the component.
+    #   @param [Hash]          opts
+    #   @option opts [String]  :id
+    #   @option opts [String]  :class
+    #   @option opts [Hash]    :data
+    #   @option opts [Boolean] :centered
+    #   @option opts [Array]    :menu
     #
-    def initialize(template, &block)
+    # @overload initialize(template, opts)
+    #   @param [ActionView]    template
+    #   @param [Hash]          opts
+    #   @option opts [String]  :id
+    #   @option opts [String]  :class
+    #   @option opts [Hash]    :data
+    #   @option opts [Boolean] :centered
+    #   @option opts [Array]    :menu
+    #
+    # @return [Overlay]
+    #
+    def initialize(template, *tag_or_options, &block)
       super(template)
 
-      @split    = @args.fetch(:split,    false)
-      @centered = @args.fetch(:centered, false)
-      @id       = @args.fetch(:id,       uuid)
-      @class    = @args.fetch(:class,    '')
-      @data     = @args.fetch(:data,     {})
-      @content  = block || proc { '' }
+      @tag, args = parse_tag_or_options(*tag_or_options, {})
+      @split     = args.fetch(:split,    false)
+      @centered  = args.fetch(:centered, false)
+      @id        = args.fetch(:id,       uuid)
+      @class     = args.fetch(:class,    '')
+      @data      = args.fetch(:data,     {})
+      @menu_args = args.fetch(:menu,     [])
+
+      puts '#' * 25
+      puts 'Overlay Params:'
+      puts @menu_args
+      puts '#' * 25
+
+      @content   = block || proc { '' }
     end
 
-    # Used to generate a button for the dropdown.  The button default is to just
-    # opens the coresponding dropdown menu.  The `split: true` option
-    # make the button just the arrow indicator that open the menu.
+    # Used to generate a button for the dropdown.  This button just
+    # opens the coresponding dropdown menu.
     #
     # @param  [Symbol] context
     # @param  [Hash]   opts
     # @option opts [String]  :id
     # @option opts [String]  :class
     # @option opts [Hash]    :data
-    # @option opts [Boolean] :split
     # @return [String]
     #
-    def button(context = :primary, opts = {})
+    def button(context = :primary, opts = {}, &block)
       id     = opts.fetch(:id,    nil)
       klass  = opts.fetch(:class, '')
-      split  = opts.fetch(:split, false)
-      data   = opts.fetch(:data,  {}).merge('bs-toggle' => 'dropdown')
-      extra  = @split ? 'dropdown-toggle-split' : ''
+      data   = opts.fetch(:data,  {}).merge(
+        'bs-toggle'  => 'dropdown',
+        'bs-display' => 'static'
+      )
 
       content_tag(
         :button,
         id:    id,
         type:  'button',
-        class: "dropdown-toggle btn btn-#{context} #{klass} #{extra}",
+        class: "dropdown-toggle btn btn-#{context} #{klass}",
+        data:  data,
+        aria:  { haspopup: true, expanded: false },
+        &block
+      )
+    end
+
+    # Used to generate a button with just the caret, to open the dropdown.
+    #
+    # @param  [Symbol] context
+    # @param  [Hash]   opts
+    # @option opts [String]  :id
+    # @option opts [String]  :class
+    # @option opts [Hash]    :data
+    # @return [String]
+    #
+    def caret(context = :primary, opts = {})
+      id     = opts.fetch(:id,    nil)
+      klass  = opts.fetch(:class, '')
+      data   = opts.fetch(:data,  {}).merge('bs-toggle' => 'dropdown')
+
+      content_tag(
+        :button,
+        id:    id,
+        type:  'button',
+        class: "dropdown-toggle btn btn-#{context} #{klass} dropdown-toggle-split",
         data:  data,
         aria:  { haspopup: true, expanded: false }
       ) do
-        split ? content_tag(:span, 'Toggle Dropdown', class: 'visually-hidden') : yield
+        content_tag(:span, 'Toggle Dropdown', class: 'visually-hidden')
       end
     end
 
@@ -65,8 +109,15 @@ module Bootstrap5Helper
     # @yield [Menu]
     # @return [Menu]
     #
-    def menu(opts = {}, &block)
-      Menu.new(@template, opts, &block)
+    def menu(*tag_or_options, &block)
+      tag, opts = parse_tag_or_options(*tag_or_options, {})
+      ptag, popts = parse_tag_or_options(*@menu_args, {})
+
+      puts '*' * 25
+      puts ptag
+      puts '*' * 25
+
+      Menu.new(@template, ptag || tag, popts || opts, &block)
     end
 
     # String reprentation of the object.
@@ -74,16 +125,12 @@ module Bootstrap5Helper
     # @return [String]
     #
     def to_s
-      if @tag.present?
-        content_tag(
-          @tag,
-          id:    @id,
-          class: "#{@type} #{alignment_type_class} #{@class}",
-          data:  @data
-        ) do
-          @content.call(self)
-        end
-      else
+      content_tag(
+        @tag || :div,
+        id:    @id,
+        class: "#{@type} #{alignment_type_class} #{@class}",
+        data:  @data
+      ) do
         @content.call(self)
       end
     end

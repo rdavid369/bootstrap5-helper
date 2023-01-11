@@ -1,8 +1,5 @@
 module Bootstrap5Helper
-  # Builds a Tab component.
-  #
-  #
-  class Tab < Component
+  class CardWithNavTab < Component # :nodoc:
     # Class constructor
     #
     # @param [ActionView] template
@@ -12,13 +9,12 @@ module Bootstrap5Helper
     # @option opts [String]  :class
     # @option opts [Hash]    :data
     #
-    def initialize(template, type_or_options = nil, opts = {}, &block)
+    def initialize(template, *context_or_options, &block)
       super(template)
-      @type, args = type_or_options(type_or_options, opts)
-
-      @id      = args.fetch(:id,    uuid)
+      @context, args = parse_context_or_options(*context_or_options, {})
+      @id      = args.fetch(:id,    '')
       @class   = args.fetch(:class, '')
-      @data    = args.fetch(:data,  {})
+      @data    = args.fetch(:data,  nil)
       @content = block || proc { '' }
     end
 
@@ -43,13 +39,15 @@ module Bootstrap5Helper
     # @return [Nav]
     #
     def nav(*tag_or_options, &block)
-      tag, args = parse_tag_or_options(*tag_or_options, {})
+      tag, args      = parse_tag_or_options(*tag_or_options, {})
+      args[:class]   = (args[:class] || '') << 'nav-tabs card-header-tabs'
+      args[:data]    = (args[:data]  || {}).merge('bs-toggle' => 'tab')
+      args[:child]   = { data: { 'bs-toggle' => 'tab' } }
+      args[:overlay] = { menu: [:ul, {}] }
 
-      args[:class] = (args[:class] || '') << " nav-#{@type}"
-      args[:data]  = (args[:data]  || {}).merge('bs-toggle' => 'tab')
-      args[:child] = { data: { 'bs-toggle' => 'tab' } }
-
-      Nav.new(@template, tag, args, &block)
+      content_tag :div, class: 'card-header' do
+        Nav.new(@template, tag, args, &block).to_s
+      end
     end
 
     # Builds the Content object for the Tab.
@@ -61,24 +59,18 @@ module Bootstrap5Helper
     # @return [Tab::Content]
     #
     def content(opts = {}, &block)
-      Content.new(@template, opts, &block)
+      content_tag :div, class: 'card-body' do
+        Tab::Content.new(@template, opts, &block).to_s
+      end
     end
 
-    # @note This has a weird interaction.  Because this object doesn't actually return any wrapping
-    #   string or DOM element, we want to return nil, so that only the output buffer on the sub components are
-    #   returned.
+    # @todo
     #
-    #   If we return the return value of the block, we will get the last element added to the input
-    #   buffer as an unescaped string.
     #
     def to_s
-      @content.call(self)
-
-      nil
-    end
-
-    def type_or_options(*args)
-      parse_arguments(*args, :tabs)
+      content_tag :div, class: "card with-nav-tabs-#{@context}" do
+        @content.call(self)
+      end
     end
   end
 end

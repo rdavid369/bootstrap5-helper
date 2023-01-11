@@ -11,21 +11,23 @@ module Bootstrap5Helper
     # @option opts [String]  :id
     # @option opts [String]  :class
     # @option opts [Hash]    :data
-    # @option opts [Hash]    :child
+    # @option opts [Array]   :dropdown
+    # @option opts []
     #
-    def initialize(template, tag_or_options = nil, opts = {}, &block)
+    def initialize(template, *tag_or_options, &block)
       super(template)
 
-      @tag, args = parse_tag_or_options(tag_or_options, opts)
+      @tag, args = parse_tag_or_options(*tag_or_options, {})
       @tag ||= config({ navs: :base }, :ul)
 
-      @id        = args.fetch(:id,    uuid)
-      @class     = args.fetch(:class, '')
-      @data      = args.fetch(:data,  {})
-      @child     = args.fetch(:child, {})
-      @content   = block || proc { '' }
+      @id       = args.fetch(:id,    uuid)
+      @class    = args.fetch(:class, '')
+      @data     = args.fetch(:data,  {})
+      @child    = args.fetch(:child, {})
+      @content  = block || proc { '' }
+      d_opts    = args.fetch(:overlay, nil)
 
-      @dropdown = Dropdown.new(@template)
+      @dropdown = Dropdown.new(@template, d_opts)
     end
 
     # rubocop:disable Metrics/MethodLength
@@ -78,6 +80,8 @@ module Bootstrap5Helper
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
+
     # Creates a dropdown menu for the nav.
     #
     # @param [NilClass|Symbol|String] name
@@ -100,12 +104,16 @@ module Bootstrap5Helper
           name,
           class: "nav-link dropdown-toggle #{klass}",
           href:  '#',
-          data:  { 'bs-toggle' => 'dropdown' },
+          data:  {
+            'bs-toggle'  => 'dropdown',
+            'bs-display' => 'static'
+          },
           role:  'button',
           aria:  aria
         ) + @dropdown.menu(opts, &block).to_s.html_safe
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     # String representation of the object.
     #
@@ -119,7 +127,7 @@ module Bootstrap5Helper
 
     private
 
-    # Decorator for elements require a wrapper component.
+    # Decorator for elements requiring a wrapper component.
     #
     # @return [String]
     #

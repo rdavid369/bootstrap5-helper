@@ -267,7 +267,7 @@
 
 <div class="row">
     <div class="col-sm mt-3 mb-3">
-        <%= dropdown_helper class: 'testing' do |dropdown| %>
+        <%= dropdown_helper :span, class: 'testing' do |dropdown| %>
             <%= dropdown.button(:primary) { "Action" } %>
             <%= dropdown.menu do |menu| %>
                 <%= menu.link 'Edit', '#' %>
@@ -277,7 +277,7 @@
         <% end %>
     </div>
     <div class="col-sm mt-3 mb-3">
-        <%= dropdown_helper :dropup, centered: true do |dropdown| %>
+        <%= dropup_helper centered: true do |dropdown| %>
             <%= dropdown.button(:info) { "Action" } %>
             <%= dropdown.menu do |menu| %>
                 <%= menu.link 'Edit', '#' %>
@@ -287,7 +287,7 @@
         <% end %>
     </div>
     <div class="col-sm mt-3 mb-3">
-        <%= dropdown_helper :dropup, class: 'btn-group' do |dropdown| %>
+        <%= dropup_helper class: 'btn-group' do |dropdown| %>
             <button type="button" class="btn btn-danger">Action 2</button>
             <%= dropdown.button(:danger, split: true) { "Action" } %>
             <%= dropdown.menu do |menu| %>

@@ -12,18 +12,22 @@ module Bootstrap5Helper
       card
       callout
       configuration
+      overlay
+      overlay/menu
       dropdown
+      dropup
+      dropstart
+      dropend
       input_group
       modal
       nav
       offcanvas
       offcanvas/content
-      overlay
-      overlay/menu
       page_header
       spinner
       tab
       tab/content
+      card_with_nav_tab
     ].freeze
   end
 end

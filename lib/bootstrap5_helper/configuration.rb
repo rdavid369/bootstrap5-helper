@@ -26,7 +26,8 @@ module Bootstrap5Helper
         text:     :p
       },
       dropdowns:         {},
-      dropdown_menus:    {
+      overlay_menus:     {
+        base:    :div,
         text:    :span,
         header:  :h6,
         divider: :div

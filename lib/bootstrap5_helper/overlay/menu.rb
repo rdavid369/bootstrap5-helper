@@ -6,19 +6,21 @@ module Bootstrap5Helper
     class Menu < Component
       # Class constructor
       #
-      # @param [ActionView] template
-      # @param [Hash] opts
+      # @param [ActionView]     template
+      # @param [Symbol|Hash]    tag_or_options
+      # @param [Hash]           opts
       # @option opts [String]  :id
       # @option opts [String]  :class
       # @option opts [Hash]    :data
       #
-      def initialize(template, opts = {}, &block)
+      def initialize(template, *tag_or_options, &block)
         super(template)
 
-        @id      = opts.fetch(:id,    uuid)
-        @class   = opts.fetch(:class, '')
-        @data    = opts.fetch(:data,  {})
-        @content = block || proc { '' }
+        @tag, opts = parse_tag_or_options(*tag_or_options, {})
+        @id        = opts.fetch(:id,    uuid)
+        @class     = opts.fetch(:class, '')
+        @data      = opts.fetch(:data,  {})
+        @content   = block || proc { '' }
       end
 
       # Use this method when the menu `item` is nothing more than a
@@ -33,8 +35,12 @@ module Bootstrap5Helper
         html_options ||= {}
         html_options[:class] = (html_options[:class] || '') << ' dropdown-item'
 
-        @template.link_to(name, options, html_options, &block)
+        nav_item_wrapper do
+          @template.link_to(name, options, html_options, &block)
+        end
       end
+
+      # rubocop:disable Metrics/MethodLength
 
       # Use this method when you are using the item in the menu as trigger for
       # something like tab content.
@@ -53,17 +59,20 @@ module Bootstrap5Helper
         data  = opts.fetch(:data,  {}).merge('bs-toggle' => 'tab')
         aria  = opts.fetch(:aria,  {})
 
-        content_tag(
-          :a,
-          id:    id,
-          class: "dropdown-item #{klass}",
-          href:  "##{target}",
-          aria:  aria,
-          data:  data
-        ) do
-          block_given? ? yield : target.to_s.titleize
+        nav_item_wrapper do
+          content_tag(
+            :a,
+            id:    id,
+            class: "dropdown-item #{klass}",
+            href:  "##{target}",
+            aria:  aria,
+            data:  data
+          ) do
+            block_given? ? yield : target.to_s.titleize
+          end
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       # Builds a Text component
       #
@@ -75,13 +84,15 @@ module Bootstrap5Helper
       # @return [String]
       #
       def text(text, opts = {}, &block)
-        build_sub_component(
-          config({ dropdown_menus: :text }, :span),
-          text,
-          'item-text',
-          opts,
-          &block
-        )
+        nav_item_wrapper do
+          build_sub_component(
+            config({ overlay_menus: :text }, :span),
+            text,
+            'item-text',
+            opts,
+            &block
+          )
+        end
       end
 
       # Builds a Header component
@@ -94,13 +105,15 @@ module Bootstrap5Helper
       # @return [String]
       #
       def header(text, opts = {}, &block)
-        build_sub_component(
-          config({ dropdown_menus: :header }, :h6),
-          text,
-          'header',
-          opts,
-          &block
-        )
+        nav_item_wrapper do
+          build_sub_component(
+            config({ overlay_menus: :header }, :h6),
+            text,
+            'header',
+            opts,
+            &block
+          )
+        end
       end
 
       # Builds a divider element
@@ -108,11 +121,13 @@ module Bootstrap5Helper
       # @return [String]
       #
       def divider
-        content_tag(
-          config({ dropdown_menus: :divider }, :div),
-          '',
-          class: 'dropdown-divider'
-        )
+        nav_item_wrapper do
+          content_tag(
+            config({ overlay_menus: :divider }, :div),
+            '',
+            class: 'dropdown-divider'
+          )
+        end
       end
 
       # String representation of the object.
@@ -120,12 +135,30 @@ module Bootstrap5Helper
       # @return [String]
       #
       def to_s
-        content_tag :div, id: @id, class: "dropdown-menu #{@class}", data: @data do
+        content_tag(
+          @tag || config({ overlay_menus: :base }, :div),
+          id:    @id,
+          class: "dropdown-menu #{@class}",
+          data:  @data
+        ) do
           @content.call(self)
         end
       end
 
       private
+
+      # Decorator for elements requiring a wrapper component.
+      #
+      # @return [String]
+      #
+      def nav_item_wrapper(&block)
+        case @tag
+        when :div, nil
+          block.call
+        when :ul
+          content_tag(:li, &block)
+        end
+      end
 
       # Used to build specific components.
       #

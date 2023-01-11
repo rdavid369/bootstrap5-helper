@@ -2,7 +2,7 @@ module Bootstrap5Helper
   # Builds a Dropdown component that can be used in other components.
   #
   #
-  class Dropdown < Overlay
+  class Dropstart < Overlay
     # Class constructor
     #
     # @overload initialize(template, tag, opts)
@@ -24,11 +24,11 @@ module Bootstrap5Helper
     #   @option opts [Boolea]  :split
     #   @option opts [Boolean] :centered
     #
-    # @return [Dropdown]
+    # @return [Dropstart]
     #
     def initialize(template, *tag_or_options, &block)
       super(template, *tag_or_options, &block)
-      @type = :dropdown
+      @type = :dropstart
     end
   end
 end
