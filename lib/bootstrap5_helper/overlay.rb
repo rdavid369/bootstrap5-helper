@@ -13,7 +13,6 @@ module Bootstrap5Helper
     #   @option opts [String]  :class
     #   @option opts [Hash]    :data
     #   @option opts [Boolean] :centered
-    #   @option opts [Array]    :menu
     #
     # @overload initialize(template, opts)
     #   @param [ActionView]    template
@@ -22,7 +21,6 @@ module Bootstrap5Helper
     #   @option opts [String]  :class
     #   @option opts [Hash]    :data
     #   @option opts [Boolean] :centered
-    #   @option opts [Array]    :menu
     #
     # @return [Overlay]
     #
@@ -35,12 +33,6 @@ module Bootstrap5Helper
       @id        = args.fetch(:id,       uuid)
       @class     = args.fetch(:class,    '')
       @data      = args.fetch(:data,     {})
-      @menu_args = args.fetch(:menu,     [])
-
-      puts '#' * 25
-      puts 'Overlay Params:'
-      puts @menu_args
-      puts '#' * 25
 
       @content   = block || proc { '' }
     end
@@ -110,14 +102,7 @@ module Bootstrap5Helper
     # @return [Menu]
     #
     def menu(*tag_or_options, &block)
-      tag, opts = parse_tag_or_options(*tag_or_options, {})
-      ptag, popts = parse_tag_or_options(*@menu_args, {})
-
-      puts '*' * 25
-      puts ptag
-      puts '*' * 25
-
-      Menu.new(@template, ptag || tag, popts || opts, &block)
+      Menu.new(@template, *tag_or_options, &block)
     end
 
     # String reprentation of the object.

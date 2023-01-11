@@ -25,9 +25,7 @@ module Bootstrap5Helper
       @data     = args.fetch(:data,  {})
       @child    = args.fetch(:child, {})
       @content  = block || proc { '' }
-      d_opts    = args.fetch(:overlay, nil)
-
-      @dropdown = Dropdown.new(@template, d_opts)
+      @dropdown = Dropdown.new(@template)
     end
 
     # rubocop:disable Metrics/MethodLength
@@ -95,8 +93,10 @@ module Bootstrap5Helper
     def dropdown(name, opts = {}, &block)
       id    = opts.fetch(:id,    nil)
       klass = opts.fetch(:class, '')
-      data  = opts.fetch(:data,  {})
+      data  = opts.fetch(:data,  {}).merge('bs-toggle' => 'dropdown')
       aria  = opts.fetch(:aria,  {}).merge(haspopup: true, expanded: false)
+
+      data.merge!('bs-display' => 'static') if @child[:data]&.key?('bs-display')
 
       nav_item_wrapper id: id, class: 'dropdown', data: data do
         content_tag(
@@ -104,10 +104,7 @@ module Bootstrap5Helper
           name,
           class: "nav-link dropdown-toggle #{klass}",
           href:  '#',
-          data:  {
-            'bs-toggle'  => 'dropdown',
-            'bs-display' => 'static'
-          },
+          data:  data,
           role:  'button',
           aria:  aria
         ) + @dropdown.menu(opts, &block).to_s.html_safe

@@ -42,8 +42,12 @@ module Bootstrap5Helper
       tag, args      = parse_tag_or_options(*tag_or_options, {})
       args[:class]   = (args[:class] || '') << 'nav-tabs card-header-tabs'
       args[:data]    = (args[:data]  || {}).merge('bs-toggle' => 'tab')
-      args[:child]   = { data: { 'bs-toggle' => 'tab' } }
-      args[:overlay] = { menu: [:ul, {}] }
+      args[:child]   = {
+        data: {
+          'bs-toggle'  => 'tab',
+          'bs-display' => 'static'
+        }
+      }
 
       content_tag :div, class: 'card-header' do
         Nav.new(@template, tag, args, &block).to_s
