@@ -165,15 +165,15 @@ module Bootstrap5Helper
     Card.new(self, opts, &block)
   end
 
-  # @overload card_with_nav_tab_helper(type, opts)
-  #   @param [Symbol|String] type - :tabs, :pills
-  #   @param  [Hash] opts
+  # @overload card_with_nav_tab_helper(context, opts)
+  #   @param [Symbol|String] context
+  #   @param [Hash] opts
   #   @option opts [String]  :id
   #   @option opts [String]  :class
   #   @option opts [Hash]    :data
   #
   # @overload card_with_nav_tab_helper(opts)
-  #   @param  [Hash] opts
+  #   @param [Hash] opts
   #   @option opts [String]  :id
   #   @option opts [String]  :class
   #   @option opts [Hash]    :data

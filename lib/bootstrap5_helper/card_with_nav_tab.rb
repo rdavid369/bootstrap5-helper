@@ -2,12 +2,20 @@ module Bootstrap5Helper
   class CardWithNavTab < Component # :nodoc:
     # Class constructor
     #
-    # @param [ActionView] template
-    # @param [Symbol|String|Hash] type_or_options
-    # @param [Hash] opts
-    # @option opts [String]  :id
-    # @option opts [String]  :class
-    # @option opts [Hash]    :data
+    # @overload initialize(template, context, opts)
+    #   @param [ActionView]    template
+    #   @param [Symbol|String] context
+    #   @param [Hash] opts
+    #   @option opts [String]  :id
+    #   @option opts [String]  :class
+    #   @option opts [Hash]    :data
+    #
+    # @overload initialize(template, opts)
+    #   @param [ActionView]    template
+    #   @param [Hash] opts
+    #   @option opts [String]  :id
+    #   @option opts [String]  :class
+    #   @option opts [Hash]    :data
     #
     def initialize(template, *context_or_options, &block)
       super(template)
@@ -42,12 +50,12 @@ module Bootstrap5Helper
       tag, args      = parse_tag_or_options(*tag_or_options, {})
       args[:class]   = (args[:class] || '') << 'nav-tabs card-header-tabs'
       args[:data]    = (args[:data]  || {}).merge('bs-toggle' => 'tab')
-      args[:child]   = {
+      args[:child]   = (args[:child] || {}).merge(
         data: {
           'bs-toggle'  => 'tab',
           'bs-display' => 'static'
         }
-      }
+      )
 
       content_tag :div, class: 'card-header' do
         Nav.new(@template, tag, args, &block).to_s
