@@ -49,11 +49,10 @@ end
 # @option opts [Hash]    :data
 # @option opts [Boolean] :always_open
 # @option opts [Boolean] :flush
+# @yield  [Accordion]
 # @return [Accordion]
 #
-def accordion_helper(opts = {}, &block)
-  Accordion.new(self, opts, &block)
-end
+accordion_helper(opts = {}, &block)
 ```
 
 #### Example:
@@ -99,9 +98,7 @@ Alerts use the context helper, where you can pass the context of the object and 
 #
 # @return [String]
 #
-def alert_helper(*args, &block)
-  Alert.new(self, *args, &block)
-end
+alert_helper(*args, &block)
 ```
 
 #### Example:
@@ -132,9 +129,7 @@ The badge helper will build badges realitively quickly. If you are just passing 
 #
 # @return [String]
 #
-def badge_helper(*args, &block)
-  Badge.new(self, *args, &block)
-end
+badge_helper(*args, &block)
 ```
 
 #### Example
@@ -164,18 +159,15 @@ Cards support a few methods that make building them easier:
 - `text`
 - `title`
 
-For usage on various card sub components, @see https://getbootstrap.com/docs/4.0/components/card/
-
 ```ruby
 # @param  [Hash] opts
 # @option opts [String] :id
 # @option opts [String] :class
 # @option opts [Hash]   :data
-# @return [String]
+# @yield  [Card]
+# @return [Card]
 #
-def card_helper(opts = {}, &block)
-  Card.new(self, opts, &block)
-end
+card_helper(opts = {}, &block)
 ```
 
 #### Example
@@ -236,79 +228,70 @@ Dropdowns support the following methods:
   - `divider` - A dividing element
 
 ```ruby
-# @overload dropdown_helper(type, opts)
-#   @param [Symbol|String] type - :dropdown, :dropup, :dropstart, :dropend
-#   @param [Hash] opts
+# @overload dropdown_helper(tag, opts)
+#   @param [Symbol|String] tag - The HTML element to use to wrap the component.
+#   @param [Hash]          opts
 #   @option opts [String]  :id
 #   @option opts [String]  :class
 #   @option opts [Hash]    :data
-#   @option opts [Boolean] :split
+#   @option opts [Boolean] :centered
 #
-# @overload dropdown(opts)
-#   @param [Hash] opts
+# @overload dropdown_helper(opts)
+#   @param [Hash]          opts
 #   @option opts [String]  :id
 #   @option opts [String]  :class
 #   @option opts [Hash]    :data
-#   @option opts [Boolean] :split
+#   @option opts [Boolean] :centered
 #
-# @return [String]
+# @yield  [Dropdown]
+# @return [Dropdown]
 #
-def dropdown_helper(*args, &block)
-  Dropdown.new(self, *args, &block)
-end
+dropdown_helper(*args, &block)
 ```
 
 #### Example
 
 ```erb
-<%= dropdown_helper do |dropdown| %>
-    <%= dropdown.button(:primary) { "Action" } %>
-    <%= dropdown.menu do |menu| %>
-        <%= menu.link 'Edit', '#' %>
-        <%= menu.link 'Delete', '#' %>
-        <%= menu.text 'Static text' %>
-    <% end %>
+<%= dropdown_helper class: "btn-group" do |dropdown| %>
+  <button type="button" class="btn btn-primary">Dropdown</button>
+  <%= dropdown.caret :primary >
+  <%= dropdown.menu do |menu| %>
+    <%= menu.link 'Dropdown Link', '#' %>
+    <%= menu.link 'Dropdown Link', '#' %>
+  <% end %>
 <% end %>
 
-<%= dropdown_helper :group, class: 'dropright' do |dropdown| %>
-    <button type="button" class="btn btn-danger">Action 2</button>
-    <%= dropdown.button(:danger, split: true) %>
-    <%= dropdown.menu do |menu| %>
-        <%= menu.header "Crud operations" %>
-        <%= menu.divider %>
-        <%= menu.link 'Edit', 'SOME-URL' %>
-        <%= menu.link 'Delete', 'SOME-URL' %>
-    <% end %>
-<% end %>
+
+// Dropdown menu with a login form inside the menu
 
 <%= dropdown_helper do |dropdown| %>
-    <%= dropdown.button :primary do %>
-        <i class="fas fa-users"></i> User
-    <% end %>
-    <%= dropdown.menu do |menu| %>
-        <form class="px-4 py-3">
-            <div class="form-group">
-                <label for="exampleDropdownFormEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-            </div>
-            <div class="form-group">
-                <label for="exampleDropdownFormPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                    <label class="form-check-label" for="dropdownCheck">
-                        Remember me
-                    </label>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Sign in</button>
-        </form>
-        <%= menu.divider %>
-        <%= menu.link "New around here? Sign up", "#" %>
-        <%= menu.link "Forgot password", "#" %>
-    <% end %>
+  <%= dropdown.button :primary do %>
+    Login
+  <% end %>
+  <%= dropdown.menu do |menu| %>
+    <form class="px-4 py-3">
+      <div class="form-group">
+        <label for="exampleDropdownFormEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+      </div>
+      <div class="form-group">
+        <label for="exampleDropdownFormPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="dropdownCheck">
+          <label class="form-check-label" for="dropdownCheck">
+            Remember me
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+    <%= menu.divider %>
+    <%= menu.link "New around here? Sign up", "#" %>
+    <%= menu.link "Forgot password", "#" %>
+  <% end %>
 <% end %>
 ```
 
@@ -324,11 +307,10 @@ end
 # @option opts [Boolean] :static
 # @option opts [Boolean|Symbol] :fullscreen - true, :sm, :lg, :xl etc
 # @option opts [Symbol]  :size - :sm, :md, :lg etc
-# @return [String]
+# @yield  [Modal]
+# @return [Modal]
 #
-def modal_helper(opts = {}, &block)
-  Modal.new(self, opts, &block)
-end
+modal_helper(opts = {}, &block)
 ```
 
 > Note: When the `close_button` is not passed a block, it will default to the X icon.
@@ -381,9 +363,7 @@ The Nav component has the following methods:
 #
 # @return [String]
 #
-def nav_helper(*args, &block)
-  Nav.new(self, *args, &block)
-end
+nav_helper(*args, &block)
 ```
 
 #### Example
@@ -405,10 +385,60 @@ end
 <% end %>
 ```
 
+### Offcanvas
+
+```ruby
+# @overload offcanvas_helper(position, options)
+#   @param  [Symbol] position - :start, :end, :top, :bottom
+#   @param  [Hash] opts
+#   @option opts [String]  :id
+#   @option opts [String]  :class
+#   @option opts [Hash]    :data
+#   @option opts [Hash]    :aria
+#   @option opts [Boolean] :scrollable
+#   @option opts [Boolean|String] :backdrop - true, false, 'static'
+#
+# @overload offcanvas_helper(options)
+#   @param  [Hash] opts
+#   @option opts [String]  :id
+#   @option opts [String]  :class
+#   @option opts [Hash]    :data
+#   @option opts [Hash]    :aria
+#   @option opts [Boolean] :scrollable
+#   @option opts [Boolean|String] :backdrop - true, false, 'static'
+#
+# @yield  [Offcanvas]
+# @return [Offcanvas]
+#
+def offcanvas_helper(*args, &block)
+```
+
+#### Example
+
+```erb
+<%= offcanvas_helper scrollable: true do |off| %>
+  <%= off.link class: 'btn btn-danger' do %>
+      <strong>*</strong> Open sidebar
+  <% end %>
+
+  <%= off.content do |c| %>
+      <%= c.header do %>
+          <%= c.title { 'Sidebar content' } %>
+          <%= c.close_button class: 'btn btn-info' do %>
+              Close
+          <% end %>
+      <% end %>
+      <%= c.body do %>
+          <p>Some content in the sidebar!</p>
+      <% end %>
+  <% end %>
+<% end %>
+```
+
 ### Tabs
 
 ```ruby
- # @overload tab_helper(type, opts)
+# @overload tab_helper(type, opts)
 #   @param [Symbol|String] type - :tabs, :pills
 #   @param  [Hash] opts
 #   @option opts [String]  :id
@@ -421,11 +451,10 @@ end
 #   @option opts [String]  :class
 #   @option opts [Hash]    :data
 #
-# @return [String]
+# @yield  [Tab]
+# @return [Tab]
 #
 def tab_helper(*args, &block)
-  Tab.new(self, *args, &block)
-end
 ```
 
 #### Example
@@ -478,14 +507,13 @@ end
 ```ruby
 # @param  [Hash] args
 # @option opts [Symbol]  :type - :border, :grow
+# @option opts [Symbol]  :size - :sm
 # @option opts [String]  :id
 # @option opts [String]  :class
 # @option opts [Hash]    :data
-# @return [String]
+# @return [Spinner]
 #
-def spinner_helper(opts = {}, &block)
-  Spinner.new(self, opts, &block)
-end
+spinner_helper(opts = {}, &block)
 ```
 
 #### Example
