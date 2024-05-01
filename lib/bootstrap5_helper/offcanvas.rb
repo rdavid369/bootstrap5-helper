@@ -146,12 +146,15 @@ module Bootstrap5Helper
 
     # Renders the component as a String, but only to the output bugger.
     #
-    # @return [NilClass]
+    # @note Was updated to return an empty string opposed to nil.
+    # @see changelog.md
+    #
+    # @return [String]
     #
     def to_s
       @content.call(self)
 
-      nil
+      ''
     end
 
     private

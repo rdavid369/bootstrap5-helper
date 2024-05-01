@@ -68,13 +68,13 @@ module Bootstrap5Helper
     #   string or DOM element, we want to return nil, so that only the output buffer on the sub components are
     #   returned.
     #
-    #   If we return the return value of the block, we will get the last element added to the input
-    #   buffer as an unescaped string.
+    # @note Was updated to return an empty string opposed to nil.
+    # @see changelog.md
     #
     def to_s
       @content.call(self)
 
-      nil
+      ''
     end
 
     def type_or_options(*args)
