@@ -1,0 +1,73 @@
+<%
+#
+#
+#
+%>
+
+<div id="root">
+    <div id="default">
+        <%= accordion_helper do |a| %>
+            <%= a.item do |item| %>
+                <%= item.header do %>
+                    Item One Default Header.
+                <% end %>
+                <%= item.body do %>
+                    Item One Default Body.
+                <% end %>
+            <% end %>
+            <%= a.item do |item| %>
+                <%= item.header { 'Item Two Default Header.' } %>
+                <%= item.body { "Item Two Default Body." } %>
+            <% end %>
+        <% end %>
+    </div>
+    <div id="custom">
+        <%= accordion_helper(
+            class: 'user-defined',
+            id:    'user_defined',
+            data:  { firstname: 'Billy', lastname: 'Bob' }
+        ) do |a| %>
+            <%= a.item(
+                class: 'user-defined-item',
+                id:    'user_defined_item',
+                data:  { age: 50, eyes: 'blue'}
+            ) do |item| %>
+                <%= item.header(
+                    :div,
+                    class: 'h2',
+                    id:     'user_defined_header',
+                    data:   { height: 5, weight: 150 }
+                ) do %>
+                    Item One Custom Header.
+                <% end %>
+                <%= item.body(
+                    id:    'user_defined_body',
+                    class: 'user-defined-body',
+                    data:  { status: 'working' }
+                ) do %>
+                    Item One Custom Body.
+                <% end %>
+            <% end %>
+            <%= a.item do |item| %>
+                <%= item.header(class: 'user-defined-shorthand-header') { 'Item Two Custom Header.' } %>
+                <%= item.body(class: 'user-defined-shorthand-body') { "Item Two Custom body." } %>
+            <% end %>
+        <% end %>
+    </div>
+    <div id="bindings">
+        <%= accordion_helper do |a| %>
+            <%= a.item do |item| %>
+                <%= item.header do %>
+                    List for: <%= name %>
+                <% end %>
+                <%= item.body do %>
+                    <ul>
+                        <% (min..max).each do |n| %>
+                            <li>Todo #<%= n %></li>
+                        <% end %>
+                    </ul>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
