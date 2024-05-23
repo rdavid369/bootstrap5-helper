@@ -1,0 +1,32 @@
+<%
+#
+#
+#
+%>
+
+<div id="root">
+    <div id="default">
+        <%= alert_helper do %>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptates odit recusandae 
+            illo dolorem laboriosam assumenda perspiciatis eum quaerat, tenetur culpa facere minus 
+            dignissimos asperiores, mollitia omnis soluta repellat consequuntur!
+        <% end %>
+    </div>
+    <div id="custom">
+        <%= alert_helper :primary, class: 'custom-alert', id: 'custom_alert', dismissible: true do %>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptates odit recusandae 
+            illo dolorem laboriosam assumenda perspiciatis eum quaerat, tenetur culpa facere minus 
+            dignissimos asperiores, mollitia omnis soluta repellat consequuntur!
+        <% end %>
+    </div>
+    <div id="bindings">
+        <%= alert_helper :primary do %>
+            <p>List for <%= name %></p>
+            <ul>
+                <% (min..max).each do |n| %>
+                    <li>Todo #<%= n %></li>
+                <% end %>
+            </ul>
+        <% end %>
+    </div>
+</div>

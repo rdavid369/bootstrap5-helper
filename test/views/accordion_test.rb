@@ -21,11 +21,11 @@ class AccordionTest < ActionView::TestCase
     @binding_items = @bindings.search(".//div[contains(@class, 'accordion-item')]")
   end
 
-  test 'Wrapper element should have default CLASS attribute' do
+  test 'Wrapper element should have default class attribute' do
     assert(@default['class'].match?('accordion'))
   end
 
-  test 'Wrapper element should have a default ID attribute' do
+  test 'Wrapper element should have a default id attribute' do
     assert(@default['id'].present?)
   end
 
@@ -38,12 +38,12 @@ class AccordionTest < ActionView::TestCase
     assert(header.name == 'h2')
   end
 
-  test 'Header should have default CLASS attribute' do
+  test 'Header should have default class attribute' do
     header, _button = default_first_header_and_button
     assert(header['class'].match?('accordion-header'))
   end
 
-  test 'Header should a default ID attribute' do
+  test 'Header should a default id attribute' do
     header, _button = default_first_header_and_button
     assert(header['id'].present?)
   end
@@ -58,12 +58,12 @@ class AccordionTest < ActionView::TestCase
     assert(body['class'].match?('accordion-collapse'))
   end
 
-  test 'Body should have a default ID attribute' do
+  test 'Body should have a default id attribute' do
     body = @default_items.first.at('div').at('div')
     assert(body['id'].present?)
   end
 
-  test 'Body should have a default CLASS attribute' do
+  test 'Body should have a default class attribute' do
     body = @default_items.first.at('div').at('div')
     assert(body['class'].match?('accordion-body'))
   end
@@ -85,31 +85,31 @@ class AccordionTest < ActionView::TestCase
     assert(body.text.match?('Item Two Default Body.'))
   end
 
-  test 'Custom wrapper should have the following classes: .accordion .user-defined' do
+  test 'Custom wrapper should have the following classes .accordion .user-defined' do
     assert(
       %w[accordion user-defined].all? { |klass| @custom['class'].match?(klass) }
     )
   end
 
-  test 'Custom wrapper should have a custom ID attribute' do
+  test 'Custom wrapper should have a custom id attribute' do
     assert(@custom['id'].match?('user_defined'))
   end
 
-  test 'Custom wrapper should have DATA attributes' do
+  test 'Custom wrapper should have data attributes' do
     assert(
       @custom['data-firstname'].match?('Billy') &&
       @custom['data-lastname'].match?('Bob')
     )
   end
 
-  test 'Custom Accordion::Item should have CLASS .accordion-item .user-defined-item' do
+  test 'Custom Accordion::Item should have the following classes .accordion-item .user-defined-item' do
     item = @custom_items.first
     assert(
       %w[accordion-item user-defined-item].all? { |klass| item['class'].match?(klass) }
     )
   end
 
-  test 'Custom Accordion::Item should have custom ID attribute' do
+  test 'Custom Accordion::Item should have custom id attribute' do
     item = @custom_items.first
     assert(item['id'].match?('user_defined_item'))
   end
@@ -127,19 +127,19 @@ class AccordionTest < ActionView::TestCase
     assert(header.name.match?('div'))
   end
 
-  test 'Custom Header should have CLASS .accordion-header .h2' do
+  test 'Custom Header should have the following classes .accordion-header .h2' do
     header, _button = custom_first_header_and_button
     assert(
       %w[accordion-header h2].all? { |klass| header['class'].match?(klass) }
     )
   end
 
-  test 'Custom Header should have a custom ID attribute' do
+  test 'Custom Header should have a custom id attribute' do
     header, _button = custom_first_header_and_button
     assert(header['id'].match?('user_defined_header'))
   end
 
-  test 'Custom Header should have custom DATA attributes' do
+  test 'Custom Header should have custom data attributes' do
     header, _button = custom_first_header_and_button
     assert(
       header['data-height'].match?('5') &&
@@ -147,7 +147,7 @@ class AccordionTest < ActionView::TestCase
     )
   end
 
-  test 'Custom Body should have CLASS .accordion-body .user-defined-body' do
+  test 'Custom Body should have the following classes .accordion-body .user-defined-body' do
     body = @custom_items.first.search('div')[1].at('div')
 
     assert(
@@ -155,13 +155,13 @@ class AccordionTest < ActionView::TestCase
     )
   end
 
-  test 'Custom Body should have DATA attributes' do
+  test 'Custom Body should have data attributes' do
     body = @custom_items.first.search('div')[1].at('div')
     assert(body['data-status'].match?('working'))
   end
 
   test <<-TEXT do
-    Custom Header with shorthand, should have CLASS .accordion-header
+    Custom Header with shorthand, should have the following classes .accordion-header
     .user-defined-shorthand-header
   TEXT
     header, _button = custom_second_header_and_button
@@ -173,7 +173,7 @@ class AccordionTest < ActionView::TestCase
   end
 
   test <<-TEXT do
-    Custom Body with shorthand, should have CLASS .accordion-body
+    Custom Body with shorthand, should have the following classes .accordion-body
     .user-defined-shorthand-body
   TEXT
     body = @custom_items.last.at('div').at('div')
