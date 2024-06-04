@@ -1,0 +1,20 @@
+<%
+#
+#
+#
+%>
+
+
+
+<div id="root">
+    <div id="default">
+        <p><% name %>: <%= badge_helper { max.to_s } %></p>
+    </div>
+    <div id="custom">
+        <p>
+            <% name %>: <%= badge_helper(:primary, class: 'custom-badge', id: 'custom_badge') do %>
+                 <%= min.to_s %>
+            <% end %>
+        </p>
+    </div>
+</div>

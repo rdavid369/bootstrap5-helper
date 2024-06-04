@@ -13,7 +13,7 @@ class AlertTest < ActionView::TestCase
                      .at(".//div[contains(@class, 'alert')]")
   end
 
-  test 'Default alert should have a default contextual CLASS' do
+  test 'Default alert should have a default contextual class' do
     assert(@default['class'].match?('alert-secondary'))
   end
 

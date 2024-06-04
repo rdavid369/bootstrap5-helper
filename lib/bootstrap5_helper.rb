@@ -101,7 +101,7 @@ module Bootstrap5Helper
     Badge.new(self, *args, &block)
   end
 
-  # Internal helper, used with personal Bootstrap modifications.
+  # @note Internal helper, used with personal Bootstrap modifications.
   #
   #
   def callout_helper(*args, &block)
@@ -165,6 +165,8 @@ module Bootstrap5Helper
     Card.new(self, opts, &block)
   end
 
+  # @note Internal helper, used with personal Bootstrap modifications.
+  #
   # @overload card_with_nav_tab_helper(context, opts)
   #   @param [Symbol|String] context
   #   @param [Hash] opts

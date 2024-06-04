@@ -1,0 +1,114 @@
+<%
+#
+#
+#
+%>
+
+<div id="root">
+    <div id="default">
+        <%= card_helper do |c| %>
+            <%= c.header do %>
+                This is the default header...
+            <% end %>
+            <%= c.body do %>
+                <%= c.title    { 'Default title' } %>
+                <%= c.subtitle { 'Default subtitle' } %>
+                <%= c.text     { 'Default card text' } %>
+                <ul>
+                    <% [1, 2, 3].each do |x|  %>
+                        <li>Default Item: <%= x %></li>
+                    <% end %>
+                    </ul>
+            <% end %>
+            <%= c.footer do %>
+                This is the default footer...
+            <% end %>
+        <% end %>
+    </div>
+    <div id="image_cap">
+        <%= card_helper do |c| %>
+            <%= c.image_cap 'placeholder.svg', :top %>
+            <%= c.body do %>
+                <%= c.title { "Card with image cap" } %>
+                <%= c.text do %>
+                    This card has an image cap located at the top of the card.
+                <% end %>
+                <%= c.text do %>
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+    <div id="custom">
+        <%= card_helper(
+            class: 'custom-wrapper-class',
+            id:    'custom_wrapper_id',
+            data:  { name: 'CustomCard'}
+        ) do |c| %>
+            <%= c.header(
+                :div,
+                class: 'h5',
+                id:    'custom_header',
+                data:  { name: 'CustomHeader' }
+            ) do %>
+                This is the custom header...
+            <% end %>
+            <%= c.body(
+                id:    'custom_body',
+                class: 'custom-body',
+                data:  { name: 'CustomBody' }
+            ) do %>
+                <%= c.title(
+                    :div,
+                    class: 'custom-title',
+                    id:    'custom_title',
+                    data:  { name: 'CustomTitle' }
+                ) do %>
+                    Custom title
+                <% end %>
+                <%= c.subtitle(
+                    :div,
+                    class: 'custom-subtitle',
+                    id:    'custom_subtitle',
+                    data:  { name: 'CustomSubtitle' }
+                 ) do %>
+                    Custom subtitle
+                <% end %>
+                <%= c.text(
+                    :div,
+                    class: 'custom-text',
+                    id:    'custom_text',
+                    data:  { name: 'CustomText' }
+                 ) do %>
+                    Custom card text
+                <% end %>
+                <ul>
+                    <% [1, 2, 3].each do |x|  %>
+                        <li>Custom Item: <%= x %></li>
+                    <% end %>
+                    </ul>
+            <% end %>
+            <%= c.footer(class: 'custom-footer', id: 'custom_footer') do %>
+                This is the custom footer...
+            <% end %>
+        <% end %>
+    </div>
+    <div id="bindings">
+        <%= card_helper do |c| %>
+            <%= c.header do %>
+                My <%= name %> List:
+            <% end %>
+            <%= c.body do %>
+                <%= c.title    { "Title: #{name}" } %>
+                <%= c.subtitle { "Subtitle: #{name}" } %>
+                <%= c.text     { "Text: #{name}" } %>
+                <ul>
+                    <% (min..max).each do |n|  %>
+                        <li>Todo Item: <%= n %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+            <%= c.footer { "#{name} list: #{min}-#{max}" } %>
+        <% end %>
+    </div>
+</div>

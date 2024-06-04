@@ -195,7 +195,7 @@ module Bootstrap5Helper
     # @return [String]
     #
     def image(src, opts = {})
-      (opts[:class] ||= '') << 'card-img'
+      (opts[:class] ||= '') << ' card-img'
       @template.image_tag(src, opts)
     end
 
@@ -207,7 +207,7 @@ module Bootstrap5Helper
     # @return [String]
     #
     def image_cap(src, type = :top, opts = {})
-      (opts[:class] ||= '') << "card-img-#{type}"
+      (opts[:class] ||= '') << " card-img-#{type}"
       @template.image_tag(src, opts)
     end
 

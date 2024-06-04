@@ -5,15 +5,12 @@ class AccordionTest < ActionView::TestCase
   setup do
     render 'components/accordions', name: 'Todos', min: 1, max: 5
 
-    @root    = document_root_element.at("//div[contains(@id, 'root')]")
-
-    @default = @root.at(".//div[contains(@id, 'default')]")
-                    .at(".//div[contains(@class, 'accordion')]")
-
-    @custom = @root.at(".//div[contains(@id, 'custom')]")
-                   .at(".//div[contains(@class, 'accordion')]")
-
-    @bindings = @root.at(".//div[contains(@id, 'bindings')]")
+    @root     = document_root_element.at("//div[contains(@id, 'root')]")
+    @default  = @root.at(".//div[contains(@id,    'default')]")
+                     .at(".//div[contains(@class, 'accordion')]")
+    @custom   = @root.at(".//div[contains(@id,    'custom')]")
+                     .at(".//div[contains(@class, 'accordion')]")
+    @bindings = @root.at(".//div[contains(@id,    'bindings')]")
                      .at(".//div[contains(@class, 'accordion')]")
 
     @default_items = @default.search(".//div[contains(@class, 'accordion-item')]")
