@@ -589,3 +589,46 @@
         <% end %>
     </div>
 </div>
+
+<div class="row mb-5">
+    <div class="col">
+        <%= card_with_nav_tab_helper do |tab|%>
+            <%= tab.nav do |nav| %>
+                <%= nav.item :item_1, class: 'active' %>
+                <%= nav.item(:item_2) do %>
+                    Item 2 
+                <% end %>
+                <%= nav.item(:item_3) { 'Item 3' } %>
+                <%= nav.item(:item_4) { 'Item 4' } %>
+                <%= nav.item(:item_5) { 'Item 5' } %>
+                <%= nav.dropdown :more do |dropdown| %>
+                    <%= dropdown.item(:item_6) { 'Item 6' } %>
+                    <%= dropdown.item(:item_7) { 'Item 7' } %>
+                <% end %>
+            <% end %>
+            <%= tab.content do |content| %>
+                <%= content.pane :item_1, class: 'active' do %>
+                    Content for: Item 1
+                <% end %>
+                <%= content.pane :item_2 do %>
+                    Content for: Item 2
+                <% end %>
+                <%= content.pane :item_3 do %>
+                    Content for: Item 3
+                <% end %>
+                <%= content.pane :item_4 do %>
+                    Content for: Item 4
+                <% end %>
+                <%= content.pane :item_5 do %>
+                    Content for: Item 5
+                <% end %>
+                <%= content.pane :item_6 do %>
+                    Content for: Item 6
+                <% end %>
+                <%= content.pane :item_7 do %>
+                    Content for: Item 7
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</div>

@@ -48,18 +48,23 @@
     <div id="custom">
         <%= card_with_nav_tab_helper(
             :primary,
-            class: 'custom-card-with-navs',
-            id:    'custom_card_with_navs',
-            data:  { name: 'CustomCardWithNavs' }
+            class: 'custom-card-with-nav',
+            id:    'custom_card_with_nav',
+            data:  { name: 'CustomCardWithNav' }
         ) do |tab|%>
-            <%= tab.nav do |nav| %>
+            <%= tab.nav(
+                :nav,
+                class: 'custom-nav',
+                id:    'custom_nav',
+                data:  { name: 'CustomNav' }
+            ) do |nav| %>
                 <%= nav.item(
                     :custom_item_1,
                     class: 'active custom-item-1-nav',
                     id:    'custom_item_1_nav',
                     data:  { name: 'CustomItem1Nav' }
                 ) do %>
-                    Custom Item 2 different than link.
+                    Custom Item 1 different than link.
                 <% end %>
                 <%= nav.item(
                     :custom_item_2,
@@ -73,22 +78,72 @@
                     id:    'custom_more_nav',
                     daata:  { name: 'CustomMoreNav'}
                 ) do |dropdown| %>
-                    <%= dropdown.item(:custom_item_3) { 'Item 3' } %>
-                    <%= dropdown.item(:custom_item_4) { 'Item 4' } %>
+                    <%= dropdown.item(
+                        :custom_item_3,
+                        class: 'custom-item-3-nav',
+                        id:    'custom_item_3_nav',
+                        data:  { name: 'CustomItem3Nav' }
+                    ) %>
+                    <%= dropdown.item(
+                        :custom_item_4,
+                        class: 'custom-item-4-nav',
+                        id:    'custom_item_4_nav',
+                        data:  { name: 'CustomItem4Nav' }
+                    ) %>
+                <% end %>
+            <% end %>
+            <%= tab.content(
+                class: 'custom-content',
+                id:    'custom_content',
+                data:  { name: 'CustomContent' }
+            ) do |content| %>
+                <%= content.pane(
+                    :custom_item_1,
+                    class: 'active custom-item-1-content',
+                    id:    'custom_item_1_content',
+                    data:  { name: 'CustomItem1Content' }
+                ) do %>
+                    Content for: Item 1
+                <% end %>
+                <%= content.pane(
+                    :custom_item_2,
+                    class: 'custom-item-2-content',
+                    id:    'custom_item_2_content',
+                    data:  { name: 'CustomItem2Content' }
+                ) do %>
+                    Content for: Item 2
+                <% end %>
+                <%= content.pane(
+                    :custom_item_3,
+                    class: 'custom-item-3-content',
+                    id:    'custom_item_3_content',
+                    data:  { name: 'CustomItem3Content' }
+                ) do %>
+                    Content for: Item 3
+                <% end %>
+                <%= content.pane(
+                    :custom_item_4,
+                    class: 'custom-item-4-content',
+                    id:    'custom_item_4_content',
+                    data:  { name: 'CustomItem4Content' }
+                ) do %>
+                    Content for: Item 4
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+    <div id="bindings">
+        <%= card_with_nav_tab_helper do |tab|%>
+            <%= tab.nav do |nav| %>
+                <% (min..max).each do |n| %>
+                    <%= nav.item "#{name}_#{n}", class: n == 1 ? 'active' : '' %>
                 <% end %>
             <% end %>
             <%= tab.content do |content| %>
-                <%= content.pane :custom_item_1, class: 'active' do %>
-                    Content for: Item 1
-                <% end %>
-                <%= content.pane :custom_item_2 do %>
-                    Content for: Item 2
-                <% end %>
-                <%= content.pane :custom_item_3 do %>
-                    Content for: Item 3
-                <% end %>
-                <%= content.pane :custom_item_4 do %>
-                    Content for: Item 4
+                <% (min..max).each do |n| %>
+                    <%= content.pane "#{name}_#{n}", class: n == 1 ? 'active' : '' do %>
+                        <%= name.titleize %> Item: <%= n %>
+                    <% end %>
                 <% end %>
             <% end %>
         <% end %>

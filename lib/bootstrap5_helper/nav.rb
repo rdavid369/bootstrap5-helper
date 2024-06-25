@@ -117,7 +117,7 @@ module Bootstrap5Helper
     # @return [String]
     #
     def to_s
-      content_tag(@tag, id: @id, class: "nav #{@class}") do
+      content_tag(@tag, id: @id, class: "nav #{@class}", data: @data) do
         @content.call(self)
       end
     end
