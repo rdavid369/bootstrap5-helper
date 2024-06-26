@@ -92,7 +92,7 @@ module Bootstrap5Helper
       end
     end
 
-    # Used to create a new <tt>Dropdown::Menu</tt>
+    # Used to create a new <tt>Overlay::Menu</tt>
     #
     # @param  [Hash] opts
     # @option opts [String] :id

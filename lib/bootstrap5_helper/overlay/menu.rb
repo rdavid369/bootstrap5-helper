@@ -32,8 +32,13 @@ module Bootstrap5Helper
       # @return [String]
       #
       def link(name = nil, options = nil, html_options = nil, &block)
-        html_options ||= {}
-        html_options[:class] = (html_options[:class] || '') << ' dropdown-item'
+        if block_given?
+          options ||= {}
+          options[:class] = (options[:class] || '') << ' dropdown-item'
+        else
+          html_options ||= {}
+          html_options[:class] = (html_options[:class] || '') << ' dropdown-item'
+        end
 
         nav_item_wrapper do
           @template.link_to(name, options, html_options, &block)
