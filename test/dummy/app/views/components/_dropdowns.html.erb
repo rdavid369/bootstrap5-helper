@@ -1,0 +1,72 @@
+<%
+#
+#
+#
+%>
+
+<div id="root">
+    <div id="default">
+        <%= dropdown_helper do |dropdown| %>
+            <%= dropdown.button(:primary) { "Action" } %>
+            <%= dropdown.menu do |menu| %>
+                <%= menu.link 'Edit', '#' %>
+                <%= menu.link 'Delete', '#' %>
+                <%= menu.text 'Static text' %>
+            <% end %>
+        <% end %>
+    </div>
+    <div id="custom">
+        <%= dropup_helper(
+            :span,
+            id:    'custom_dropdown',
+            class: 'custom-dropdown',
+            data:   { name: 'CustomDropdown' },
+            centered: true
+        ) do |dropdown| %>
+            <%= dropdown.button(
+                :info,
+                id:    'custom_button',
+                class: 'custom-button',
+                data:  { name: 'CustomButton' }
+            ) do %>
+                Custom Action
+            <% end %>
+            <%= dropdown.menu(
+                id:    'custom_menu',
+                class: 'custom-menu',
+                data:  { name: 'CustomMenu' }
+            ) do |menu| %>
+                <%= menu.link(
+                    '#',
+                    id:    'custom_edit_link',
+                    class: 'custom-edit-link',
+                    data:  { name: 'CustomEditLink' }
+                ) do %>
+                    Edit
+                <% end %>
+                <%= menu.link 'Delete', '#' %>
+                <%= menu.text(
+                    'Static text',
+                    class: 'custom-static-text',
+                    id:    'custom_static_text'
+                ) %>
+                <%= menu.divider %>
+                <p>Some custom content</p>
+            <% end %>
+        <% end %>
+    </div>
+    <div id="bindings">
+        <%= dropdown_helper class: "btn-group" do |dropdown| %>
+            <button type="button" class="btn btn-primary">
+                <%= name %>
+            </button>
+            <%= dropdown.caret :primary %>
+            <%= dropdown.menu do |menu| %>
+                <% (min..max).each do |n| %>
+                    <%= menu.link "#{name} Dropdown Link #{n}", '#' %>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
