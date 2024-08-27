@@ -1,0 +1,67 @@
+<%
+#
+#
+#
+%>
+
+<div id="root">
+    <div id="default">
+        <%= modal_helper do |m| %>
+            <%= m.header do %>
+                <%= m.title { 'Example Modal' } %>
+                <%= m.close_button %>
+            <% end %>
+            <%= m.body do %>
+                <p>Modal content goes here.</p>
+            <% end %>
+            <%= m.footer do %>
+                <%= m.close_button class: 'btn btn-secondary' do %>
+                    Close
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+    <div id="custom">
+        <%= modal_helper(
+            id:         'custom_modal',
+            class:      'custom-modal',
+            data:       { name: 'CustomModal' },
+            scrollable: true,
+            vcentered:  true,
+            fullscreen: :sm
+        ) do |modal| %>
+            <%= modal.header(
+                id:    'custom_modal_header',
+                class: 'custom-modal-header',
+                data:  { name: 'CustomModalHeader' }
+            ) do %>
+                <%= modal.title(
+                    id:    'custom_modal_title',
+                    class: 'custom-modal-title'
+                ) do %>
+                    Custom Modal
+                <% end %>
+                <%= modal.close_button %>
+            <% end %>
+            <%= modal.body(
+                id:    'custom_modal_body',
+                class: 'custom-modal-body',
+                data:  { name: 'CustomModalBody' }
+            ) do %>
+               <p>Modal content goes here.</p>
+            <% end %>
+            <%= modal.footer(
+                id:    'custom_modal_footer',
+                class: 'custom-modal-footer',
+                data:  { name: 'CustomModalFooter' }
+            ) do %>
+                <%= modal.close_button class: 'btn btn-secondary' do %>
+                    Close
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+    <div id="bindings">
+        
+    </div>
+</div>

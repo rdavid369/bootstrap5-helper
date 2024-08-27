@@ -6,9 +6,9 @@
 
 <div id="root">
     <div id="default">
-        <%= dropdown_helper do |dropdown| %>
-            <%= dropdown.button(:primary) { "Action" } %>
-            <%= dropdown.menu do |menu| %>
+        <%= dropend_helper do |dropend| %>
+            <%= dropend.button(:primary) { "Action" } %>
+            <%= dropend.menu do |menu| %>
                 <%= menu.link 'Edit', '#' %>
                 <%= menu.link 'Delete', '#' %>
                 <%= menu.text 'Static text' %>
@@ -16,14 +16,14 @@
         <% end %>
     </div>
     <div id="custom">
-        <%= dropdown_helper(
+        <%= dropend_helper(
             :span,
             id:    'custom_dropdown',
             class: 'custom-dropdown',
             data:   { name: 'CustomDropdown' },
             centered: true
-        ) do |dropdown| %>
-            <%= dropdown.button(
+        ) do |dropend| %>
+            <%= dropend.button(
                 :info,
                 id:    'custom_button',
                 class: 'custom-button',
@@ -31,7 +31,7 @@
             ) do %>
                 Custom Action
             <% end %>
-            <%= dropdown.menu(
+            <%= dropend.menu(
                 id:    'custom_menu',
                 class: 'custom-menu',
                 data:  { name: 'CustomMenu' }
@@ -56,12 +56,12 @@
         <% end %>
     </div>
     <div id="bindings">
-        <%= dropdown_helper class: "btn-group" do |dropdown| %>
+        <%= dropend_helper class: "btn-group" do |dropend| %>
             <button type="button" class="btn btn-primary">
                 <%= name %>
             </button>
-            <%= dropdown.caret :primary %>
-            <%= dropdown.menu do |menu| %>
+            <%= dropend.caret :primary %>
+            <%= dropend.menu do |menu| %>
                 <% (min..max).each do |n| %>
                     <%= menu.link "#{name} Dropdown Link #{n}", '#' %>
                 <% end %>
@@ -69,4 +69,3 @@
         <% end %>
     </div>
 </div>
-

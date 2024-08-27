@@ -19,6 +19,7 @@ module Bootstrap5Helper
 
       @id          = args.fetch(:id,          uuid)
       @class       = args.fetch(:class,       '')
+      @data        = args.fetch(:data,        {})
       @dismissible = args.fetch(:dismissible, false)
       @content     = block || proc { '' }
     end
@@ -42,7 +43,7 @@ module Bootstrap5Helper
     # @return [String]
     #
     def to_s
-      content_tag :div, id: @id, class: container_class do
+      content_tag(:div, id: @id, class: container_class, data: @data) do
         concat(@dismissible ? close_button : '')
         @content.call(self)
       end

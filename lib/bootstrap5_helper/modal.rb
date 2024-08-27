@@ -197,7 +197,7 @@ module Bootstrap5Helper
       when TrueClass
         'modal-fullscreen'
       when String, Symbol
-        "modal-fullscreen-#{@fullscreen}-down	"
+        "modal-fullscreen-#{@fullscreen}-down "
       else
         ''
       end
