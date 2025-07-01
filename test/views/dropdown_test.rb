@@ -1,13 +1,13 @@
-require "test_helper"
+require 'test_helper'
 
 # rubocop:disable Metrics/ClassLength
 class DropdownTest < ActionView::TestCase
-  DEFAULT  = "Default Dropdown".freeze
-  CUSTOM   = "Custom Dropdown".freeze
-  BINDINGS = "Binding dropdown".freeze
+  DEFAULT  = 'Default Dropdown'.freeze
+  CUSTOM   = 'Custom Dropdown'.freeze
+  BINDINGS = 'Binding dropdown'.freeze
 
   setup do
-    render "components/dropdowns", name: "Todo", min: 1, max: 5
+    render 'components/dropdowns', name: 'Todo', min: 1, max: 5
 
     @root      = document_root_element.at("//div[contains(@id, 'root')]")
     @default   = @root.at(".//div[contains(@id,    'default')]")
@@ -45,7 +45,7 @@ class DropdownTest < ActionView::TestCase
   end
 
   test "#{DEFAULT} dropdown toggle should have the correct text" do
-    default_toggle.text == 'Action'
+    assert(default_toggle.text == 'Action')
   end
 
   test "#{DEFAULT} should have a dropdown menu" do
@@ -78,7 +78,7 @@ class DropdownTest < ActionView::TestCase
 
   test "#{CUSTOM} should have the following classes .dropdown and .custom-dropdown" do
     assert(
-      ['dropdown', 'custom-dropdown'].all? do |klass|
+      %w[dropdown custom-dropdown].all? do |klass|
         @custom['class'].match?(klass)
       end
     )
@@ -101,7 +101,7 @@ class DropdownTest < ActionView::TestCase
     .dropdown-toggle .custom-button
   TEXT
     assert(
-      ['dropdown-toggle', 'custom-button'].all? do |klass|
+      %w[dropdown-toggle custom-button].all? do |klass|
         custom_toggle['class'].match?(klass)
       end
     )
@@ -116,7 +116,7 @@ class DropdownTest < ActionView::TestCase
     data-name data-bs-toggle data-bs-display
   TEXT
     assert(
-      ['data-name','data-bs-toggle','data-bs-display'].all? do |attr|
+      %w[data-name data-bs-toggle data-bs-display].all? do |attr|
         custom_toggle[attr].present?
       end
     )
@@ -134,7 +134,7 @@ class DropdownTest < ActionView::TestCase
     #{CUSTOM} dropdown menu should have the correct classes .dropdown-menu .custom-menu
   TEXT
     assert(
-      ['dropdown-menu', 'custom-menu'].all? do |klass|
+      %w[dropdown-menu custom-menu].all? do |klass|
         custom_menu['class'].match?(klass)
       end
     )
@@ -171,7 +171,7 @@ class DropdownTest < ActionView::TestCase
   end
 
   test "#{CUSTOM} dropdown menu should have a custom paragraph element" do
-    ptag = custom_menu.at(".//p")
+    ptag = custom_menu.at('.//p')
     assert(ptag.present? && ptag.text.match?('Some custom content'))
   end
 
@@ -185,7 +185,7 @@ class DropdownTest < ActionView::TestCase
 
   test "#{BINDINGS} caret element should have the correct classes" do
     assert(
-      ['dropdown-toggle', 'dropdown-toggle-split'].all? do |klass|
+      %w[dropdown-toggle dropdown-toggle-split].all? do |klass|
         bindings_toggle['class'].match?(klass)
       end
     )

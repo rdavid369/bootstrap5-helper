@@ -45,7 +45,7 @@ class DropstartTest < ActionView::TestCase
   end
 
   test "#{DEFAULT} dropdown toggle should have the correct text" do
-    default_toggle.text == 'Action'
+    assert(default_toggle.text == 'Action')
   end
 
   test "#{DEFAULT} should have a dropdown menu" do
@@ -292,3 +292,4 @@ class DropstartTest < ActionView::TestCase
     bindings_menu.search(".//*[contains(@class, 'dropdown-item')]")
   end
 end
+# rubocop:enable Metrics/ClassLength
