@@ -12,6 +12,7 @@ module Bootstrap5Helper
     # @option opts [String]  :id
     # @option opts [String]  :class
     # @option opts [Hash]    :data
+    # @option opts [Hash]    :wrapper
     # @option opts [Boolean] :scrollable
     # @option opts [Boolean] :vcentered
     # @option opts [Boolean] :static
@@ -24,6 +25,7 @@ module Bootstrap5Helper
       @id         = opts.fetch(:id,         uuid)
       @class      = opts.fetch(:class,      '')
       @data       = opts.fetch(:data,       {})
+      @wrapper    = opts.fetch(:wrapper,    {})
       @scrollable = opts.fetch(:scrollable, false)
       @vcentered  = opts.fetch(:vcentered,  false)
       @static     = opts.fetch(:static,     false)
@@ -122,7 +124,14 @@ module Bootstrap5Helper
           class: "modal-dialog #{size} #{scrollable} #{vcentered} #{fullscreen}",
           role:  'document'
         ) do
-          content_tag(:div, class: 'modal-content') { @content.call(self) }
+          content_tag(
+            :div,
+            id:    @wrapper.fetch(:id, nil),
+            class: "modal-content #{@wrapper.fetch(:class, '')}",
+            data:  @wrapper.fetch(:data, {})
+          ) do
+            @content.call(self)
+          end
         end
       end
     end
@@ -194,10 +203,8 @@ module Bootstrap5Helper
     #
     def fullscreen
       case @fullscreen
-      when TrueClass
-        'modal-fullscreen'
-      when String, Symbol
-        "modal-fullscreen-#{@fullscreen}-down "
+      when TrueClass      then 'modal-fullscreen'
+      when String, Symbol then "modal-fullscreen-#{@fullscreen}-down "
       else
         ''
       end
@@ -209,12 +216,9 @@ module Bootstrap5Helper
     #
     def size
       case @size.to_s
-      when 'xlarge', 'xl'
-        'modal-xl'
-      when 'large', 'lg'
-        'modal-lg'
-      when 'small', 'sm'
-        'modal-sm'
+      when 'xlarge', 'xl' then 'modal-xl'
+      when 'large', 'lg'  then 'modal-lg'
+      when 'small', 'sm'  then 'modal-sm'
       else
         ''
       end

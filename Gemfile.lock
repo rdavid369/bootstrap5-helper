@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bootstrap5_helper (1.2.0.pre2)
+    bootstrap5_helper (1.2.0.pre3)
       rails (> 4.2, <= 8.1)
 
 GEM

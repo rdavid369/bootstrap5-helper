@@ -79,6 +79,10 @@ class ModalTest < ActionView::TestCase
     assert(btn['data-bs-dismiss'] == 'modal')
   end
 
+  test "#{CUSTOM} content should have border classes" do
+    assert(custom_content['class'].match?('border-success'))
+  end
+
   # Start testing custom modal
 
   private
