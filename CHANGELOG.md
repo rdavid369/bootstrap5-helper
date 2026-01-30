@@ -1,3 +1,7 @@
+## 1.2.1 (2026-01-30)
+
+- Updated dummy app to Rails 8. Tests all passed and dummy application runs, with no issues.
+
 ## 1.1.3 (2024-08-27)
 
 - Added tests for some of the components. Updated `Alert` to accept data attributes.
