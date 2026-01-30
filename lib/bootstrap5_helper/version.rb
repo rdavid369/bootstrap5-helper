@@ -1,3 +1,3 @@
 module Bootstrap5Helper
-  VERSION = '1.1.3'.freeze
+  VERSION = '1.2.1'.freeze
 end
