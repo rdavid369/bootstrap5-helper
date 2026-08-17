@@ -15,9 +15,10 @@ module Bootstrap5Helper
       super(template)
       @context, args = parse_context_or_options(context_or_options, opts)
 
-      @id      = args.fetch(:id,    nil)
-      @class   = args.fetch(:class, '')
-      @data    = args.fetch(:data,  {})
+      @attrs   = args
+      @id      = @attrs.delete(:id)    { nil }
+      @class   = @attrs.delete(:class) { '' }
+      @data    = @attrs.delete(:data)  { {} }
       @content = block || proc { '' }
     end
 
@@ -40,7 +41,14 @@ module Bootstrap5Helper
     # @return [String]
     #
     def to_s
-      content_tag :div, id: @id, class: container_class, data: @data do
+      content_tag(
+        :div,
+        {
+          id:    @id,
+          class: container_class,
+          data:  @data
+        }.merge(@attrs)
+      ) do
         @content.call(self)
       end
     end

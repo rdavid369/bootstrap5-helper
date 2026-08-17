@@ -1,7 +1,7 @@
 module Bootstrap5Helper
-  # Used to build Bootstrap Card components.  Cards are wildly used through Bootstrap 4.
-  #
-  #
+  # rubocop:disable Metrics/ClassLength
+
+  # Used to build Bootstrap Card components..
   class Card < Component
     # Used to initialize a new Card component.
     #
@@ -15,9 +15,10 @@ module Bootstrap5Helper
     def initialize(template, opts = {}, &block)
       super(template)
 
-      @id      = opts.fetch(:id,    '')
-      @class   = opts.fetch(:class, '')
-      @data    = opts.fetch(:data,  nil)
+      @attrs   = opts
+      @id      = @attrs.delete(:id)    { '' }
+      @class   = @attrs.delete(:class) { '' }
+      @data    = @attrs.delete(:data)  { {} }
       @content = block || proc { '' }
     end
 
@@ -228,7 +229,14 @@ module Bootstrap5Helper
     # @return [String]
     #
     def to_s
-      content_tag :div, id: @id, class: "card #{@class}", data: @data do
+      content_tag(
+        :div,
+        {
+          id:    @id,
+          class: "card #{@class}",
+          data:  @data
+        }.merge(@attrs)
+      ) do
         @content.call(self)
       end
     end
@@ -256,17 +264,21 @@ module Bootstrap5Helper
     # @return [String]
     #
     def build_sub_component(tag, type, args, &block)
-      id    = args.fetch(:id,    '')
-      klass = args.fetch(:class, '')
-      data  = args.fetch(:data,  {})
+      attrs = args
+      id    = attrs.delete(:id)    { '' }
+      klass = attrs.delete(:class) { '' }
+      data  = attrs.delete(:data)  { {} }
 
       content_tag(
         tag,
-        id:    id,
-        class: "card-#{type} #{klass}",
-        data:  data,
+        {
+          id:    id,
+          class: "card-#{type} #{klass}",
+          data:  data
+        }.merge(attrs),
         &block
       )
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

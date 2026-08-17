@@ -21,14 +21,15 @@ module Bootstrap5Helper
     def initialize(template, opts = {}, &block)
       super(template)
 
-      @id         = opts.fetch(:id,         uuid)
-      @class      = opts.fetch(:class,      '')
-      @data       = opts.fetch(:data,       {})
-      @scrollable = opts.fetch(:scrollable, false)
-      @vcentered  = opts.fetch(:vcentered,  false)
-      @static     = opts.fetch(:static,     false)
-      @fullscreen = opts.fetch(:fullscreen, false)
-      @size       = opts.fetch(:size,       nil)
+      @attrs      = opts
+      @id         = @attrs.delete(:id)         { uuid }
+      @class      = @attrs.delete(:class)      { '' }
+      @data       = @attrs.delete(:data)       { {} }
+      @scrollable = @attrs.delete(:scrollable) { false }
+      @vcentered  = @attrs.delete(:vcentered)  { false }
+      @static     = @attrs.delete(:static)     { false }
+      @fullscreen = @attrs.delete(:fullscreen) { false }
+      @size       = @attrs.delete(:size)       { nil }
       @content    = block || proc { '' }
     end
 
@@ -87,14 +88,19 @@ module Bootstrap5Helper
     # @return [String]
     #
     def close_button(opts = {})
-      klass = opts.fetch(:class, '')
+      attrs = opts
+      klass = attrs.delete(:class) { '' }
+      data  = attrs.delete(:data)  { {} }
+      aria  = attrs.delete(:aria)  { {} }
 
       content_tag(
         :button,
-        type:  'button',
-        class: block_given? ? klass : 'btn-close',
-        data:  { 'bs-dismiss': 'modal' },
-        aria:  { label: 'Close' }
+        {
+          type:  'button',
+          class: block_given? ? klass : 'btn-close',
+          data:  data.merge('bs-dismiss' => 'modal'),
+          aria:  aria.merge(label: 'Close')
+        }.merge(attrs)
       ) do
         block_given? ? yield : xbutton
       end
@@ -111,11 +117,13 @@ module Bootstrap5Helper
 
       content_tag(
         :div,
-        id:       @id,
-        class:    "modal #{@class}",
-        tabindex: -1,
-        role:     'dialog',
-        data:     @data
+        {
+          id:       @id,
+          class:    "modal #{@class}",
+          tabindex: -1,
+          role:     'dialog',
+          data:     @data
+        }.merge(@attrs)
       ) do
         content_tag(
           :div,
@@ -151,15 +159,18 @@ module Bootstrap5Helper
     # @return [String]
     #
     def build_sub_component(tag, type, opts = {}, &block)
-      id    = opts.fetch(:id,    nil)
-      klass = opts.fetch(:class, '')
-      data  = opts.fetch(:data,  {})
+      attrs = opts
+      id    = attrs.delete(:id)    { nil }
+      klass = attrs.delete(:class) { '' }
+      data  = attrs.delete(:data)  { {} }
 
       content_tag(
         tag,
-        id:    id,
-        class: "modal-#{type} #{klass}",
-        data:  data,
+        {
+          id:    id,
+          class: "modal-#{type} #{klass}",
+          data:  data
+        }.merge(attrs),
         &block
       )
     end

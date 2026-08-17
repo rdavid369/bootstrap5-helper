@@ -15,9 +15,10 @@ module Bootstrap5Helper
       def initialize(template, opts = {}, &block)
         super(template)
 
-        @id      = opts.fetch(:id,    uuid)
-        @class   = opts.fetch(:class, '')
-        @data    = opts.fetch(:data,  {})
+        @attrs   = opts
+        @id      = @attrs.delete(:id)    { uuid }
+        @class   = @attrs.delete(:class) { '' }
+        @data    = @attrs.delete(:data)  { {} }
         @content = block || proc { '' }
       end
 
@@ -30,16 +31,19 @@ module Bootstrap5Helper
       # @return [String]
       #
       def pane(source, opts = {}, &block)
-        id    = opts.fetch(:id,    source)
-        klass = opts.fetch(:class, '')
-        data  = opts.fetch(:data,  {})
+        attrs = opts
+        id    = attrs.delete(:id)    { source }
+        klass = attrs.delete(:class) { '' }
+        data  = attrs.delete(:data)  { {} }
 
         content_tag(
           :div,
-          id:    id,
-          class: "tab-pane #{klass}",
-          role:  'tabpanel',
-          data:  data,
+          {
+            id:    id,
+            class: "tab-pane #{klass}",
+            role:  'tabpanel',
+            data:  data
+          }.merge(attrs),
           &block
         )
       end
@@ -49,7 +53,14 @@ module Bootstrap5Helper
       # @return [String]
       #
       def to_s
-        content_tag :div, id: @id, class: "tab-content #{@class}" do
+        content_tag(
+          :div,
+          {
+            id:    @id,
+            class: "tab-content #{@class}",
+            data:  @data
+          }.merge(@attrs)
+        ) do
           @content.call(self)
         end
       end

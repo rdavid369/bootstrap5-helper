@@ -18,14 +18,14 @@ module Bootstrap5Helper
     #
     def initialize(template, position_or_options = nil, opts = {}, &block)
       super(template)
-      @pos, args  = parse_position_or_options(position_or_options, opts)
-      @id         = args.fetch(:id,         uuid)
-      @class      = args.fetch(:class,      '')
-      @data       = args.fetch(:data,       {})
-      @aria       = args.fetch(:aria,       {})
-      @scrollable = args.fetch(:scrollable, false)
-      @backdrop   = args.fetch(:backdrop,   true)
-      @content    = block || proc { '' }
+      @pos, @attrs  = parse_position_or_options(position_or_options, opts)
+      @id           = @attrs.delete(:id)         { uuid }
+      @class        = @attrs.delete(:class)      { '' }
+      @data         = @attrs.delete(:data)       { {} }
+      @aria         = @attrs.delete(:aria)       { {} }
+      @scrollable   = @attrs.delete(:scrollable) { false }
+      @backdrop     = @attrs.delete(:backdrop)   { true }
+      @content      = block || proc { '' }
     end
     # rubocop:disable Metrics/MethodLength
 
@@ -139,7 +139,7 @@ module Bootstrap5Helper
           scrollable: @scrollable,
           backdrop:   @backdrop,
           position:   @pos
-        },
+        }.merge(@attrs),
         &block
       )
     end

@@ -15,12 +15,12 @@ module Bootstrap5Helper
     def initialize(template, tag_or_options = nil, opts = {}, &block)
       super(template)
 
-      @tag, args = parse_tag_or_options(tag_or_options, opts)
+      @tag, @attrs = parse_tag_or_options(tag_or_options, opts)
       @tag ||= config(:page_header, :h1)
 
-      @id      = args.fetch(:id,    uuid)
-      @class   = args.fetch(:class, '')
-      @data    = args.fetch(:data,  {})
+      @id      = @attrs.delete(:id)    { uuid }
+      @class   = @attrs.delete(:class) { '' }
+      @data    = @attrs.delete(:data)  { {} }
       @content = block || proc { '' }
     end
 
@@ -31,9 +31,11 @@ module Bootstrap5Helper
     def to_s
       content_tag(
         @tag,
-        id:    @id,
-        class: "pb-2 mt-4 mb-2 border-bottom #{@class}",
-        data:  @data
+        {
+          id:    @id,
+          class: "pb-2 mt-4 mb-2 border-bottom #{@class}",
+          data:  @data
+        }.merge(@attrs)
       ) do
         @content.call(self)
       end

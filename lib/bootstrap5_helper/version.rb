@@ -1,3 +1,3 @@
 module Bootstrap5Helper
-  VERSION = '1.2.1'.freeze
+  VERSION = '2.0.0.beta'.freeze
 end

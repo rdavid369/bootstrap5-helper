@@ -17,14 +17,15 @@ module Bootstrap5Helper
         super(template)
 
         @parent         = parent_id
-        @id             = opts.fetch(:id,       uuid)
-        @class          = opts.fetch(:class,    '')
-        @data           = opts.fetch(:data,     {})
-        @expanded       = opts.fetch(:expanded, false)
-        @collapse       = opts.fetch(:collapse, {})
-        @collapse_id    = @collapse.fetch(:id,    uuid)
-        @collapse_klass = @collapse.fetch(:class, '')
-        @collapse_data  = @collapse.fetch(:data,  {})
+        @attrs          = opts
+        @id             = @attrs.delete(:id)       { uuid }
+        @class          = @attrs.delete(:class)    { '' }
+        @data           = @attrs.delete(:data)     { {} }
+        @expanded       = @attrs.delete(:expanded) { false }
+        @collapse       = @attrs.delete(:collapse) { {} }
+        @collapse_id    = @collapse.delete(:id)    { uuid }
+        @collapse_klass = @collapse.delete(:class) { '' }
+        @collapse_data  = @collapse.delete(:data)  { {} }
         @header_id      = uuid
         @content        = block || proc { '' }
       end
@@ -51,15 +52,17 @@ module Bootstrap5Helper
       def header(*tag_or_options, &block)
         tag, args = parse_tag_or_options(*tag_or_options, {})
 
-        @header_id = args.fetch(:id,    @header_id)
-        klass      = args.fetch(:class, '')
-        data       = args.fetch(:data,  {})
+        @header_id = args.delete(:id)    { @header_id }
+        klass      = args.delete(:class) { '' }
+        data       = args.delete(:data)  { {} }
 
         content_tag(
           tag || config({ accordions: :header }, :h2),
-          id:    @header_id,
-          class: "accordion-header #{klass}",
-          data:  data
+          {
+            id:    @header_id,
+            class: "accordion-header #{klass}",
+            data:  data
+          }.merge(args)
         ) do
           content_tag(
             :button,
@@ -90,9 +93,9 @@ module Bootstrap5Helper
       # @return [String]
       #
       def body(opts = {}, &block)
-        id     = opts.fetch(:id,    uuid)
-        klass  = opts.fetch(:class, '')
-        data   = opts.fetch(:data,  {})
+        id     = opts.delete(:id)    { uuid }
+        klass  = opts.delete(:class) { '' }
+        data   = opts.delete(:data)  { {} }
 
         content_tag(
           :div,
@@ -105,9 +108,11 @@ module Bootstrap5Helper
         ) do
           content_tag(
             :div,
-            id:    id,
-            class: "accordion-body #{klass}",
-            data:  data,
+            {
+              id:    id,
+              class: "accordion-body #{klass}",
+              data:  data
+            }.merge(opts),
             &block
           )
         end
@@ -119,7 +124,14 @@ module Bootstrap5Helper
       # @return [String]
       #
       def to_s
-        content_tag :div, id: @id, class: "accordion-item #{@class}", data: @data do
+        content_tag(
+          :div,
+          {
+            id:    @id,
+            class: "accordion-item #{@class}",
+            data:  @data
+          }.merge(@attrs)
+        ) do
           @content.call(self)
         end
       end

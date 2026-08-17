@@ -28,4 +28,10 @@ class BadgeTest < ActionView::TestCase
       end
     )
   end
+
+  test <<~TEXT do
+    Custom badge should have an aria-special attribute of badge!
+  TEXT
+    assert(@custom['aria-special'].match?('badge!'))
+  end
 end

@@ -87,20 +87,23 @@
 
 <div class="row">
     <div class="col-sm mt-3 mb-3">
-        <%= card_helper do |c| %>
-            <%= c.header  do %>
+        <%= card_helper('aria-special' => 'helper!') do |c| %>
+            <%= c.header('aria-special' => 'header!') do %>
                 This is the header...
             <% end %>
-            <%= c.body do %>
-                <%= c.title { 'This is the title' } %>
-                <%= c.text { 'This card body' } %>
+            <%= c.body('aria-special' => 'body!') do %>
+                <%= c.title('aria-special' => 'title!') { 'This is the title' } %>
+                <%= c.text('aria-special' => 'text!') { 'This card body' } %>
                 <ul>
                     <% [1, 2, 3].each do |x|  %>
                         <li>Item: <%= x %></li>
                     <% end %>
                 </ul>
             <% end %>
-            <%= c.footer class: 'text-muted' do %>
+            <%= c.footer(
+                class: 'text-muted',
+                'aria-special' => 'footer!'
+            ) do %>
                 This is the footer...
             <% end %>
         <% end %>
@@ -221,10 +224,10 @@
     <div class="col-sm mt-3 mb-3">
         <%= accordion_helper id: 'my_custom_id' do |a| %>
             <%= a.item expanded: true, collapse: { data: { test: 'worked' }, class: 'some-collapse-class', id: 'some_collapse_id' } do |item| %>
-                <%= item.header do %>
+                <%= item.header 'aria-special' => 'header' do %>
                     Accordion Header #1
                 <% end %>
-                <%= item.body do %>
+                <%= item.body 'aria-special' => 'body' do %>
                     This is the first item's accordion body. It is hidden by default, until the 
                     collapse plugin adds the appropriate classes that we use to style each element. 
                     These classes control the overall appearance, as well as the showing and hiding 
@@ -592,7 +595,7 @@
 
 <div class="row mb-5">
     <div class="col">
-        <%= card_with_nav_tab_helper do |tab|%>
+        <%= card_with_nav_tab_helper('aria-special' => 'cardWithTabs!') do |tab|%>
             <%= tab.nav do |nav| %>
                 <%= nav.item :item_1, class: 'active' %>
                 <%= nav.item(:item_2) do %>
@@ -627,6 +630,49 @@
                 <% end %>
                 <%= content.pane :item_7 do %>
                     Content for: Item 7
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col">
+        <%= card_with_nav_tab_helper('aria-special' => 'cardWithTabs!') do |tab|%>
+            <%= tab.nav(:nav) do |nav| %>
+                <%= nav.item :item_10, class: 'active' %>
+                <%= nav.item(:item_20) do %>
+                    Item 20 
+                <% end %>
+                <%= nav.item(:item_30) { 'Item 30' } %>
+                <%= nav.item(:item_40) { 'Item 40' } %>
+                <%= nav.item(:item_50) { 'Item 50' } %>
+                <%= nav.dropdown :more do |dropdown| %>
+                    <%= dropdown.item(:item_60) { 'Item 60' } %>
+                    <%= dropdown.item(:item_70) { 'Item 70' } %>
+                <% end %>
+            <% end %>
+            <%= tab.content do |content| %>
+                <%= content.pane :item_10, class: 'active' do %>
+                    Content for: Item 10
+                <% end %>
+                <%= content.pane :item_20 do %>
+                    Content for: Item 20
+                <% end %>
+                <%= content.pane :item_30 do %>
+                    Content for: Item 30
+                <% end %>
+                <%= content.pane :item_40 do %>
+                    Content for: Item 40
+                <% end %>
+                <%= content.pane :item_50 do %>
+                    Content for: Item 50
+                <% end %>
+                <%= content.pane :item_60 do %>
+                    Content for: Item 60
+                <% end %>
+                <%= content.pane :item_70 do %>
+                    Content for: Item 70
                 <% end %>
             <% end %>
         <% end %>

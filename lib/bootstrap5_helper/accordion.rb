@@ -16,11 +16,12 @@ module Bootstrap5Helper
     def initialize(template, opts = {}, &block)
       super(template)
 
-      @id          = opts.fetch(:id,          uuid)
-      @class       = opts.fetch(:class,       '')
-      @data        = opts.fetch(:data,        {})
-      @always_open = opts.fetch(:always_open, false)
-      @flush       = opts.fetch(:flush,       false)
+      @attrs       = opts
+      @id          = @attrs.delete(:id)          { uuid }
+      @class       = @attrs.delete(:class)       { '' }
+      @data        = @attrs.delete(:data)        { {} }
+      @always_open = @attrs.delete(:always_open) { false }
+      @flush       = @attrs.delete(:flush)       { false }
       @content     = block || proc { '' }
     end
 
@@ -39,9 +40,11 @@ module Bootstrap5Helper
     def to_s
       content_tag(
         :div,
-        id:    @id,
-        class: "accordion #{@flush ? 'accordion-flush' : ''} #{@class}",
-        data:  @data
+        {
+          id:    @id,
+          class: "accordion #{@flush ? 'accordion-flush' : ''} #{@class}",
+          data:  @data
+        }.merge(@attrs)
       ) do
         @content.call(self)
       end

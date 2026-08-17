@@ -43,26 +43,30 @@
         <%= card_helper(
             class: 'custom-wrapper-class',
             id:    'custom_wrapper_id',
-            data:  { name: 'CustomCard'}
+            data:  { name: 'CustomCard'},
+            'aria-special' => 'card!'
         ) do |c| %>
             <%= c.header(
                 :div,
                 class: 'h5',
                 id:    'custom_header',
-                data:  { name: 'CustomHeader' }
+                data:  { name: 'CustomHeader' },
+                'aria-special' => 'header!'
             ) do %>
                 This is the custom header...
             <% end %>
             <%= c.body(
                 id:    'custom_body',
                 class: 'custom-body',
-                data:  { name: 'CustomBody' }
+                data:  { name: 'CustomBody' },
+                'aria-special' => 'body!'
             ) do %>
                 <%= c.title(
                     :div,
                     class: 'custom-title',
                     id:    'custom_title',
-                    data:  { name: 'CustomTitle' }
+                    data:  { name: 'CustomTitle' },
+                    'aria-special' => 'title!'
                 ) do %>
                     Custom title
                 <% end %>
@@ -70,7 +74,8 @@
                     :div,
                     class: 'custom-subtitle',
                     id:    'custom_subtitle',
-                    data:  { name: 'CustomSubtitle' }
+                    data:  { name: 'CustomSubtitle' },
+                    'aria-special' => 'subtitle!'
                  ) do %>
                     Custom subtitle
                 <% end %>
@@ -78,7 +83,8 @@
                     :div,
                     class: 'custom-text',
                     id:    'custom_text',
-                    data:  { name: 'CustomText' }
+                    data:  { name: 'CustomText' },
+                    'aria-special' => 'text!'
                  ) do %>
                     Custom card text
                 <% end %>
@@ -86,9 +92,13 @@
                     <% [1, 2, 3].each do |x|  %>
                         <li>Custom Item: <%= x %></li>
                     <% end %>
-                    </ul>
+                </ul>
             <% end %>
-            <%= c.footer(class: 'custom-footer', id: 'custom_footer') do %>
+            <%= c.footer(
+                class: 'custom-footer',
+                id:    'custom_footer',
+                'aria-special' => 'footer!'
+            ) do %>
                 This is the custom footer...
             <% end %>
         <% end %>

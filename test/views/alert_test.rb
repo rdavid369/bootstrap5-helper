@@ -31,6 +31,10 @@ class AlertTest < ActionView::TestCase
     assert(@custom['id'].match?('custom_alert'))
   end
 
+  test 'Custom alert should have a custom aria-special attribute' do
+    assert(@custom['aria-special'].match?('alert!'))
+  end
+
   test 'Bindings alert should have P tag with the proper text' do
     assert(@bindings.text.match?('List for Todos'))
   end

@@ -28,14 +28,17 @@ module Bootstrap5Helper
       super(template)
 
       @tag, args = parse_tag_or_options(*tag_or_options, {})
-      @split     = args.fetch(:split,    false)
-      @centered  = args.fetch(:centered, false)
-      @id        = args.fetch(:id,       uuid)
-      @class     = args.fetch(:class,    '')
-      @data      = args.fetch(:data,     {})
+      @attrs     = args
+      @split     = @attrs.delete(:split)    { false }
+      @centered  = @attrs.delete(:centered) { false }
+      @id        = @attrs.delete(:id)       { uuid }
+      @class     = @attrs.delete(:class)    { '' }
+      @data      = @attrs.delete(:data)     { {} }
 
       @content   = block || proc { '' }
     end
+
+    # rubocop:disable Metrics/MethodLength
 
     # Used to generate a button for the dropdown.  This button just
     # opens the coresponding dropdown menu.
@@ -48,23 +51,29 @@ module Bootstrap5Helper
     # @return [String]
     #
     def button(context = :primary, opts = {}, &block)
-      id     = opts.fetch(:id,    nil)
-      klass  = opts.fetch(:class, '')
-      data   = opts.fetch(:data,  {}).merge(
-        'bs-toggle'  => 'dropdown',
-        'bs-display' => 'static'
-      )
+      attrs  = opts
+      klass  = attrs.delete(:class) { '' }
+      data   = attrs.delete(:data)  { {} }
+      aria   = attrs.delete(:aria)  { {} }
 
       content_tag(
         :button,
-        id:    id,
-        type:  'button',
-        class: "dropdown-toggle btn btn-#{context} #{klass}",
-        data:  data,
-        aria:  { haspopup: true, expanded: false },
+        {
+          type:  'button',
+          class: "dropdown-toggle btn btn-#{context} #{klass}",
+          data:  data.merge(
+            'bs-toggle'  => 'dropdown',
+            'bs-display' => 'static'
+          ),
+          aria:  aria.merge(
+            haspopup: true,
+            expanded: false
+          )
+        }.merge(attrs),
         &block
       )
     end
+    # rubocop:enable Metrics/MethodLength
 
     # Used to generate a button with just the caret, to open the dropdown.
     #
@@ -112,9 +121,11 @@ module Bootstrap5Helper
     def to_s
       content_tag(
         @tag || :div,
-        id:    @id,
-        class: "#{@type} #{alignment_type_class} #{@class}",
-        data:  @data
+        {
+          id:    @id,
+          class: "#{@type} #{alignment_type_class} #{@class}",
+          data:  @data
+        }.merge(@attrs)
       ) do
         @content.call(self)
       end

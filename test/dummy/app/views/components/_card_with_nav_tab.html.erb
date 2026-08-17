@@ -50,19 +50,22 @@
             :primary,
             class: 'custom-card-with-nav',
             id:    'custom_card_with_nav',
-            data:  { name: 'CustomCardWithNav' }
+            data:  { name: 'CustomCardWithNav' },
+            'aria-special' => 'wrapper!'
         ) do |tab|%>
             <%= tab.nav(
                 :nav,
                 class: 'custom-nav',
                 id:    'custom_nav',
-                data:  { name: 'CustomNav' }
+                data:  { name: 'CustomNav' },
+                'aria-special' => 'nav!'
             ) do |nav| %>
                 <%= nav.item(
                     :custom_item_1,
                     class: 'active custom-item-1-nav',
                     id:    'custom_item_1_nav',
-                    data:  { name: 'CustomItem1Nav' }
+                    data:  { name: 'CustomItem1Nav' },
+                    'aria-special' => 'item!'
                 ) do %>
                     Custom Item 1 different than link.
                 <% end %>
@@ -76,7 +79,7 @@
                     :custom_more,
                     class: 'custom-more-nav',
                     id:    'custom_more_nav',
-                    daata:  { name: 'CustomMoreNav'}
+                    data:  { name: 'CustomMoreNav'}
                 ) do |dropdown| %>
                     <%= dropdown.item(
                         :custom_item_3,
@@ -95,13 +98,15 @@
             <%= tab.content(
                 class: 'custom-content',
                 id:    'custom_content',
-                data:  { name: 'CustomContent' }
+                data:  { name: 'CustomContent' },
+                'aria-special' => 'content!'
             ) do |content| %>
                 <%= content.pane(
                     :custom_item_1,
                     class: 'active custom-item-1-content',
                     id:    'custom_item_1_content',
-                    data:  { name: 'CustomItem1Content' }
+                    data:  { name: 'CustomItem1Content' },
+                    'aria-special' => 'pane!'
                 ) do %>
                     Content for: Item 1
                 <% end %>

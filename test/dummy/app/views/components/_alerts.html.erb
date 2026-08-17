@@ -13,7 +13,13 @@
         <% end %>
     </div>
     <div id="custom">
-        <%= alert_helper :primary, class: 'custom-alert', id: 'custom_alert', dismissible: true do %>
+        <%= alert_helper(
+            :primary,
+            class: 'custom-alert',
+            id: 'custom_alert',
+            dismissible: true,
+            'aria-special' => 'alert!'
+        ) do %>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptates odit recusandae 
             illo dolorem laboriosam assumenda perspiciatis eum quaerat, tenetur culpa facere minus 
             dignissimos asperiores, mollitia omnis soluta repellat consequuntur!

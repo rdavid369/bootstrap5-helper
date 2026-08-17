@@ -21,26 +21,30 @@
             id:    'custom_dropdown',
             class: 'custom-dropdown',
             data:   { name: 'CustomDropdown' },
-            centered: true
+            centered: true,
+            'aria-special' => 'dropdown!'
         ) do |dropdown| %>
             <%= dropdown.button(
                 :info,
                 id:    'custom_button',
                 class: 'custom-button',
-                data:  { name: 'CustomButton' }
+                data:  { name: 'CustomButton' },
+                'aria-special' => 'button!'
             ) do %>
                 Custom Action
             <% end %>
             <%= dropdown.menu(
                 id:    'custom_menu',
                 class: 'custom-menu',
-                data:  { name: 'CustomMenu' }
+                data:  { name: 'CustomMenu' },
+                'aria-special' => 'menu!'
             ) do |menu| %>
                 <%= menu.link(
                     '#',
                     id:    'custom_edit_link',
                     class: 'custom-edit-link',
-                    data:  { name: 'CustomEditLink' }
+                    data:  { name: 'CustomEditLink' },
+                    'aria-special' => 'link!'
                 ) do %>
                     Edit
                 <% end %>
@@ -48,7 +52,8 @@
                 <%= menu.text(
                     'Static text',
                     class: 'custom-static-text',
-                    id:    'custom_static_text'
+                    id:    'custom_static_text',
+                    'aria-special' => 'text!'
                 ) %>
                 <%= menu.divider %>
                 <p>Some custom content</p>

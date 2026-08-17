@@ -25,25 +25,29 @@
         <%= accordion_helper(
             class: 'user-defined',
             id:    'user_defined',
-            data:  { firstname: 'Billy', lastname: 'Bob' }
+            data:  { firstname: 'Billy', lastname: 'Bob' },
+            'aria-special' => 'main'
         ) do |a| %>
             <%= a.item(
                 class: 'user-defined-item',
                 id:    'user_defined_item',
-                data:  { age: 50, eyes: 'blue'}
+                data:  { age: 50, eyes: 'blue'},
+                'aria-special' => 'item'
             ) do |item| %>
                 <%= item.header(
                     :div,
                     class: 'h2',
                     id:     'user_defined_header',
-                    data:   { height: 5, weight: 150 }
+                    data:   { height: 5, weight: 150 },
+                    'aria-special' => 'header'
                 ) do %>
                     Item One Custom Header.
                 <% end %>
                 <%= item.body(
                     id:    'user_defined_body',
                     class: 'user-defined-body',
-                    data:  { status: 'working' }
+                    data:  { status: 'working' },
+                    'aria-special' => 'body'
                 ) do %>
                     Item One Custom Body.
                 <% end %>

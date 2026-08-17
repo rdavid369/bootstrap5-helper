@@ -28,16 +28,19 @@
             data:       { name: 'CustomModal' },
             scrollable: true,
             vcentered:  true,
-            fullscreen: :sm
+            fullscreen: :sm,
+            'aria-special' => 'modal!'
         ) do |modal| %>
             <%= modal.header(
                 id:    'custom_modal_header',
                 class: 'custom-modal-header',
-                data:  { name: 'CustomModalHeader' }
+                data:  { name: 'CustomModalHeader' },
+                'aria-special' => 'header!'
             ) do %>
                 <%= modal.title(
                     id:    'custom_modal_title',
-                    class: 'custom-modal-title'
+                    class: 'custom-modal-title',
+                    'aria-special' => 'title!'
                 ) do %>
                     Custom Modal
                 <% end %>
@@ -46,16 +49,21 @@
             <%= modal.body(
                 id:    'custom_modal_body',
                 class: 'custom-modal-body',
-                data:  { name: 'CustomModalBody' }
+                data:  { name: 'CustomModalBody' },
+                'aria-special' => 'body!'
             ) do %>
                <p>Modal content goes here.</p>
             <% end %>
             <%= modal.footer(
                 id:    'custom_modal_footer',
                 class: 'custom-modal-footer',
-                data:  { name: 'CustomModalFooter' }
+                data:  { name: 'CustomModalFooter' },
+                'aria-special' => 'footer!'
             ) do %>
-                <%= modal.close_button class: 'btn btn-secondary' do %>
+                <%= modal.close_button(
+                    class: 'btn btn-secondary',
+                    'aria-special' => 'xbutton!'
+                ) do %>
                     Close
                 <% end %>
             <% end %>
