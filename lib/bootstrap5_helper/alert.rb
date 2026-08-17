@@ -17,10 +17,11 @@ module Bootstrap5Helper
       super(template)
       @context, args = parse_context_or_options(context_or_options, opts)
 
-      @id          = args.fetch(:id,          uuid)
-      @class       = args.fetch(:class,       '')
-      @data        = args.fetch(:data,        {})
-      @dismissible = args.fetch(:dismissible, false)
+      @attrs       = args
+      @id          = @attrs.delete(:id)          { uuid }
+      @class       = @attrs.delete(:class)       { '' }
+      @data        = @attrs.delete(:data)        { {} }
+      @dismissible = @attrs.delete(:dismissible) { false }
       @content     = block || proc { '' }
     end
 
@@ -43,7 +44,14 @@ module Bootstrap5Helper
     # @return [String]
     #
     def to_s
-      content_tag(:div, id: @id, class: container_class, data: @data) do
+      content_tag(
+        :div,
+        {
+          id:    @id,
+          class: container_class,
+          data:  @data
+        }.merge(@attrs)
+      ) do
         concat(@dismissible ? close_button : '')
         @content.call(self)
       end

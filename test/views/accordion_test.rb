@@ -69,7 +69,7 @@ class AccordionTest < ActionView::TestCase
     _header, button = default_first_header_and_button
     body = @default_items.first.at('div')
 
-    assert(button['data-bs-target'][1..-1] == body['id'])
+    assert(button['data-bs-target'][1..] == body['id'])
   end
 
   test 'Block shorthand syntax should properly work in header elements' do
@@ -178,6 +178,46 @@ class AccordionTest < ActionView::TestCase
       %w[accordion-body user-defined-shorthand-body].all? do |klass|
         body['class'].match?(klass)
       end
+    )
+  end
+
+  test 'Custom main component should have aria-special attribute' do
+    assert(
+      @custom['aria-special'].present? &&
+      @custom['aria-special'].match?('main')
+    )
+  end
+
+  test <<~TEXT do
+    Custom component should have an item element with an attribute of
+    aria-special that equals item
+  TEXT
+    item = @custom_items.first
+    assert(
+      item['aria-special'].present? &&
+      item['aria-special'].match?('item')
+    )
+  end
+
+  test <<~TEXT do
+    Custom component should have an item element, with an header element,
+    with an attribute of aria-special that equals header
+  TEXT
+    header, _button = custom_first_header_and_button
+    assert(
+      header['aria-special'].present? &&
+      header['aria-special'].match?('header')
+    )
+  end
+
+  test <<~TEXT do
+    Custom component should have an item element, with an body element,
+    with an attribute of aria-special that equals body
+  TEXT
+    body = @custom_items.first.search('div')[1].at('div')
+    assert(
+      body['aria-special'].present? &&
+      body['aria-special'].match?('body')
     )
   end
 

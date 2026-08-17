@@ -18,9 +18,10 @@ module Bootstrap5Helper
 
       @context, args = parse_context_or_options(context_or_options, opts)
 
-      @id      = args.fetch(:id,     nil)
-      @class   = args.fetch(:class,  '')
-      @data    = args.fetch(:data,   {})
+      @attrs   = args
+      @id      = @attrs.delete(:id)     { nil }
+      @class   = @attrs.delete(:class)  { '' }
+      @data    = @attrs.delete(:data)   { {} }
       @content = block || proc { '' }
     end
 
@@ -42,9 +43,11 @@ module Bootstrap5Helper
     def to_s
       content_tag(
         :div,
-        id:    @id,
-        class: "input-group #{size_class} #{@class}",
-        data:  @data
+        {
+          id:    @id,
+          class: "input-group #{size_class} #{@class}",
+          data:  @data
+        }.merge(@attrs)
       ) do
         @content.call(self)
       end

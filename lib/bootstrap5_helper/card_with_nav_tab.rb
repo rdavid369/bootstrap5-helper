@@ -20,9 +20,11 @@ module Bootstrap5Helper
     def initialize(template, *context_or_options, &block)
       super(template)
       @context, args = parse_context_or_options(*context_or_options, {})
-      @id      = args.fetch(:id,    '')
-      @class   = args.fetch(:class, '')
-      @data    = args.fetch(:data,  nil)
+
+      @attrs   = args
+      @id      = @attrs.delete(:id)    { '' }
+      @class   = @attrs.delete(:class) { '' }
+      @data    = @attrs.delete(:data)  { {} }
       @content = block || proc { '' }
     end
 
@@ -47,13 +49,14 @@ module Bootstrap5Helper
     # @return [Nav]
     #
     def nav(*tag_or_options, &block)
-      tag, args      = parse_tag_or_options(*tag_or_options, {})
-      args[:class]   = (args[:class] || '') << ' nav-tabs card-header-tabs'
-      args[:data]    = (args[:data]  || {}).merge('bs-toggle' => 'tab')
-      args[:child]   = (args[:child] || {}).merge(
-        data: {
-          'bs-toggle'  => 'tab',
-          'bs-display' => 'static'
+      tag, args       = parse_tag_or_options(*tag_or_options, {})
+      args[:class]    = (args[:class]    || '') << ' nav-tabs card-header-tabs'
+      args[:bs_attrs] = (args[:bs_attrs] || {}).merge(
+        {
+          data: {
+            'bs-toggle'  => 'tab',
+            'bs-display' => 'static'
+          }
         }
       )
 
@@ -82,9 +85,11 @@ module Bootstrap5Helper
     def to_s
       content_tag(
         :div,
-        class: "card with-nav-tabs-#{@context} #{@class}",
-        id:    @id,
-        data:  @data
+        {
+          class: "card with-nav-tabs-#{@context} #{@class}",
+          id:    @id,
+          data:  @data
+        }.merge(@attrs)
       ) do
         @content.call(self)
       end

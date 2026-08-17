@@ -30,14 +30,14 @@ module Bootstrap5Helper
     #   @option opts [String]  :id
     #   @option opts [String]  :class
     #   @option opts [Hash]    :data
-    #   @option opts [Hash]    :child - data attributes for child, NOT wrapper
+    #   @option opts [Hash]    :bs_attrs
     #
     # @overload nav(opts)
     #   @param [Hash] opts
     #   @option opts [String]  :id
     #   @option opts [String]  :class
     #   @option opts [Hash]    :data
-    #   @option opts [Hash]    :child - data attributes for child, NOT wrapper
+    #   @option opts [Hash]    :bs_attrs
     #
     # @yield  [Nav]
     # @return [Nav]
@@ -45,9 +45,14 @@ module Bootstrap5Helper
     def nav(*tag_or_options, &block)
       tag, args = parse_tag_or_options(*tag_or_options, {})
 
-      args[:class] = (args[:class] || '') << " nav-#{@type}"
-      args[:data]  = (args[:data]  || {}).merge('bs-toggle' => 'tab')
-      args[:child] = { data: { 'bs-toggle' => 'tab' } }
+      args[:class]    = (args[:class] || '') << " nav-#{@type}"
+      args[:data]     = (args[:data]  || {})
+      args[:bs_attrs] = {
+        data: {
+          'bs-toggle'  => 'tab',
+          'bs-display' => 'static'
+        }
+      }
 
       Nav.new(@template, tag, args, &block)
     end

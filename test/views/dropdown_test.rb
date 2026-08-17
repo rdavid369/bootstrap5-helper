@@ -1,13 +1,13 @@
-require "test_helper"
+require 'test_helper'
 
 # rubocop:disable Metrics/ClassLength
 class DropdownTest < ActionView::TestCase
-  DEFAULT  = "Default Dropdown".freeze
-  CUSTOM   = "Custom Dropdown".freeze
-  BINDINGS = "Binding dropdown".freeze
+  DEFAULT  = 'Default Dropdown'.freeze
+  CUSTOM   = 'Custom Dropdown'.freeze
+  BINDINGS = 'Binding dropdown'.freeze
 
   setup do
-    render "components/dropdowns", name: "Todo", min: 1, max: 5
+    render 'components/dropdowns', name: 'Todo', min: 1, max: 5
 
     @root      = document_root_element.at("//div[contains(@id, 'root')]")
     @default   = @root.at(".//div[contains(@id,    'default')]")
@@ -78,7 +78,7 @@ class DropdownTest < ActionView::TestCase
 
   test "#{CUSTOM} should have the following classes .dropdown and .custom-dropdown" do
     assert(
-      ['dropdown', 'custom-dropdown'].all? do |klass|
+      %w[dropdown custom-dropdown].all? do |klass|
         @custom['class'].match?(klass)
       end
     )
@@ -101,7 +101,7 @@ class DropdownTest < ActionView::TestCase
     .dropdown-toggle .custom-button
   TEXT
     assert(
-      ['dropdown-toggle', 'custom-button'].all? do |klass|
+      %w[dropdown-toggle custom-button].all? do |klass|
         custom_toggle['class'].match?(klass)
       end
     )
@@ -116,7 +116,7 @@ class DropdownTest < ActionView::TestCase
     data-name data-bs-toggle data-bs-display
   TEXT
     assert(
-      ['data-name','data-bs-toggle','data-bs-display'].all? do |attr|
+      %w[data-name data-bs-toggle data-bs-display].all? do |attr|
         custom_toggle[attr].present?
       end
     )
@@ -134,7 +134,7 @@ class DropdownTest < ActionView::TestCase
     #{CUSTOM} dropdown menu should have the correct classes .dropdown-menu .custom-menu
   TEXT
     assert(
-      ['dropdown-menu', 'custom-menu'].all? do |klass|
+      %w[dropdown-menu custom-menu].all? do |klass|
         custom_menu['class'].match?(klass)
       end
     )
@@ -171,8 +171,59 @@ class DropdownTest < ActionView::TestCase
   end
 
   test "#{CUSTOM} dropdown menu should have a custom paragraph element" do
-    ptag = custom_menu.at(".//p")
+    ptag = custom_menu.at('.//p')
     assert(ptag.present? && ptag.text.match?('Some custom content'))
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} dropdown should have a aria-special attribute that equals
+    dropdown!
+  TEXT
+    assert(
+      @custom['aria-special'].present? &&
+      @custom['aria-special'].match?('dropdown!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} dropdown menu should have a aria-special attribute that equals
+    menu!
+  TEXT
+    assert(
+      custom_menu['aria-special'].present? &&
+      custom_menu['aria-special'].match?('menu!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} should have a caret toggle button with a arial-special attribute
+    that equals button!
+  TEXT
+    assert(
+      custom_toggle.present? &&
+      custom_toggle['aria-special'].present? &&
+      custom_toggle['aria-special'].match?('button!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} dropdown menu item should have a edit link with a aria-special
+    attribute that equals link!
+  TEXT
+    assert(
+      custom_menu_items_edit_link['aria-special'].present? &&
+      custom_menu_items_edit_link['aria-special'].match?('link!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} dropdown menu item should have static text with a aria-special
+    attribute that equals text!
+  TEXT
+    assert(
+      custom_menu_items_text['aria-special'].present? &&
+      custom_menu_items_text['aria-special'].match?('text!')
+    )
   end
 
   test "#{BINDINGS} root element should be a div" do
@@ -185,7 +236,7 @@ class DropdownTest < ActionView::TestCase
 
   test "#{BINDINGS} caret element should have the correct classes" do
     assert(
-      ['dropdown-toggle', 'dropdown-toggle-split'].all? do |klass|
+      %w[dropdown-toggle dropdown-toggle-split].all? do |klass|
         bindings_toggle['class'].match?(klass)
       end
     )
@@ -268,6 +319,16 @@ class DropdownTest < ActionView::TestCase
     )
   end
 
+  # Get the menu edit link component.
+  #
+  # @return [Nokogiri::XML::Element|NilClass]
+  #
+  def custom_menu_items_text
+    custom_menu.at(
+      ".//*[contains(@class, 'dropdown-item') and contains(@class, 'custom-static-text')]"
+    )
+  end
+
   # Get the toggle component.
   #
   # @return [Nokogiri::XML::Element|NilClass]
@@ -292,3 +353,4 @@ class DropdownTest < ActionView::TestCase
     bindings_menu.search(".//*[contains(@class, 'dropdown-item')]")
   end
 end
+# rubocop:enable Metrics/ClassLength

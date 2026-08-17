@@ -153,6 +153,76 @@ class CardTest < ActionView::TestCase
     end
   end
 
+  test <<~TEXT do
+    Custom card should have an attribute aria-special and it should equal
+    card!
+  TEXT
+    assert(
+      @custom['aria-special'].present? &&
+      @custom['aria-special'].match?('card!')
+    )
+  end
+
+  test <<~TEXT do
+    Custom card header should have an attribute aria-special and it should
+    equal header!
+  TEXT
+    assert(
+      custom_header['aria-special'].present? &&
+      custom_header['aria-special'].match?('header!')
+    )
+  end
+
+  test <<~TEXT do
+    Custom card body should have an attribute aria-special and it should
+    equal body!
+  TEXT
+    assert(
+      custom_body['aria-special'].present? &&
+      custom_body['aria-special'].match?('body!')
+    )
+  end
+
+  test <<~TEXT do
+    Custom card footer should have an attribute aria-special and it should
+    equal footer!
+  TEXT
+    assert(
+      custom_footer['aria-special'].present? &&
+      custom_footer['aria-special'].match?('footer!')
+    )
+  end
+
+  test <<~TEXT do
+    Custom card title should have an attribute aria-special and it should
+    equal title!
+  TEXT
+    assert(
+      custom_title['aria-special'].present? &&
+      custom_title['aria-special'].match?('title!')
+    )
+  end
+
+  test <<~TEXT do
+    Custom card subtitle should have an attribute aria-special and it should
+    equal subtitle!
+  TEXT
+    assert(
+      custom_subtitle['aria-special'].present? &&
+      custom_subtitle['aria-special'].match?('subtitle!')
+    )
+  end
+
+  test <<~TEXT do
+    Custom card text should have an attribute aria-special and it should
+    equal text!
+  TEXT
+    assert(
+      custom_text['aria-special'].present? &&
+      custom_text['aria-special'].match?('text!')
+    )
+  end
+
   test 'Bindings card header should have the correct text' do
     header = @bindings.at(".//*[contains(@class, 'card-header')]")
     assert(header.text.match?('My Todos List:'))

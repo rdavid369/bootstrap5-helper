@@ -18,11 +18,12 @@ module Bootstrap5Helper
     def initialize(template, opts = {}, &block)
       super(template)
 
-      @type    = opts.fetch(:type, :border)
-      @size    = opts.fetch(:size,  nil)
-      @id      = opts.fetch(:id,    uuid)
-      @class   = opts.fetch(:class, '')
-      @data    = opts.fetch(:data,  {})
+      @attrs   = opts
+      @type    = @attrs.delete(:type)  { :border }
+      @size    = @attrs.delete(:size)  { nil }
+      @id      = @attrs.delete(:id)    { uuid }
+      @class   = @attrs.delete(:class) { '' }
+      @data    = @attrs.delete(:data)  { {} }
       @content = block || proc { '' }
     end
 
@@ -33,11 +34,13 @@ module Bootstrap5Helper
     def to_s
       content_tag(
         :span,
-        id:    @id,
-        class: component_classes,
-        role:  'status',
-        aria:  { hidden: true },
-        data:  @data
+        {
+          id:    @id,
+          class: component_classes,
+          role:  'status',
+          aria:  { hidden: true },
+          data:  @data
+        }.merge(@attrs)
       ) do
         content_tag :span, 'Loading', class: 'visually-hidden'
       end

@@ -1,13 +1,13 @@
-require "test_helper"
+require 'test_helper'
 
 # rubocop:disable Metrics/ClassLength
 class CardWithNavTabTest < ActionView::TestCase
-  DEFAULT  = "Default Card With Nav Tab".freeze
-  CUSTOM   = "Custom Card With Nav Tab".freeze
-  BINDINGS = "Binding Card With Nav Tab".freeze
+  DEFAULT  = 'Default Card With Nav Tab'.freeze
+  CUSTOM   = 'Custom Card With Nav Tab'.freeze
+  BINDINGS = 'Binding Card With Nav Tab'.freeze
 
   setup do
-    render "components/card_with_nav_tab", name: "Todo", min: 1, max: 5
+    render 'components/card_with_nav_tab', name: 'Todo', min: 1, max: 5
 
     @root      = document_root_element.at("//div[contains(@id, 'root')]")
     @default   = @root.at(".//div[contains(@id,    'default')]")
@@ -24,7 +24,7 @@ class CardWithNavTabTest < ActionView::TestCase
   TEXT
     assert(
       %w[card with-nav-tabs-secondary].all? do |klass|
-        @default["class"].match?(klass)
+        @default['class'].match?(klass)
       end
     )
   end
@@ -33,23 +33,23 @@ class CardWithNavTabTest < ActionView::TestCase
     #{DEFAULT} should have a header element wrapping the nav
     component with the class .card-header
   TEXT
-    assert(default_header["class"].match?("card-header"))
+    assert(default_header['class'].match?('card-header'))
   end
 
   test "#{DEFAULT} nav should be a ul element" do
-    assert(default_nav.name == "ul")
+    assert(default_nav.name == 'ul')
   end
 
   test "#{DEFAULT} nav items should be a li element" do
-    assert(default_nav_items.first.name == "li")
+    assert(default_nav_items.first.name == 'li')
   end
 
-  test "Default Card With Nav Tab should have six nav items" do
+  test 'Default Card With Nav Tab should have six nav items' do
     assert(default_nav_items.count == 6)
   end
 
   test "#{DEFAULT} nav items should have correct class .nav-item" do
-    assert(default_nav_items.all? { |item| item["class"].match?("nav-item") })
+    assert(default_nav_items.all? { |item| item['class'].match?('nav-item') })
   end
 
   test <<~TEXT do
@@ -85,7 +85,7 @@ class CardWithNavTabTest < ActionView::TestCase
   test "#{DEFAULT} last item in nav, should be a dropdown" do
     assert(
       %w[nav-item dropdown].all? do |klass|
-        default_nav_items.last["class"].match?(klass)
+        default_nav_items.last['class'].match?(klass)
       end
     )
   end
@@ -124,7 +124,7 @@ class CardWithNavTabTest < ActionView::TestCase
   end
 
   test "#{DEFAULT} should have a tab content component" do
-    assert(default_content["class"].match?("tab-content"))
+    assert(default_content['class'].match?('tab-content'))
   end
 
   test "#{DEFAULT} should have seven content panes" do
@@ -142,7 +142,7 @@ class CardWithNavTabTest < ActionView::TestCase
 
   test "#{DEFAULT} content pane should have the correct class .tab-pane" do
     assert(
-      default_content_panes.all? { |pane| pane["class"].match?("tab-pane") }
+      default_content_panes.all? { |pane| pane['class'].match?('tab-pane') }
     )
   end
 
@@ -152,21 +152,21 @@ class CardWithNavTabTest < ActionView::TestCase
   TEXT
     assert(
       %w[card with-nav-tabs-primary custom-card-with-nav].all? do |klass|
-        @custom["class"].match?(klass)
+        @custom['class'].match?(klass)
       end
     )
   end
 
   test "#{CUSTOM} base element should have the correct id attribute" do
-    assert(@custom["id"].match?("custom_card_with_nav"))
+    assert(@custom['id'].match?('custom_card_with_nav'))
   end
 
   test "#{CUSTOM} base element should have the correct data attribute" do
-    assert(@custom["data-name"].match?("CustomCardWithNav"))
+    assert(@custom['data-name'].match?('CustomCardWithNav'))
   end
 
   test "#{CUSTOM} nav should be a nav element" do
-    assert(custom_nav.name == "nav")
+    assert(custom_nav.name == 'nav')
   end
 
   test <<~TEXT do
@@ -175,17 +175,17 @@ class CardWithNavTabTest < ActionView::TestCase
   TEXT
     assert(
       %w[nav nav-tabs card-header-tabs custom-nav].all? do |klass|
-        custom_nav["class"].match?(klass)
+        custom_nav['class'].match?(klass)
       end
     )
   end
 
   test "#{CUSTOM} nav should have the correct id attribute" do
-    assert(custom_nav["id"].match?("custom_nav"))
+    assert(custom_nav['id'].match?('custom_nav'))
   end
 
   test "#{CUSTOM} nav should have the correct data attribute" do
-    assert(custom_nav["data-name"].match?("CustomNav"))
+    assert(custom_nav['data-name'].match?('CustomNav'))
   end
 
   test "#{CUSTOM} nav should have 3 items" do
@@ -203,7 +203,7 @@ class CardWithNavTabTest < ActionView::TestCase
   end
 
   test "#{CUSTOM} nav items should be a anchor element" do
-    assert(custom_nav_items.first.name == "a")
+    assert(custom_nav_items.first.name == 'a')
   end
 
   test "#{CUSTOM} nav should have a dropdown menu" do
@@ -224,7 +224,7 @@ class CardWithNavTabTest < ActionView::TestCase
   end
 
   test "#{CUSTOM} should have a tab content component" do
-    assert(custom_content["class"].match?("tab-content"))
+    assert(custom_content['class'].match?('tab-content'))
   end
 
   test "#{CUSTOM} should have seven content panes" do
@@ -245,7 +245,7 @@ class CardWithNavTabTest < ActionView::TestCase
     assert(
       custom_content_panes.all? do |pane|
         ['tab-pane', "custom-item-#{count += 1}"].all? do |klass|
-          pane["class"].match?(klass)
+          pane['class'].match?(klass)
         end
       end
     )
@@ -266,6 +266,48 @@ class CardWithNavTabTest < ActionView::TestCase
       custom_content_panes.all? do |pane|
         pane['data-name'].match?("CustomItem#{count += 1}Content")
       end
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} wrapper element should have attribute aria-special that equals
+    wrapper!
+  TEXT
+    assert(
+      @custom['aria-special'].present? &&
+      @custom['aria-special'].match?('wrapper!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} nav element should have attribute aria-special that equals
+    nav!
+  TEXT
+    assert(
+      custom_nav['aria-special'].present? &&
+      custom_nav['aria-special'].match?('nav!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} nav elements first item should have an attribute aria-special
+    that equals item!
+  TEXT
+    item = custom_nav.search(".//a[contains(@class, 'nav-link')]").first
+    assert(
+      item['aria-special'].present? &&
+      item['aria-special'].match?('item!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} nav elements first pane should have an attribute aria-special
+    that equals pane!
+  TEXT
+    item = custom_content_panes.first
+    assert(
+      item['aria-special'].present? &&
+      item['aria-special'].match?('pane!')
     )
   end
 

@@ -1,8 +1,9 @@
+# frozen_string_literal: false
+
 module Bootstrap5Helper
   class Overlay
+    # rubocop:disable Metrics/ClassLength
     # Builds a menu component for use in dropdowns.
-    #
-    #
     class Menu < Component
       # Class constructor
       #
@@ -17,9 +18,10 @@ module Bootstrap5Helper
         super(template)
 
         @tag, opts = parse_tag_or_options(*tag_or_options, {})
-        @id        = opts.fetch(:id,    uuid)
-        @class     = opts.fetch(:class, '')
-        @data      = opts.fetch(:data,  {})
+        @attrs     = opts
+        @id        = @attrs.delete(:id)    { uuid }
+        @class     = @attrs.delete(:class) { '' }
+        @data      = @attrs.delete(:data)  { {} }
         @content   = block || proc { '' }
       end
 
@@ -45,8 +47,6 @@ module Bootstrap5Helper
         end
       end
 
-      # rubocop:disable Metrics/MethodLength
-
       # Use this method when you are using the item in the menu as trigger for
       # something like tab content.
       #
@@ -59,25 +59,23 @@ module Bootstrap5Helper
       # @return [String]
       #
       def item(target, opts = {})
-        id    = opts.fetch(:id,    nil)
-        klass = opts.fetch(:class, '')
-        data  = opts.fetch(:data,  {}).merge('bs-toggle' => 'tab')
-        aria  = opts.fetch(:aria,  {})
+        attrs = opts
+        klass = attrs.delete(:class) { '' }
+        data  = attrs.delete(:data)  { {} }
 
         nav_item_wrapper do
           content_tag(
             :a,
-            id:    id,
-            class: "dropdown-item #{klass}",
-            href:  "##{target}",
-            aria:  aria,
-            data:  data
+            {
+              class: "dropdown-item #{klass}",
+              href:  "##{target}",
+              data:  data.merge('bs-toggle' => 'tab')
+            }.merge(attrs)
           ) do
             block_given? ? yield : target.to_s.titleize
           end
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       # Builds a Text component
       #
@@ -142,9 +140,11 @@ module Bootstrap5Helper
       def to_s
         content_tag(
           @tag || config({ overlay_menus: :base }, :div),
-          id:    @id,
-          class: "dropdown-menu #{@class}",
-          data:  @data
+          {
+            id:    @id,
+            class: "dropdown-menu #{@class}",
+            data:  @data
+          }.merge(@attrs)
         ) do
           @content.call(self)
         end
@@ -177,19 +177,23 @@ module Bootstrap5Helper
       # @return [String]
       #
       def build_sub_component(tag, text, type, opts)
-        id    = opts.fetch(:id,    nil)
-        klass = opts.fetch(:class, '')
-        data  = opts.fetch(:data,  {})
+        attrs = opts
+        id    = attrs.delete(:id)    { nil }
+        klass = attrs.delete(:class) { '' }
+        data  = attrs.delete(:data)  { {} }
 
         content_tag(
           tag,
-          id:    id,
-          class: "dropdown-#{type} #{klass}",
-          data:  data
+          {
+            id:    id,
+            class: "dropdown-#{type} #{klass}",
+            data:  data
+          }.merge(attrs)
         ) do
           block_given? ? yield : text || ''
         end
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

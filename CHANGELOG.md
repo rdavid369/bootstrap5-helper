@@ -1,3 +1,7 @@
+## 2.0.0.beta (2026-08-10)
+
+- Allow all attributes passed to helpers to be placed on the DOM components generated. Can now add attributes like `disabled`, `draggable`, `contenteditable` or other custom attributes.
+
 ## 1.2.1 (2026-01-30)
 
 - Updated dummy app to Rails 8. Tests all passed and dummy application runs, with no issues.

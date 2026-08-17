@@ -1,5 +1,5 @@
 require 'test_helper'
-
+# rubocop:disable Metrics/ClassLength
 class ModalTest < ActionView::TestCase
   DEFAULT  = 'Default Modal'.freeze
   CUSTOM   = 'Custom Modal'.freeze
@@ -79,7 +79,56 @@ class ModalTest < ActionView::TestCase
     assert(btn['data-bs-dismiss'] == 'modal')
   end
 
-  # Start testing custom modal
+  test "#{CUSTOM} should have a aria-special attribute that equals modal!" do
+    assert(
+      @custom['aria-special'].present? &&
+      @custom['aria-special'].match?('modal!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} should have a header component with an aria-special attribute
+    that equals header!
+  TEXT
+    assert(
+      custom_header.present? &&
+      custom_header['aria-special'].present? &&
+      custom_header['aria-special'].match?('header!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} header component should have a title element with an
+    aria-special attribute that equals title!
+  TEXT
+    assert(
+      custom_header_title.present? &&
+      custom_header_title['aria-special'].present? &&
+      custom_header_title['aria-special'].match?('title!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} body component should have a  aria-special attribute that
+    equals body!
+  TEXT
+    assert(
+      custom_body.present? &&
+      custom_body['aria-special'].present? &&
+      custom_body['aria-special'].match?('body!')
+    )
+  end
+
+  test <<~TEXT do
+    #{CUSTOM} footer component should have a  aria-special attribute that
+    equals footer!
+  TEXT
+    assert(
+      custom_footer.present? &&
+      custom_footer['aria-special'].present? &&
+      custom_footer['aria-special'].match?('footer!')
+    )
+  end
 
   private
 
@@ -195,3 +244,4 @@ class ModalTest < ActionView::TestCase
     custom_header.at(".//*[contains(@class, 'btn-close')]")
   end
 end
+# rubocop:enable Metrics/ClassLength
